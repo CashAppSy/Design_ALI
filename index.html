@@ -55,9 +55,6 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
   height:58px;position:relative;flex:none;padding:9px 10px;color:#fff;overflow:hidden;
   background:radial-gradient(circle at 80% -18%,#ffffff82,transparent 50%),linear-gradient(125deg,#18b6c2,#6de5e1 52%,#387bc5);
 }
-.bundle.combo .cover{background:linear-gradient(115deg,#35cabb,#66c4ef 60%,#398ec8)}
-.bundle.roaming .cover{background:linear-gradient(110deg,#7aa9e9,#93e9e9)}
-.bundle.offer .cover{background:linear-gradient(110deg,#be55cb,#699cfa)}
 .cover-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .cover-name{font-size:12px;font-weight:900;line-height:1.12;max-width:112px;letter-spacing:-.15px;overflow-wrap:normal}.cover-title{display:flex;flex-direction:column;gap:3px;min-width:0}.cover-hint{font-size:9px;line-height:1.1;color:#e8fcff;opacity:.86;font-weight:650;max-width:106px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tag{font-size:9px;font-weight:900;display:inline-block;border-radius:12px;background:#ffffff3d;padding:4px 7px;white-space:nowrap;backdrop-filter:blur(2px)}
 /* Large category illustration embedded in the header as a low-contrast watermark. */
@@ -72,7 +69,11 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
 .card-body{padding:7px 10px 9px;display:flex;flex-direction:column;flex:1;min-height:0}
 .validity{display:inline-flex;align-items:center;align-self:flex-start;gap:5px;font-size:9px;font-weight:750;color:#477780;background:#ecf6f3;border-radius:10px;padding:4px 7px;margin:6px 0 0;line-height:1.1;border:1px solid #deece8}.period-pill{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:18px;padding:0 7px;border-radius:999px;font-size:8px;font-weight:900;letter-spacing:.2px;color:#fff}.period-daily .period-pill{background:#20c6c7}.period-weekly .period-pill{background:#4f8ef7}.period-monthly .period-pill{background:#88c93a}.period-daily .validity{background:#ebfcfb;color:#167b84;border-color:#c7efee}.period-weekly .validity{background:#eef4ff;color:#325ea9;border-color:#d7e5ff}.period-monthly .validity{background:#f3faea;color:#557d1d;border-color:#dcecc4}
 .detail-text{margin-top:5px;font-size:11px;line-height:1.3;font-weight:900;color:#184a57;letter-spacing:-.08px;min-height:27px;display:flex;align-items:center}
-.purchase-row{margin-top:auto;display:flex;flex-direction:column;gap:4px;padding-top:3px}
+.duration-chip{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;min-width:76px;height:24px;padding:0 10px;margin-top:8px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.2px;border:1px solid transparent}
+.period-daily .duration-chip{background:#e6fbf8;color:#118490;border-color:#bdeee7}
+.period-weekly .duration-chip{background:#eef3ff;color:#315fb7;border-color:#d8e2ff}
+.period-monthly .duration-chip{background:#f2f8e8;color:#5d861b;border-color:#d9e9bf}
+.purchase-row{margin-top:auto;display:flex;flex-direction:column;gap:4px;padding-top:8px}
 .price{color:#7d98a1;font-size:9px;line-height:1.1;font-weight:700;margin:0;white-space:nowrap}
 .price b{color:#2f6673;font-size:12px;font-weight:800}
 .activate{min-height:29px;border:0;border-radius:16px;background:var(--accent);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:6px;width:100%}
@@ -102,7 +103,7 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
 @media(max-width:360px){.scroll{padding-left:12px;padding-right:12px}.tools{gap:5px}.tool{width:38px;height:38px}.logo{font-size:30px}.bundle{flex-basis:156px;width:156px}.cover-name{font-size:11px}.hero h1{font-size:21px}.section-title{font-size:17px}}
 .hero{flex-direction:row;align-items:center;justify-content:space-between;gap:8px}
 .hero-copy{position:relative;z-index:1;min-width:0;flex:1}.hero h1{font-size:clamp(18px,5.5vw,23px);white-space:nowrap;letter-spacing:-.8px}.hero p{font-size:11px;white-space:nowrap}
-.hero-history{z-index:2;flex:none;display:flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:0 10px;border:1px solid #ffffff80;border-radius:18px;background:#ffffff2b;color:white;backdrop-filter:blur(7px);font:800 11px system-ui,-apple-system,"Segoe UI",Arial,sans-serif;cursor:pointer}
+.hero-history{z-index:2;flex:none;display:flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:0 10px;border:none;box-shadow:inset 0 0 0 1px #ffffff30;border-radius:18px;background:#ffffff2b;color:white;backdrop-filter:blur(7px);font:800 11px system-ui,-apple-system,"Segoe UI",Arial,sans-serif;cursor:pointer}
 .hero-history svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .hero-history:focus-visible{outline:2px solid white;outline-offset:3px}
 @media(max-width:360px){.hero{padding-left:13px;padding-right:12px}.hero h1{font-size:18px}.hero p{font-size:10px}.hero-history{padding:0 8px;font-size:10px;min-height:32px}}
@@ -135,6 +136,20 @@ html{-webkit-text-size-adjust:100%}
 @media(max-height:650px){.sheet{max-height:88%}.bottom{height:67px}.brand-button{width:67px;height:67px;top:-7px}}
 @media(min-width:601px){.phone{height:min(844px,calc(100dvh - 44px))}}
 
+
+/* V39: open, frameless page heading */
+.hero{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important;padding:11px 1px 15px!important;min-height:77px!important;color:#123d49!important;margin-bottom:9px!important}
+.hero::after,.hero::before{display:none!important}
+.hero h1{color:#103e4c!important;text-shadow:none!important}
+.hero p{color:#426c75!important}
+.hero-history{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;color:#125c6d!important;padding:0 3px!important;border-radius:0!important;min-height:40px!important}
+.hero-history svg{stroke:#128399!important}
+.hero-history:focus-visible{outline:2px solid #188f9b;outline-offset:3px;border-radius:8px!important}
+@media(max-width:360px){.hero{padding:10px 0 14px!important}.hero-history{min-width:38px!important;width:38px!important}}
+/* V40: outlined History on a frameless header */
+.hero-history{background:rgba(255,255,255,.27)!important;border:1.5px solid rgba(13,100,113,.42)!important;box-shadow:none!important;backdrop-filter:none!important;color:#125c6d!important;padding:0 12px!important;border-radius:22px!important;min-height:38px!important}
+.hero-history:focus-visible{outline:2px solid #188f9b!important;outline-offset:3px}
+@media(max-width:360px){.hero-history{padding:0!important;width:38px!important;min-width:38px!important}}
 </style>
 </head>
 <body>
@@ -153,7 +168,7 @@ html{-webkit-text-size-adjust:100%}
     </header>
 
     <div class="hero">
-      <div class="hero-copy"><h1>Bundles &amp; Services</h1><p>Choose the right bundle for you</p></div>
+      <div class="hero-copy"><h1>Bundles</h1><p>Choose the right bundle for you</p></div>
       <button class="hero-history" id="history-btn" type="button" aria-label="View bundle history" title="Bundle history">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v4.7l3.2 2.2"/></svg>
         <span>History</span>
@@ -321,6 +336,7 @@ function render(){
         </div>
         <div class="card-body">
           ${detailMarkup(item)}
+          <div class="duration-chip">${item.period}</div>
           <div class="purchase-row"><div class="price">Price <b>${fmt(item.price)}</b></div><button class="activate ${stateFor(item.id).active&&!stateFor(item.id).canRepeat?'unavailable':''}" aria-disabled="false" data-id="${item.id}">${buttonCopy(item)} <span aria-hidden="true">›</span></button></div>
         </div>`;
       rail.append(card);
