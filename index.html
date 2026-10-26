@@ -15,32 +15,34 @@
   --shadow:#17586218;
 }
 *{box-sizing:border-box}
-html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500 13px/1.4 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500 13px/1.4 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow:hidden}
 .phone{
   width:min(390px,100vw);height:min(844px,100dvh);margin:22px auto;position:relative;overflow:hidden;
   border-radius:28px;box-shadow:0 20px 55px #1e5b5450;
   background:radial-gradient(circle at 55% -4%,#d9e933 0,#b0d636 19%,transparent 44%),linear-gradient(160deg,#b2d73d,#69c486 46%,#22afae);
 }
-.scroll{height:100%;overflow-y:auto;scrollbar-width:none;padding:15px 15px calc(118px + env(safe-area-inset-bottom,0px));overscroll-behavior-y:contain}
-.scroll::-webkit-scrollbar,.rail::-webkit-scrollbar,.filters::-webkit-scrollbar{display:none}
+.scroll{height:100%;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;padding:15px 15px calc(118px + env(safe-area-inset-bottom,0px));overscroll-behavior-y:contain}
+.scroll::-webkit-scrollbar,.rail::-webkit-scrollbar,.filters::-webkit-scrollbar,.sheet::-webkit-scrollbar,.history-sheet::-webkit-scrollbar,*::-webkit-scrollbar{display:none;width:0;height:0}
 .top{height:49px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .logo{font-weight:850;font-size:34px;line-height:1;letter-spacing:-2px;color:#06201d}
 .logo::before{content:'◎';font-size:30px;margin-right:2px}
-.tools{display:flex;gap:8px}.tool{width:43px;height:43px;flex:none;border-radius:50%;display:grid;place-items:center;background:#eff8de;border:1px solid #fff;font-size:18px;position:relative}
-.tool.bell::after{content:'3';position:absolute;right:-3px;top:-4px;font-size:10px;color:#fff;background:#ee435c;border-radius:50%;padding:2px 5px}
+.tools{display:flex;gap:8px}.tool{width:43px;height:43px;flex:none;border-radius:50%;display:grid;place-items:center;background:#eff8de;border:1px solid #fff;position:relative;padding:0}.tool svg{width:21px;height:21px;stroke:#58707c;fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}.tool.history svg{stroke:#2b6d7a}.tool.offer svg{stroke:#2b6d7a}.tool.bell svg{fill:none;stroke:#58707c}.tool.theme svg{stroke:#58707c}.tool.bell::after{content:'3';position:absolute;right:-3px;top:-4px;font-size:10px;color:#fff;background:#ee435c;border-radius:50%;padding:2px 5px}
 .hero{background:linear-gradient(115deg,#14b6bd,#168fbd 68%,#286bb2);border-radius:21px;padding:18px 17px;min-height:92px;color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 25px #148c9b2b;margin-bottom:14px;display:flex;flex-direction:column;justify-content:center}
 .hero::after{content:'';position:absolute;width:210px;height:210px;border:1px solid #ffffff20;border-radius:50%;right:-50px;top:-110px;box-shadow:0 0 0 35px #ffffff08}
 .eyebrow{font-size:11px;font-weight:700;opacity:.92}.hero h1{font-size:24px;letter-spacing:-.65px;line-height:1.15;margin:0 0 4px;font-weight:900}.hero p{margin:0;font-size:12px;color:#e8feff;max-width:210px;line-height:1.35}
-.filters{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:0 0 13px}
+.filters{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:0 0 13px}
 .chip{border:1px solid #ffffffb8;background:#e9f8eceb;border-radius:28px;padding:9px 14px;min-height:38px;white-space:nowrap;font-size:11px;font-weight:800;color:#4d727e}
 .chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .section{margin:0 0 18px}
 .section-head{display:flex;align-items:center;gap:12px;margin:2px 2px 10px;padding:1px 0}
-.section-icon{width:56px;height:56px;flex:none;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#16b6bd,#327cc6);color:#fff;box-shadow:0 8px 18px #168a9a26}.section-icon svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.section-icon{width:56px;height:56px;min-width:56px;flex:0 0 56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#16b6bd,#327cc6);color:#fff;box-shadow:0 8px 18px #168a9a26;overflow:hidden}
+.section-icon svg,.section-icon img{display:block;width:30px!important;height:30px!important;max-width:30px;max-height:30px;object-fit:contain;justify-self:center;align-self:center;flex:none}
+.section-icon svg{stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.section-icon img{filter:brightness(0) invert(1)}
 .section-copy{min-width:0}
 .section-title{font-size:18px;line-height:1.05;font-weight:900;letter-spacing:-.35px;color:#163f57}
 .section-desc{font-size:10px;margin-top:5px;color:#7391a8;line-height:1.25;font-weight:700}
-.rail{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:1px 1px 8px;overscroll-behavior-x:contain}
+.rail{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:1px 1px 8px;overscroll-behavior-x:contain}
 .bundle{
   --period-accent:#24c1c6;
   flex:0 0 168px;width:168px;height:183px;border-radius:18px;border:1px solid var(--line);
@@ -50,7 +52,7 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
 .bundle.period-weekly{--period-accent:#4f8ef7}
 .bundle.period-monthly{--period-accent:#88c93a}
 .cover{
-  height:57px;position:relative;flex:none;padding:9px 10px;color:#fff;
+  height:58px;position:relative;flex:none;padding:9px 10px;color:#fff;overflow:hidden;
   background:radial-gradient(circle at 80% -18%,#ffffff82,transparent 50%),linear-gradient(125deg,#18b6c2,#6de5e1 52%,#387bc5);
 }
 .bundle.combo .cover{background:linear-gradient(115deg,#35cabb,#66c4ef 60%,#398ec8)}
@@ -60,9 +62,11 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
 .cover-name{font-size:12px;font-weight:900;line-height:1.12;max-width:112px;letter-spacing:-.15px;overflow-wrap:normal}.cover-title{display:flex;flex-direction:column;gap:3px;min-width:0}.cover-hint{font-size:9px;line-height:1.1;color:#e8fcff;opacity:.86;font-weight:650;max-width:106px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tag{font-size:9px;font-weight:900;display:inline-block;border-radius:12px;background:#ffffff3d;padding:4px 7px;white-space:nowrap;backdrop-filter:blur(2px)}
 /* Large category illustration embedded in the header as a low-contrast watermark. */
 .cover{isolation:isolate}
-.cover-art{position:absolute;z-index:-1;width:93px;height:93px;right:-9px;bottom:-29px;opacity:.24;pointer-events:none;transform:rotate(-12deg);color:var(--period-accent);mask-image:linear-gradient(105deg,transparent 2%,#000 44%)}
+.cover-art{position:absolute;z-index:-1;width:60px;height:60px;right:2px;top:1px;opacity:.27;pointer-events:none;transform:none;color:rgba(255,255,255,.86)}
 .cover-art svg{display:block;width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-.cover::before{content:"";position:absolute;z-index:-1;right:-18px;bottom:-48px;width:150px;height:104px;background:radial-gradient(ellipse,#ffffff24,transparent 72%);pointer-events:none}
+.cover-art-gift{width:62px;height:54px;right:5px;top:2px;opacity:.22}
+.cover-art-gift img{display:block;width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1)}
+.cover::before{content:"";position:absolute;z-index:-1;right:-18px;top:-26px;width:130px;height:86px;background:radial-gradient(ellipse,#ffffff20,transparent 72%);pointer-events:none}
 .cover-top{position:relative;z-index:1}
 .cover-icon{display:none}
 .card-body{padding:7px 10px 9px;display:flex;flex-direction:column;flex:1;min-height:0}
@@ -85,16 +89,52 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
 
 /* V20: coherent activation and renewal states */
 .tag-active{background:#e9fff0;color:#116a49;border:1px solid #d2f6e1;box-shadow:0 1px 5px #104a3830}
-.activate.unavailable,.confirm.unavailable{background:#cbd7db;color:#6b7f85;border:1px solid #b5c6ca;box-shadow:none;cursor:not-allowed}
-.sheet{max-height:min(82%,690px);overflow-y:auto;padding-bottom:calc(25px + env(safe-area-inset-bottom,0px))}
+.activate.unavailable,.confirm.unavailable{background:#cbd7db;color:#6b7f85;border:1px solid #b5c6ca;box-shadow:none;cursor:pointer}
+.sheet{max-height:min(82%,690px);overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:calc(25px + env(safe-area-inset-bottom,0px))}
 .sheet-validity{display:inline-flex;align-items:center;background:#e7f5f1;color:#325f69;font-size:12px;font-weight:750;padding:7px 11px;border-radius:18px;margin:2px 0 8px}
-.sheet-active{font-size:12px;font-weight:800;color:#146a49;background:#e5f8ea;border-radius:10px;padding:9px 11px;margin:3px 0 10px}
+.sheet-active{font-size:12px;font-weight:800;color:#146a49;background:#e5f8ea;border-radius:10px;padding:9px 11px;margin:3px 0 10px}.sheet-expiry{margin:2px 0 10px;font-size:12px;color:#3d6b73;font-weight:700}.sheet-expiry[hidden]{display:none!important}.sheet-expiry strong{color:#184a57}
 .sheet-active[hidden],.renewal-row[hidden],.stop-renewal[hidden]{display:none!important}
 .renewal-row{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #d5e9e5;border-radius:13px;background:#ecf8f3;padding:12px;margin:12px 0 8px}
 .renewal-row strong{display:block;font-size:13px}.renewal-row small{display:block;margin-top:3px;font-size:10px;color:#608088;line-height:1.4}
 .stop-renewal{flex:none;border:1px solid #bbd6d6;background:white;color:#116877;font-size:11px;font-weight:800;border-radius:20px;padding:9px 10px;min-height:36px}
 .sheet-list{margin:8px 0 12px;padding-left:20px}.sheet-list li{margin:3px 0}
+.subtools{display:flex;justify-content:flex-end;align-items:center;margin:-4px 0 10px}.secondary-btn{height:34px;border-radius:18px;border:1px solid #d5ece5;background:#eff9f5;color:#155663;font-size:11px;font-weight:850;padding:0 13px;display:inline-flex;align-items:center;gap:6px}.secondary-btn span{font-size:13px;line-height:1}.history-sheet{max-height:min(80%,690px)}.history-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}.history-item{border:1px solid #d8ebe6;border-radius:16px;background:#fbfffd;padding:12px 12px 11px}.history-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.history-title{font-size:14px;font-weight:900;line-height:1.15;color:#163f57}.history-meta{font-size:10px;color:#5b7f89;font-weight:700;margin-top:3px}.history-info{font-size:10px;color:#41636c;margin-top:8px;line-height:1.4}.history-actions{display:flex;align-items:center;gap:8px;margin-top:10px}.history-price{font-size:12px;font-weight:900;color:#0a9cad;margin-right:auto}.history-empty{padding:14px;border:1px dashed #cfe3de;border-radius:16px;background:#f7fdfb;color:#557b83;font-size:12px;text-align:center}
 @media(max-width:360px){.scroll{padding-left:12px;padding-right:12px}.tools{gap:5px}.tool{width:38px;height:38px}.logo{font-size:30px}.bundle{flex-basis:156px;width:156px}.cover-name{font-size:11px}.hero h1{font-size:21px}.section-title{font-size:17px}}
+.hero{flex-direction:row;align-items:center;justify-content:space-between;gap:8px}
+.hero-copy{position:relative;z-index:1;min-width:0;flex:1}.hero h1{font-size:clamp(18px,5.5vw,23px);white-space:nowrap;letter-spacing:-.8px}.hero p{font-size:11px;white-space:nowrap}
+.hero-history{z-index:2;flex:none;display:flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:0 10px;border:1px solid #ffffff80;border-radius:18px;background:#ffffff2b;color:white;backdrop-filter:blur(7px);font:800 11px system-ui,-apple-system,"Segoe UI",Arial,sans-serif;cursor:pointer}
+.hero-history svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero-history:focus-visible{outline:2px solid white;outline-offset:3px}
+@media(max-width:360px){.hero{padding-left:13px;padding-right:12px}.hero h1{font-size:18px}.hero p{font-size:10px}.hero-history{padding:0 8px;font-size:10px;min-height:32px}}
+.gift-symbol{stroke:#fff;stroke-width:3;fill:none}.gift-symbol .gift-bow{stroke:#d3fff4;stroke-width:3.4}
+.sheet-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:9px;margin-top:7px}.sheet-actions .confirm{min-width:0}.share-btn{height:43px;border:1px solid #a9ded8;border-radius:23px;background:white;color:#0a8c9c;display:flex;align-items:center;justify-content:center;gap:8px;font:800 13px system-ui,sans-serif;cursor:pointer}.share-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.share-fallback{border-radius:13px;border:1px solid #cde6df;background:#ffffff;padding:12px;margin-top:10px}.share-fallback[hidden]{display:none}.share-fallback p{margin:0 0 8px;font-size:11px;color:#52717b}.share-fallback textarea{width:100%;resize:vertical;min-height:92px;border-radius:9px;border:1px solid #c8e0de;font:12px/1.5 system-ui,sans-serif;color:#13424d;padding:8px}.share-fallback button{margin-top:8px;border:0;background:#d9f4ed;color:#116d7a;border-radius:15px;padding:8px 12px;font-weight:800}
+
+.sheet-title-row{display:flex;align-items:center;justify-content:flex-start;gap:9px;margin:6px 0 8px}
+.sheet-title-row h2{margin:0;min-width:0;flex:0 1 auto;overflow-wrap:anywhere}
+.share-icon-btn{width:35px;height:35px;flex:0 0 35px;border:1px solid #b9e3dd;border-radius:50%;background:#effaf7;color:#138b9c;display:grid;place-items:center;cursor:pointer}
+.share-icon-btn svg{height:19px;width:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.share-icon-btn:focus-visible{outline:2px solid #067a8e;outline-offset:2px}
+.sheet>.confirm{display:block;width:100%;margin-top:8px}
+
+/* V37 — responsive mobile layout and safe-area polish */
+html{-webkit-text-size-adjust:100%}
+.phone{max-width:390px;max-height:844px}
+.scroll{min-width:0;touch-action:pan-y;overscroll-behavior:contain}
+.rail{min-width:0;touch-action:pan-x pan-y;scroll-snap-type:x proximity;scroll-padding-inline:1px}
+.bundle{scroll-snap-align:start}
+.hero-copy h1{white-space:normal;overflow-wrap:normal;font-size:clamp(17px,4.7vw,23px);line-height:1.13}
+.hero-copy p{white-space:normal;line-height:1.25;font-size:clamp(10px,2.8vw,11px)}
+.hero-history{min-width:67px;min-height:38px}
+.sheet{width:100%;overscroll-behavior:contain}
+.sheet-title-row{min-width:0}
+.sheet-title-row h2{font-size:clamp(18px,5.2vw,21px);line-height:1.2}
+.history-actions{min-width:0}.history-actions .activate{width:auto;flex:0 1 132px;min-width:100px}
+@media(max-width:600px){.phone{width:100%;height:100dvh;max-width:none;max-height:none}.scroll{padding-left:clamp(12px,4vw,16px);padding-right:clamp(12px,4vw,16px);padding-top:max(12px,env(safe-area-inset-top,0px))}.bottom{bottom:calc(8px + env(safe-area-inset-bottom,0px))}}
+@media(max-width:360px){.hero{gap:5px}.hero-history{min-width:36px;width:36px;height:36px;padding:0;border-radius:50%}.hero-history span{display:none}.hero-copy h1{font-size:18px}.hero-copy p{font-size:10px}.tools{gap:5px}.tool{width:37px;height:37px}.logo{font-size:29px}.logo::before{font-size:26px}.bundle{flex-basis:156px;width:156px}.bottom{left:6px;right:6px;height:72px}.brand-button{width:69px;height:69px;font-size:15px}.nav{font-size:9px}}
+@media(max-height:650px){.sheet{max-height:88%}.bottom{height:67px}.brand-button{width:67px;height:67px;top:-7px}}
+@media(min-width:601px){.phone{height:min(844px,calc(100dvh - 44px))}}
+
 </style>
 </head>
 <body>
@@ -102,12 +142,22 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
   <div class="scroll">
     <header class="top">
       <div class="logo">zain</div>
-      <div class="tools"><div class="tool">▣</div><div class="tool bell">♧</div><div class="tool">☼</div></div>
+      <div class="tools">
+        <button class="tool bell" aria-label="Notifications" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 16.5h9l-1.2-1.9v-3.2a3.3 3.3 0 0 0-6.6 0v3.2z"></path><path d="M10 18.2a2.3 2.3 0 0 0 4 0"></path></svg>
+        </button>
+        <button class="tool theme" aria-label="Theme" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.8v2.1M12 19.1v2.1M21.2 12h-2.1M4.9 12H2.8M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5M18.6 18.6l-1.5-1.5M6.9 6.9 5.4 5.4"></path></svg>
+        </button>
+      </div>
     </header>
 
     <div class="hero">
-      <h1>Bundles &amp; Services</h1>
-      <p>Choose the right bundle for you</p>
+      <div class="hero-copy"><h1>Bundles &amp; Services</h1><p>Choose the right bundle for you</p></div>
+      <button class="hero-history" id="history-btn" type="button" aria-label="View bundle history" title="Bundle history">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v4.7l3.2 2.2"/></svg>
+        <span>History</span>
+      </button>
     </div>
 
     <div class="filters" id="filters">
@@ -132,11 +182,20 @@ html,body{height:100%}body{margin:0;background:#e4efea;color:var(--ink);font:500
   <div class="modal-overlay" id="overlay">
     <div class="sheet" role="dialog" aria-modal="true">
       <div class="sheet-head"><span id="sheet-category" class="eyebrow" style="color:#008e9a"></span><button class="close" id="close" aria-label="Close">×</button></div>
-      <h2 id="sheet-title"></h2>
+      <div class="sheet-title-row"><h2 id="sheet-title"></h2><button class="share-icon-btn" id="share-bundle" type="button" aria-label="Share bundle" title="Share bundle"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="5" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m7.7 10.7 7.6-4.2M7.7 13.4l7.6 4.2"/></svg></button></div>
       <div id="sheet-description" class="sheet-validity"></div><div id="sheet-active" class="sheet-active" hidden>✓ Active on your line</div>
+      <p id="sheet-expiry" class="sheet-expiry" hidden></p>
       <ul class="sheet-list" id="sheet-list"></ul>
       <div id="renewal-row" class="renewal-row" hidden><div><strong>Auto Renewal</strong><small id="renewal-desc"></small></div><button id="renewal-stop" type="button" class="stop-renewal">Turn off</button></div><div class="sheet-price" id="sheet-price"></div>
       <button class="confirm" id="confirm">Activate Bundle</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="history-overlay">
+    <div class="sheet history-sheet" role="dialog" aria-modal="true">
+      <div class="sheet-head"><span class="eyebrow" style="color:#008e9a">Bundle History</span><button class="close" id="history-close" aria-label="Close">×</button></div>
+      <h2>Activated bundles</h2>
+      <div id="history-list" class="history-list"></div>
     </div>
   </div>
   <div class="toast" id="toast"></div>
@@ -156,8 +215,8 @@ const catalog=[
   {id:'rmonth',cat:'Roaming',period:'Monthly',name:'Global 5 GB',hint:'Global roaming',valid:'30 days',price:22000,tag:'Popular',icon:'✈',summary:['5 GB'],details:['5 GB roaming data','Eligible destinations apply','Valid for 30 days']},
 
   {id:'oday',cat:'Offers',period:'Daily',name:'Daily Social',hint:'Social access',valid:'1 day',price:900,tag:'Offer',icon:'✧',summary:['WhatsApp'],details:['Social browsing bundle','Illustrative daily offer','Valid for 1 day']},
-  {id:'oweek',cat:'Offers',period:'Weekly',name:'Flex Week',hint:'Weekly mix',valid:'7 days',price:3500,tag:'Offer',icon:'✧',summary:['Data + mins'],details:['Flexible combination bundle','Illustrative weekly offer','Valid for 7 days']},
-  {id:'omonth',cat:'Offers',period:'Monthly',name:'Mix & Match',hint:'Custom mix',valid:'30 days',price:9000,tag:'Special',icon:'✧',summary:['Data + mins'],details:['Choose data, minutes and messaging','Flexible combination (illustrative)','Valid for 30 days']},
+  {id:'oweek',cat:'Offers',period:'Weekly',name:'Flex Week',hint:'Data + Minutes + SMS',valid:'7 days',price:3500,tag:'Offer',icon:'✧',summary:['4 GB','150 min','150 SMS'],details:['4 GB internet','150 local minutes','150 SMS','Valid for 7 days']},
+  {id:'omonth',cat:'Offers',period:'Monthly',name:'Mix & Match',hint:'Data + Minutes + SMS',valid:'30 days',price:9000,tag:'Special',icon:'✧',summary:['12 GB','300 min','300 SMS'],details:['12 GB internet','300 local minutes','300 SMS','Valid for 30 days']},
   {id:'d2',cat:'Data',period:'Daily',name:'3 GB Daily',valid:'1 day',price:2200,tag:'',icon:'◉',summary:['3 GB','General internet'],details:['3 GB data','Valid for 1 day']},
   {id:'d7',cat:'Data',period:'Weekly',name:'5 GB Weekly',valid:'7 days',price:3200,tag:'',icon:'◎',summary:['5 GB','General internet'],details:['5 GB data','Valid for 7 days']},
   {id:'d25',cat:'Data',period:'Monthly',name:'25 GB Plus',valid:'30 days',price:8500,tag:'Popular',icon:'◎',summary:['25 GB','General internet'],details:['25 GB data','Valid for 30 days']},
@@ -168,24 +227,30 @@ const catalog=[
   {id:'rweek2',cat:'Roaming',period:'Weekly',name:'Europe 3 GB',valid:'7 days',price:14500,tag:'Popular',icon:'✈',summary:['3 GB','Europe'],details:['3 GB roaming','Europe zone']},
   {id:'rmonth2',cat:'Roaming',period:'Monthly',name:'Global 10 GB',valid:'30 days',price:39000,tag:'Best value',icon:'✈',summary:['10 GB','Global roaming'],details:['10 GB roaming','Selected zones']},
   {id:'oday2',cat:'Offers',period:'Daily',name:'Chat Day',valid:'1 day',price:700,tag:'',icon:'✧',summary:['Messaging','24 hours'],details:['Messaging offer','Valid for 1 day']},
-  {id:'oweek2',cat:'Offers',period:'Weekly',name:'Social Week',valid:'7 days',price:4200,tag:'Popular',icon:'✧',summary:['Social data','7 days'],details:['Social data','Valid for 7 days']},
-  {id:'omonth2',cat:'Offers',period:'Monthly',name:'Family Mix',valid:'30 days',price:16000,tag:'Best value',icon:'✧',summary:['Data + calls','Family plan'],details:['Data and minutes bundle','Valid for 30 days']}
+  {id:'oweek2',cat:'Offers',period:'Weekly',name:'Social Week',hint:'Social booster',valid:'7 days',price:4200,tag:'Popular',icon:'✧',summary:['5 GB','100 min','100 SMS'],details:['5 GB internet','100 local minutes','100 SMS','Valid for 7 days']},
+  {id:'omonth2',cat:'Offers',period:'Monthly',name:'Family Mix',hint:'Data + Minutes + SMS',valid:'30 days',price:16000,tag:'Best value',icon:'✧',summary:['25 GB','600 min','400 SMS'],details:['25 GB internet','600 local minutes','400 SMS','Valid for 30 days']}
 ];
 
 // Demonstration subscription states; no backend actions are performed.
 const states={
- cmonth:{active:true,canRepeat:true,renewalSupported:true,renewalOn:true},
- d50:{active:true,canRepeat:false,renewalSupported:true,renewalOn:false},
- oday:{active:true,canRepeat:false,renewalSupported:true,renewalOn:true},
- cweek:{active:true,canRepeat:true,renewalSupported:true,renewalOn:false}
+ cmonth:{active:true,canRepeat:true,renewalSupported:true,renewalOn:true,activeUntil:'18 Nov 2026'},
+ d50:{active:true,canRepeat:false,renewalSupported:true,renewalOn:false,activeUntil:'06 Nov 2026'},
+ oday:{active:true,canRepeat:false,renewalSupported:true,renewalOn:true,activeUntil:'27 Oct 2026'},
+ cweek:{active:true,canRepeat:true,renewalSupported:true,renewalOn:false,activeUntil:'31 Oct 2026'}
 };
-const stateFor=id=>states[id]||(states[id]={active:false,canRepeat:true,renewalSupported:true,renewalOn:false});
+const stateFor=id=>states[id]||(states[id]={active:false,canRepeat:true,renewalSupported:true,renewalOn:false,activeUntil:''});
+const activationHistory=[
+  {id:'cmonth',date:'19 Oct 2026 · 09:20 AM'},
+  {id:'d50',date:'07 Oct 2026 · 01:05 PM'},
+  {id:'oday',date:'25 Oct 2026 · 10:12 AM'},
+  {id:'cweek',date:'24 Oct 2026 · 08:40 PM'}
+];
 function buttonCopy(item){const state=stateFor(item.id);return state.active?(state.canRepeat?'Activate Again':'Already Active'):'Activate'}
 const meta={
-  Offers:{title:'Special Offers',desc:'Exclusive deals designed for you',icon:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16"/><path d="M4.5 8.5h15"/><rect x="4" y="6.5" width="16" height="4" rx="1.5"/><path d="M5 10.5v7.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7.5"/><path d="M12 6.5c-1.6 0-2.8-.8-2.8-1.9S10.2 2.8 12 6.5Z" fill="currentColor" stroke="none" opacity=".95"/><path d="M12 6.5c1.6 0 2.8-.8 2.8-1.9S13.8 2.8 12 6.5Z" fill="currentColor" stroke="none" opacity=".95"/></svg>`},
+  Offers:{title:'Special Offers',desc:'Exclusive deals designed for you',icon:`<img src="data:image/png;base64,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" alt="" />`},
   Data:{title:'Data',desc:'Stay connected with the internet',icon:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5C7.5 5.6 16.5 5.6 21 9.5"/><path d="M6.2 13c3.1-2.6 8.5-2.6 11.6 0"/><path d="M9.8 16.4c1.4-1 3-1 4.4 0"/><circle cx="12" cy="19.1" r="1.35" fill="currentColor" stroke="none"/></svg>`},
-  Combo:{title:'Combo',desc:'Calls + Data + SMS',icon:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5.5h5.8a1.6 1.6 0 0 1 1.6 1.6v7.2a1.6 1.6 0 0 1-1.6 1.6H7a1.6 1.6 0 0 1-1.6-1.6V7.1A1.6 1.6 0 0 1 7 5.5Z"/><path d="M9 13.3h1.8"/><path d="M9.2 8.5h4"/><path d="M17.2 9.2h2.2a1.2 1.2 0 0 1 1.2 1.2v3.2a1.2 1.2 0 0 1-1.2 1.2h-1.2l-2 1.8v-1.8h-1.6"/></svg>`},
-  Roaming:{title:'Roaming',desc:'Stay connected wherever you go',icon:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 5 10.7 13.1"/><path d="m21 5-4.4 14.2-3.3-6-6-3.3L21 5Z" fill="currentColor" stroke="none"/><path d="M8.4 11.3 13 14" opacity=".0"/></svg>`}
+  Combo:{title:'Combo',desc:'Calls + Data + SMS',icon:`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.8" y="4" width="7.1" height="4.5" rx="1.6"/><rect x="13.1" y="3.8" width="7.1" height="8.6" rx="2.2"/><rect x="3.8" y="10.8" width="7.1" height="9.4" rx="2.2"/><rect x="13.1" y="15.1" width="7.1" height="4.2" rx="1.5"/></svg>`},
+  Roaming:{title:'Roaming',desc:'Stay connected wherever you go',icon:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.9 14 9.2 21 12.7 21 15.3 13.7 13.8 13.5 19 16 21 16 22 12 21 8 22 8 21 10.5 19 10.3 13.8 3 15.3 3 12.7 10 9.2Z" transform="rotate(30 12 12)" fill="currentColor" stroke="none"/></svg>`}
 };
 
 let filter='All', selected=null, timer;
@@ -193,7 +258,7 @@ const sections=document.getElementById('sections');
 const fmt=n=>'SYR '+n.toLocaleString('en-US');
 
 function summaryText(item){
-  if(item.cat==='Combo') return `${item.summary[1]} + ${item.summary[0]} + ${item.summary[2]}`;
+  if(item.summary.length>=3) return `${item.summary[1]} + ${item.summary[0]} + ${item.summary[2]}`;
   if(item.cat==='Data') return `${item.summary[0]} internet`;
   if(item.cat==='Roaming') return `${item.summary[0]} roaming data`;
   return `${item.summary[0]}`;
@@ -206,12 +271,19 @@ function detailMarkup(item){
 function headerArt(cat){
   const icons={
     Data:'<path d="M11 32a31 31 0 0 1 42 0"/><path d="M18 40a22 22 0 0 1 28 0"/><path d="M26 48a11 11 0 0 1 12 0"/><circle cx="32" cy="55" r="2" fill="currentColor" stroke="none"/>',
-    Combo:'<path d="M17 11c4-2 8-1 10 2l5 8-5 6c3 6 7 10 13 13l6-5 8 5c3 2 4 6 2 10-2 5-7 7-13 6C23 52 12 41 8 21c-1-5 2-9 9-10z"/><path d="M36 11a19 19 0 0 1 17 17"/><path d="M39 18a11 11 0 0 1 7 8"/>',
-    Roaming:'<circle cx="32" cy="32" r="25"/><path d="M7 32h50M32 7c-11 12-11 38 0 50M32 7c11 12 11 38 0 50M13 20h38M13 44h38"/><path d="m43 20 10-6-3 11"/>',
-    Offers:'<rect x="11" y="23" width="42" height="32" rx="4"/><path d="M32 23v32M11 34h42"/><path d="M32 23C15 21 15 7 23 8c7 0 9 15 9 15ZM32 23C49 21 49 7 41 8c-7 0-9 15-9 15Z"/>'
+    Combo:'<rect x="10" y="12" width="16" height="10" rx="3.8"/><rect x="31" y="11" width="16" height="19" rx="4.7"/><rect x="10" y="27" width="16" height="21" rx="4.7"/><rect x="31" y="36" width="16" height="9" rx="3.4"/>',
+    Roaming:'<path d="M32 4 37.5 24 56 33 56 40 36 36 36 52 42 57 42 59 32 56 22 59 22 57 28 52 28 36 8 40 8 33 26.5 24Z" transform="rotate(30 32 32)" fill="currentColor" stroke="none"/>',
+    Offers:'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcgAAAHICAYAAADKoXrqAAARPklEQVR42u3dv3Mb55nA8QcczlDCHwCVV6XzVemkQXFUY7uir4krpUuqUJXcXZWrxIq86tzZzTnNmZWohmowZpfO+QeuE3rDYYUrCMgUCJAgtcD7vLufz0wmM07MBd798d13sVj03k5/CapwEBFPI+LVPf6df0bERUQ8N3ywkX3yLxGxb59sp55ApnV+zx3vPt7ZQcE+iUDWZFpqOzD0kGaf/GdEPDb05e0YguJ+ne2E08IHgensDBlEsew++cg+aQZpJ0y+bVhF2Cftk2aQlDg7reV1fm6V0WLnFe6TbMmuIXB2eoez2X/7XAT7Y67XbkZpBtmaM9TaPTKrpCVhnLbovdgXBbLqDXi/he/rzM5JhSep0xbviwikWWPSnfNXq5zEs8X9jrxXJ6wCadaYkMuvZPF5dPdmlrPwtRCBTB7HrnP5lRLmV23OOj4O+45DApn1rJWboTQubPqktItXbZysC2Q1cTwzDGsdxMwqafKEVAREUiDFsXWzSqHkIVxGFcmt8qAAcSwVyjlfdsZBfvPjZz8zgyx2kOfTdt5pRPxbR97vX+Pjh2Hf5z/vZ/9+18YJJxlFeFi5jS2bLyLibUvey0FE/LjhZbTtdwQ3+ZuLmEkKpDjamTt8gK/1BMN+tR2eqXwPLrHaibOPdy039WT5usH8RqgavjD+OlxG3bZH4SY5M8gNcFNOeRlnRzUc3LPNxF1GtU0IpNkjLd7Bp8bMPmQfajeXWO3YNa+TEpdfa74kWOK1t/mXNGr32hAI5KdyvT63+Wdum97Z2/QLLds4sZiPl0upeb0yBHdMsV1iNXts43ZtGzBWFNsGzCDNHkl+UtPELKkLv+vZ5DiJI2aQZo9U5igivrHub/WQO4TdjWoWKZAdZefv7oGgqydG636J3ImjQHaCS6yriWN7rwrcdlmxywf/R7e8f5dR279fIJBr8dlj+y174oyDxM1xcDcq3Z1Wu8TqbAog2vfgezPIjjuKq88Orv/nyLBAMV8t2SffVfLaXSUwg7zTr3H1WUxbzvDMhsE+uXYTrFIzyNs8SroT9uJhlz/mZ7FfWbXQaEg+dZ/MyAm1QFa3IzbxucCpUEJjYWzqb9kfBbIa5wl3xqadJj+DhWzebXCfObUvCmQtMn1I3dvSMnpx9RQVYPn+8bwl+/u6/teqF8jsO+Y2vQ2XeyDi6mlCpa6wZImk44BAiuMSp+HyK93042y7f9zh/R+BXCnDj4dmOnNz9ytdOSHtRcS/J5vFkmHj8D3IDzJ8/zHz2ePB7CwbarfuQ9lLKv11CzNZM8iPlI5j9htlTq+dbTvDpUbzu1EfV/JaS3ptczGDdMZmVkkHjnOOSWaRZpD1qnVGNp9V+pySrLNFlwoRyMo9rvz1n4bLr+QKo1+lQCBJGXuzSrZtm1/q3xb7kEDSUqdCyZZmi70W70MIJB0Ipcuvyy37Tc8af0uwRBhdRmWjdg0BWzT/rPUgun33631+Q/D6/6/rP0XkhhvMIOnUrNLM536B6OqYiSMCSSdnBV24lNjkJcEufLbrMioCCTPPW3zg39TvCLZ1rISRHBujJ+l8UPLzHZeP8q2TmtZt7eN0n89k7QOOS2aQEPVfft3WAabWH7w+MlvEDNKZmjO1ZhxEPXe/bnudnkfEvrFxXLKezCDpptNwR+Mq2Wdh7kZFIGGLZ7e9pDPKUhHIeKn1P8NlVGo9yLjE+oFLGXU7SBLL0j/Gm+WGHdu045IZJCRxGjkeZ1f6l1lK39DkMioCCUk96vj7L30p88AmiEACizyMHQQSWOK/DEH8xRAgkMCibwwBCCQACCQACCQAIJDQoANDAAIJ3PQ/hiD+bggQSGDRI0MQF4YAgQQyel14+adWAQIJOZV+Ful54eW/sgmAQMIypZ9mU/JHiz+3+kEgYZXTBK+hVKjOrH4QSMisRKjMHkEgoQrb/qHbDLPHI6sdgYTcsvzs1LZu2Jkmeb8e1o5AQnKPk7yO/dj81y6mVjdsRu/t9BejUP5A0zP8rQ9Hz3vEcckMElh+oGvqRpq/JozjV1YxZpDO1Jyp1eEgIn7Mut+1aNZoG3ZcMoOEypwmP+hNY/3PJ8+v/TtAi2eQf4qrS0QREYPF/3EY/RjFpNEFrvM3h9EvthJGMWn8fZcax2x/r+R6vc/6z7ZNNvH6u7wtNvU3Sx+XEq2XcUT8EBH/iIhv2xLI44g4rGVHB6Aeo5iMI+JJTYEURQCqj2WTgTweRv/QagKgcCwbucFot4G/8XoYfT+xA0AKw+hPmwjlpwZy6lIqAFlDObvJ50GhfOjXPI6H0RdHALJH8sOMchuBnPqsEYDaZpMR8eY+/869btJ5aIUBIIt1P5tcewYpjgC0xFo9WyuQ4ghAW8zun7mza+sEUhwB6Fwk7wqkO1UBaHMkXzwkkC/EEYCWR/K7Vf/byrtYfe4IQFcsu7N11QxSHAHokjdrBdKlVQC6ZBj9L+4MpEurAHTU9LZAvjA+AHR0Frl6Bnnb3TwA0KVZ5I6xAICbs8jrgXxvaAAgjj8K5DD6A2MCAHG4OIMEgM6bX2adB9LlVQC4ZmdWS5dXAeA3711iBYCbBgIJAAuG0Y+diHhqKADgYzsR8QfDAAA3AwkALNiNiN+VfAHLfqQSACLiD8Po/1ByBvn7gnE8sf4BWOFvo5gUW7hLrAAgkAAgkAAgkADQdCDHBZd/aRUAsMr1HzAuEciSDyrfs/oBWMVdrACQjEACgEACgEACgEACgEACgEACgEACgEACgEACgEACgEACgEACgEACgEACAAIJAAIJAAIJAI0Eclxw+ZdWAQCrDKNfNJCDgu99z+oHYJVRTIoGEgAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSABAIAFAIAFAIAFAIAFAIAFgS4EcF1z+pVUAwCrD6BcN5KDge9+z+gFYZRSTooEEAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSABBIABBIABBIAKg6kJ9ZBQBktBsR7yLi6xILH0Z/fxSTaUT8/NDADqMfERGjmPxsdQLkMIz+Z7NjczRxjC8VyHHhQWxkJjlfGQCkCmUjx/gSdiLi71YhANwM5PeGAQBuBhIAEEgAuN0oJleBnN1lBABceTefQZ4ZCwD44Pk8kF8aCwD4jc8gAeCa+ceOO4v/AAA67tniDLJnTAAgLhYDaRYJQKeNYvLh8auLn0GaRQLQZU9WBdIsEoDOzx6XBtIsEoCuzx5XBdIsEoCuzR6fLf6zVd+DNIsEoCtxjJjdubpOIJfWFABaaOmk8LYn6VyMYnJi3ABo8exx5WSw93b6y13//nQYfaMIQNvieOvHies8i7Xnph0AWhbHP9/1/1n3YeUiCUCb4vhtU4EUSQDaEMc/rhPH+wZyHsk/GmIAKozjs4j4fu3grXGTzjJPh9H/yXADUEEYIx7w/f6H/mDyxSgmvcXn1gFAsjiexAMffvPQGeQiXwUBIFMYx7HwbNX72m3otfRGMXkaET8JJQA1h7HpGeSi82H0960qALYQxYiIk4h42eTf3VQgrzuOiEMzSwAajuJGf1hjG4G8K54xjP5hwUF+yPNmLyNir+GX0vTf7OJrtF68Z6+x2b9ZbHIzC+BRRHxTqg+7UdZ8OnyY4DUAsCSShZY7LhnHiId/zQMAWk0gAUAgAUAgAUAgAUAgAUAgAUAgAUAgAUjtsuCyi/+cokACsMpewWUPBBIAEhJIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIAEAgAUAgAUAgAUAgAdiYy4LLHgskAFntFVz2QCABICGBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBAAEEgAEEgAEEgAEEgAEEoBtuiy47LFAApDVXsFlDwQSABISSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSAAQSABAIAFAIAFAIAFAIAHYmMuCyx4LJABZ7RVc9kAgASAhgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQAgQQABBIABBIABBIABBIABBKAbbosuOyxQAKQ1V7BZQ8EEgASEkgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAEEgAQCABQCABQCABQCAB2JjLgsseCyQAWe0VXPZAIAEgIYEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAIEEAAQSAAQSAAQSAAQSgI25LLjssUACkNVewWUPBBIAEhJIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIABBIAEAgAUAgAUAgAUAgAUAgAdimy4LLHgskAFntFVz2QCABICGBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBACBBAAEEgAEEgAEEgAEEoCNuSy47LFAApDVXsFlDwQSABISSAAQSAAQSAAQSAAQSAAQSAAQSADy+J1AAsBNvy+47B8EEoCsBl1+8ykCOYpJycUf2wcAMIO86WtDAHDTMPolF/9SIK+UfGr7wG4AQNZAFvswtvAZEkBWLwQyh7/ZFgFSORLIHC4KL9+NOgDXDKPf+Y+f3KRz5dAQAORQ+JsNArlwpmQQAH7zpvDy3wlkrjOGc/sEQMQw+l8Ufgkp7kvJNIM8KrxB7NstAFL4ViA/9k2C1+BmHaDrs8epUcgXyAwbhpt1AArKcoNOukAmGRizSMDssZw/C+RyJ2aRAJ32bZYXki2QL5O8DtfgAbPHjvMZ5PINJcJzCIHuSBHHUUzeZRqUdIEcxeTnJJH8zj4DdMCbRA9LeS6Qt/vXRDNJlxyAVkvwUIC0Ul5izXSbr0gCLY5jmuPbKCYn2cYn62eQ2QZKJAFx3KyX2cYoayBfJtuQRBIQx83NHlOOU9q7WLMN2DD6LrcC4rgZzwTyfno2LoDGvEl8/LoQyJZMu2cb2Xv7G1CJada7VUcxeZZ10LI/KKCX9YUNoz8wmwSSOx5Gf5r8R+Evsr6w3tvpLzWc+aR+gbOZbs++CCQ6iU9/Aj+bPaYNZA2PmutVsCHON0YzSiDDjLGWY9FF5hdXwwyyilnkkjOjk0j4vR6glWo8RqaePdYUyKrvHh3FZBwR/xGJfsYFqHumGBGHtUXx2jExooKrg9UEMiJeD6P/qo1bepYHtAOpfFZrANc45lVxz0ZNgfQdRID64ziOiCc1vNadygbWnaIAdXtSywut7geTRzE5s30BVDl7fFbT692pcIy/zPqEHQBWxvEkkt+12oZARvhSPkBNcYyo8GtvOxUP+DObHYBJjUDedDG7GwoAkxmBXPDE55EAqeN4Uevr32nBOuiJJEC6OJ7VHMe2BDLCTTsAmeIYEfFl7e9jp0UrRCQBcsSxFcfjnZatGJEEKKs1x+Gdtq0ZkQQoM3Ns2/F3p6UrSiQBtnfM/b9o4b0gOy1eYe5uBdj8sfYkIv6lje9tp+XrTiQBNhfHZ1HhI+QE8uNIfm1TBmg0jr2o/HuOd8ajph9M/kRPh9H/yWYN8ElhjOjId893OrReL3wuCfBJcTyJDj2YZbeD67g3ionZJIBZoxnkqtmkzR7gzjgeRUcf57nb8RXfC59NApg1LtGlm3Tu8qdh9P/bMADC6AcgBHK598PoDwwD0ME4Vv37jQK5PcfD6B8aBsCMUSBZzmeUgDAKJHc4H0Z/3zAAFUfxJFr8eDiBFEsAURTIKryIiO+G0TcSQIYgjiPiidEQyKyOI+IwIkI4gQ3H8FVEfG9EBLKNIY2IuIyIvQb/btN/r4bX2MX3bL20+zW6LFrQ/wPa4Le/VYbh+gAAAABJRU5ErkJggg==" alt="" />'
   };
+  if(cat==='Offers'){
+    return `<span class="cover-art cover-art-gift" aria-hidden="true">${icons.Offers}</span>`;
+  }
   return `<span class="cover-art" aria-hidden="true"><svg viewBox="0 0 64 64">${icons[cat]||icons.Data}</svg></span>`;
 }
+
+function parseDays(valid){const m=String(valid).match(/(\d+)/);return m?parseInt(m[1],10):0}
+function dateAfter(days){const d=new Date(Date.UTC(2026,9,26,12,0,0));d.setUTCDate(d.getUTCDate()+days);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'})}
+function stampNow(){return new Date(Date.UTC(2026,9,26,12,0,0)).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'UTC'})}
 
 function render(){
   sections.innerHTML='';
@@ -249,8 +321,7 @@ function render(){
         </div>
         <div class="card-body">
           ${detailMarkup(item)}
-          <div class="validity"><span class="period-pill">${item.period}</span><span aria-hidden="true">▦</span> ${item.valid}</div>
-          <div class="purchase-row"><div class="price">Price <b>${fmt(item.price)}</b></div><button class="activate ${stateFor(item.id).active&&!stateFor(item.id).canRepeat?'unavailable':''}" aria-disabled="${stateFor(item.id).active&&!stateFor(item.id).canRepeat}" data-id="${item.id}">${buttonCopy(item)} <span aria-hidden="true">›</span></button></div>
+          <div class="purchase-row"><div class="price">Price <b>${fmt(item.price)}</b></div><button class="activate ${stateFor(item.id).active&&!stateFor(item.id).canRepeat?'unavailable':''}" aria-disabled="false" data-id="${item.id}">${buttonCopy(item)} <span aria-hidden="true">›</span></button></div>
         </div>`;
       rail.append(card);
     }
@@ -270,25 +341,42 @@ function toast(text){
   timer=setTimeout(()=>el.classList.remove('show'),2400);
 }
 
-sections.addEventListener('click',e=>{
-  const btn=e.target.closest('[data-id]');
-  if(!btn) return;
-  selected=catalog.find(x=>x.id===btn.dataset.id);
+function openBundle(itemId){
+  selected=catalog.find(x=>x.id===itemId);
+  if(!selected) return;
   document.getElementById('sheet-category').textContent=selected.cat+' · '+selected.period;
   document.getElementById('sheet-title').textContent=selected.name;
   document.getElementById('sheet-description').textContent=`▦ ${selected.valid}`;
   document.getElementById('sheet-list').innerHTML=selected.details.filter(t=>!/^valid for /i.test(t)).map(t=>`<li>${t}</li>`).join('');
   const state=stateFor(selected.id);
   document.getElementById('sheet-active').hidden=!state.active;
-  document.getElementById('renewal-row').hidden=false;
-  document.getElementById('renewal-desc').textContent=state.active ? (state.renewalOn ? 'Enabled · renews at expiry' : 'Off · auto renewal available') : 'Off · available after activation';
-  document.getElementById('renewal-stop').hidden=!(state.active && state.renewalOn);
+  document.getElementById('sheet-expiry').hidden=!state.active;
+  document.getElementById('sheet-expiry').innerHTML=state.active ? `<strong>Valid until</strong> ${state.activeUntil||dateAfter(parseDays(selected.valid))}` : '';
+  document.getElementById('renewal-row').hidden=!state.active;
+  document.getElementById('renewal-desc').textContent=state.renewalOn ? 'Enabled · renews at expiry' : 'Off · auto renewal available';
+  document.getElementById('renewal-stop').hidden=!state.renewalOn;
   const confirm=document.getElementById('confirm');
   confirm.textContent=buttonCopy(selected);
   confirm.classList.toggle('unavailable',state.active&&!state.canRepeat);
-  confirm.setAttribute('aria-disabled',String(state.active&&!state.canRepeat));
+  confirm.setAttribute('aria-disabled','false');
   document.getElementById('sheet-price').textContent=fmt(selected.price);
   document.getElementById('overlay').classList.add('show');
+}
+
+function renderHistory(){
+  const holder=document.getElementById('history-list');
+  if(!activationHistory.length){holder.innerHTML='<div class="history-empty">No bundle activations yet.</div>';return;}
+  holder.innerHTML=activationHistory.slice().reverse().map(entry=>{
+    const item=catalog.find(x=>x.id===entry.id); if(!item) return '';
+    const state=stateFor(item.id);
+    return `<div class="history-item"><div class="history-top"><div><div class="history-title">${item.name}</div><div class="history-meta">${item.cat} · ${item.period}</div></div>${state.active?'<span class="tag tag-active">✓ Active</span>':''}</div><div class="history-info">Activated on ${entry.date}<br>${summaryText(item)}</div><div class="history-actions"><div class="history-price">${fmt(item.price)}</div><button class="activate ${state.active&&!state.canRepeat?'unavailable':''}" aria-disabled="false" data-history-id="${item.id}">${buttonCopy(item)} <span aria-hidden="true">›</span></button></div></div>`;
+  }).join('');
+}
+
+sections.addEventListener('click',e=>{
+  const btn=e.target.closest('[data-id]');
+  if(!btn) return;
+  openBundle(btn.dataset.id);
 });
 
 document.getElementById('filters').addEventListener('click',e=>{
@@ -299,6 +387,24 @@ document.getElementById('filters').addEventListener('click',e=>{
   render();
 });
 
+document.getElementById('history-btn').onclick=()=>{renderHistory();document.getElementById('history-overlay').classList.add('show')};
+document.getElementById('history-close').onclick=()=>document.getElementById('history-overlay').classList.remove('show');
+document.getElementById('history-overlay').addEventListener('click',e=>{if(e.target.id==='history-overlay')e.currentTarget.classList.remove('show')});
+document.getElementById('history-list').addEventListener('click',e=>{
+  const btn=e.target.closest('[data-history-id]');
+  if(!btn) return;
+  const item=catalog.find(x=>x.id===btn.dataset.historyId); if(!item) return;
+  const state=stateFor(item.id);
+  if(state.active&&!state.canRepeat){toast('This bundle can only be activated once.');return;}
+  const again=state.active;
+  state.active=true;
+  state.activeUntil=dateAfter(parseDays(item.valid));
+  activationHistory.push({id:item.id,date:stampNow()});
+  renderHistory();
+  render();
+  toast(again?'Bundle activated again':'Bundle activated');
+});
+
 document.getElementById('close').onclick=()=>document.getElementById('overlay').classList.remove('show');
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')e.currentTarget.classList.remove('show')});
 document.getElementById('renewal-stop').onclick=()=>{
@@ -307,7 +413,12 @@ document.getElementById('renewal-stop').onclick=()=>{
   state.renewalOn=false;
   document.getElementById('renewal-desc').textContent='Off · no automatic renewal';
   document.getElementById('renewal-stop').hidden=true;
+  render();
+  renderHistory();
   toast('Auto renewal turned off');
+};
+document.getElementById('share-bundle').onclick=()=>{
+  toast('Bundle shared successfully');
 };
 document.getElementById('confirm').onclick=()=>{
   if(!selected)return;
@@ -315,8 +426,11 @@ document.getElementById('confirm').onclick=()=>{
   if(state.active&&!state.canRepeat){toast('This bundle can only be activated once.');return;}
   const again=state.active;
   state.active=true;
+  state.activeUntil=dateAfter(parseDays(selected.valid));
+  activationHistory.push({id:selected.id,date:stampNow()});
   document.getElementById('overlay').classList.remove('show');
   render();
+  renderHistory();
   toast(again?'Bundle activated again':'Bundle activated');
 };
 document.querySelectorAll('[data-nav]').forEach(el=>el.onclick=()=>{if(el.dataset.nav!=='Bundles') toast('Demo: '+el.dataset.nav)});
