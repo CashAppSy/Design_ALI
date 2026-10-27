@@ -150,6 +150,13 @@ html{-webkit-text-size-adjust:100%}
 .hero-history{background:rgba(255,255,255,.27)!important;border:1.5px solid rgba(13,100,113,.42)!important;box-shadow:none!important;backdrop-filter:none!important;color:#125c6d!important;padding:0 12px!important;border-radius:22px!important;min-height:38px!important}
 .hero-history:focus-visible{outline:2px solid #188f9b!important;outline-offset:3px}
 @media(max-width:360px){.hero-history{padding:0!important;width:38px!important;min-width:38px!important}}
+
+/* V41: a single solid brand color for every bundle card header. */
+.bundle .cover,
+.bundle.combo .cover,
+.bundle.roaming .cover,
+.bundle.offer .cover { background: #18AAB5 !important; background-image: none !important; }
+.bundle .cover::before { display: none; }
 </style>
 </head>
 <body>
