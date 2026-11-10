@@ -405,9 +405,10 @@ input{caret-color:var(--btn-bg)}
 .bundle.card .bhero .p.bhero-long{font-size:22px}
 .bundle .bp .u{font-size:12px;line-height:1.2;margin-top:2px}
 .bundle .bt .t{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;line-height:1.25}
-.bundle .bmeta{display:flex;align-items:baseline;gap:8px;color:var(--ink-soft);font-size:17px;line-height:1.4;white-space:nowrap}
+.bundle .bmeta{display:grid;grid-template-columns:minmax(0,1.4fr) 1px minmax(0,1fr);align-items:baseline;column-gap:8px;text-align:start;color:var(--ink-soft);font-size:17px;line-height:1.4;white-space:nowrap}
+.bundle .bmeta > [aria-hidden]{justify-self:center}
 .bundle .bmeta .bprice{min-width:0;overflow:hidden;text-overflow:ellipsis;font-weight:400;color:inherit}
-.bundle .bmeta .bvalid{overflow:hidden;text-overflow:ellipsis}
+.bundle .bmeta .bvalid{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .bundle .bt .d{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
 .bprice{font-weight:800;color:var(--ink)}
 .bpill-auto{border:1px solid rgba(255,255,255,.45)}
