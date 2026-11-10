@@ -405,10 +405,11 @@ input{caret-color:var(--btn-bg)}
 .bundle.card .bhero .p.bhero-long{font-size:22px}
 .bundle .bp .u{font-size:12px;line-height:1.2;margin-top:2px}
 .bundle .bt .t{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;line-height:1.25}
-.bundle .bmeta{display:grid;grid-template-columns:minmax(0,1.4fr) 1px minmax(0,1fr);align-items:baseline;column-gap:8px;text-align:start;color:var(--ink-soft);font-size:17px;line-height:1.4;white-space:nowrap}
+.bundle .bmeta{display:grid;grid-template-columns:94px 1px minmax(0,1fr);align-items:baseline;column-gap:5px;text-align:start;color:var(--ink-soft);font-size:17px;line-height:1.4;white-space:nowrap}
 .bundle .bmeta > [aria-hidden]{justify-self:center}
-.bundle .bmeta .bprice{min-width:0;overflow:hidden;text-overflow:ellipsis;font-weight:400;color:inherit}
+.bundle .bmeta .bprice{min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:end;font-weight:400;color:inherit;font-variant-numeric:tabular-nums}
 .bundle .bmeta .bvalid{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.bundle .bmeta .bunit{font-size:12px}
 .bundle .bt .d{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
 .bprice{font-weight:800;color:var(--ink)}
 .bpill-auto{border:1px solid rgba(255,255,255,.45)}
@@ -6727,12 +6728,13 @@ function renderWorldStrip() {
 }
 function bBand(bd) { const h = bd.hours || 720; return h < 168 ? 'daily' : h < 672 ? 'weekly' : 'monthly'; }
 function bPrice(bd) { return parseInt(String(bd.p).replace(/\D/g, ''), 10) || 0; }
-function bValidLabel(bd) {
-  if (bd.cyc) return LANG === 'ar' ? 'لكل دورة فوترة' : 'per billing cycle';
+function bValidLabel(bd, compactUnits = false) {
+  const unit = text => compactUnits ? '<span class="bunit">' + text + '</span>' : text;
+  if (bd.cyc) return unit(LANG === 'ar' ? 'لكل دورة فوترة' : 'per billing cycle');
   const h = bd.hours || 720;
-  if (h < 24) return fmtN(h) + ' ' + (LANG === 'ar' ? (h === 1 ? 'ساعة' : 'ساعات') : (h === 1 ? 'hour' : 'hours'));
+  if (h < 24) return fmtN(h) + ' ' + unit(LANG === 'ar' ? (h === 1 ? 'ساعة' : 'ساعات') : (h === 1 ? 'hour' : 'hours'));
   const d = Math.round(h / 24);
-  return fmtN(d) + ' ' + (LANG === 'ar' ? (d === 1 ? 'يوم' : 'أيام') : (d === 1 ? 'day' : 'days'));
+  return fmtN(d) + ' ' + unit(LANG === 'ar' ? (d === 1 ? 'يوم' : 'أيام') : (d === 1 ? 'day' : 'days'));
 }
 /* ================= v137: v4 card hero (bHeroKind/bHero/bSubline) ================= */
 /* ============================================================================
@@ -6941,11 +6943,11 @@ function bCardElement(bd, best) {
     ? `<span class="bpill-act ${autoOn ? 'bpill-auto' : 'bpill-grey'}">${T('b_activated')}${autoOn ? ' <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' : ''}</span>`
     : (bd.offer ? `<span class="bpill-act bpill-offer">${T('b_offer')}</span>` : ''); /* v47: ONE tag, top-right like the old Activated tag; Activated replaces Special offer on activation */
   if (tagHtml) b.style.marginTop = '14px';
-  const priceLabel = b4PriceNum(bd) === 0 ? (LANG === 'ar' ? 'مجاني' : 'Free') : fmtN(bd.p) + ' ' + T('syp'); /* Price and validity share the second content row. */
+  const priceLabel = b4PriceNum(bd) === 0 ? (LANG === 'ar' ? 'مجاني' : 'Free') : fmtN(bd.p) + ' <span class="bunit">' + T('syp') + '</span>'; /* Price and validity share the second content row. */
   b.innerHTML = `${tagHtml}
       <span class="bu-corner" aria-hidden="true" data-hero="${hk}" data-icon="${cornerIcon}" style="background:${cornerBg}"><img class="bu-corner-ic" alt="" src="${ZI(cornerIcon)}"></span>
       <span class="bp bhero"><span class="p num${String(hero.big).length > 8 ? ' bhero-long' : ''}">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>
-      <span class="bt"><span class="t">${B(bd.n)}</span><span class="bmeta"><span class="bprice num">${priceLabel}</span><span aria-hidden="true">|</span><span class="bvalid">${bValidLabel(bd)}</span></span><span class="d" style="display:block">${bSubline(bd)}</span></span>`;
+      <span class="bt"><span class="t">${B(bd.n)}</span><span class="bmeta"><span class="bprice num">${priceLabel}</span><span aria-hidden="true">|</span><span class="bvalid">${bValidLabel(bd, true)}</span></span><span class="d" style="display:block">${bSubline(bd)}</span></span>`;
   b.onclick = () => openBundle(bd);
   return b;
 }
