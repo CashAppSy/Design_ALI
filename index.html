@@ -395,17 +395,18 @@ input{caret-color:var(--btn-bg)}
 .bundle.card{box-shadow:0 12px 32px rgba(0,0,0,.12);padding-inline-start:56px}
 .bundle .bu-corner{border-start-start-radius:var(--r-lg)}
 /* Compact catalogue cards: allowance beside name, price/validity and benefits. */
-.bundle.card{display:grid;grid-template-columns:35% minmax(0,1fr);padding:14px 0;height:140px;min-height:140px;margin-bottom:10px;gap:0}
+.bundle.card{display:grid;grid-template-columns:40% minmax(0,1fr);padding:14px 0;height:140px;min-height:140px;margin-bottom:10px;gap:0}
 .bundle .bu-corner{top:-1px;inset-inline-start:-1px;width:56px;height:56px;border-end-end-radius:56px}
 .bundle .bu-corner img{top:10px;inset-inline-start:10px;width:24px;height:24px}
 .bundle .bhero{width:auto;min-width:0;align-self:center;display:flex;flex-direction:column;justify-content:center;padding:0 12px;text-align:center}
-.bundle .bt{align-self:center;padding-inline-end:14px}
+.bundle .bt{min-width:0;align-self:center;padding-inline:8px 14px}
 .bundle .bt .d:empty{margin-top:0}
-.bundle .bp .p{font-size:26px;line-height:1.05;font-weight:900;white-space:normal;overflow-wrap:anywhere}
+.bundle.card .bhero .p{min-width:0;max-width:100%;font-size:26px;line-height:1.05;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bundle.card .bhero .p.bhero-long{font-size:22px}
 .bundle .bp .u{font-size:12px;line-height:1.2;margin-top:2px}
 .bundle .bt .t{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;line-height:1.25}
 .bundle .bmeta{display:flex;align-items:baseline;gap:8px;color:var(--ink-soft);font-size:17px;line-height:1.4;white-space:nowrap}
-.bundle .bmeta .bprice{font-weight:400;color:inherit}
+.bundle .bmeta .bprice{min-width:0;overflow:hidden;text-overflow:ellipsis;font-weight:400;color:inherit}
 .bundle .bmeta .bvalid{overflow:hidden;text-overflow:ellipsis}
 .bundle .bt .d{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
 .bprice{font-weight:800;color:var(--ink)}
@@ -6942,7 +6943,7 @@ function bCardElement(bd, best) {
   const priceLabel = b4PriceNum(bd) === 0 ? (LANG === 'ar' ? 'مجاني' : 'Free') : fmtN(bd.p) + ' ' + T('syp'); /* Price and validity share the second content row. */
   b.innerHTML = `${tagHtml}
       <span class="bu-corner" aria-hidden="true" data-hero="${hk}" data-icon="${cornerIcon}" style="background:${cornerBg}"><img class="bu-corner-ic" alt="" src="${ZI(cornerIcon)}"></span>
-      <span class="bp bhero"><span class="p num">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>
+      <span class="bp bhero"><span class="p num${String(hero.big).length > 8 ? ' bhero-long' : ''}">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>
       <span class="bt"><span class="t">${B(bd.n)}</span><span class="bmeta"><span class="bprice num">${priceLabel}</span><span aria-hidden="true">|</span><span class="bvalid">${bValidLabel(bd)}</span></span><span class="d" style="display:block">${bSubline(bd)}</span></span>`;
   b.onclick = () => openBundle(bd);
   return b;
