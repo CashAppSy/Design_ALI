@@ -394,21 +394,18 @@ input{caret-color:var(--btn-bg)}
 .bundle .bp .u{font-size:12px}
 .bundle.card{box-shadow:0 12px 32px rgba(0,0,0,.12);padding-inline-start:56px}
 .bundle .bu-corner{border-start-start-radius:var(--r-lg)}
-/* v138 (test): bundle card redesign — price above hero, hero big+bold,
-   corner fills top-left, validity first in details, card slightly smaller */
-.bundle.card{padding-top:12px;padding-bottom:12px;padding-inline-start:66px;margin-bottom:10px;gap:12px}
-.bundle .bu-corner{width:64px;height:64px;border-end-end-radius:64px}
-.bundle .bu-corner img{top:8px;inset-inline-start:8px;width:34px;height:34px}
-.bundle .bhero{width:132px}
-.bundle .bp .bprice{display:block;font-size:15px;font-weight:800;color:var(--ink);margin-bottom:1px;white-space:nowrap}
-.bundle .bp .p{font-size:26px;line-height:1.05;font-weight:900}
-.bundle .bp .u{font-size:12px}
-.bundle .bt .d .bvalid{font-weight:800;color:var(--ink)}
-/* v139 (test): wider gap between the two text columns, card a bit shorter */
-.bundle.card{padding-top:10px;padding-bottom:10px;padding-inline-end:12px;gap:20px}
-.bundle .bhero{width:128px}
-/* v140 (test): hero colour fills the card border at the top-left only */
-.bundle .bu-corner{top:-1px;inset-inline-start:-1px}
+/* Compact catalogue cards: allowance beside name, price/validity and benefits. */
+.bundle.card{padding:14px 14px 14px 16px;min-height:110px;margin-bottom:10px;gap:18px}
+.bundle .bu-corner{top:-1px;inset-inline-start:-1px;width:56px;height:56px;border-end-end-radius:56px}
+.bundle .bu-corner img{top:10px;inset-inline-start:10px;width:24px;height:24px}
+.bundle .bhero{width:92px;align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end;padding-top:30px;text-align:center}
+.bundle .bp .p{font-size:26px;line-height:1.05;font-weight:900;white-space:normal;overflow-wrap:anywhere}
+.bundle .bp .u{font-size:12px;line-height:1.2;margin-top:2px}
+.bundle .bt .t{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;line-height:1.25}
+.bundle .bmeta{display:flex;align-items:baseline;gap:8px;color:var(--ink-soft);font-size:17px;line-height:1.4;white-space:nowrap}
+.bundle .bmeta .bprice{font-weight:400;color:inherit}
+.bundle .bmeta .bvalid{overflow:hidden;text-overflow:ellipsis}
+.bundle .bt .d{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
 .bprice{font-weight:800;color:var(--ink)}
 .bpill-auto{border:1px solid rgba(255,255,255,.45)}
 .bsec-note{font-size:var(--f-cap);color:var(--ink-soft);margin:-4px 0 0}
@@ -6887,7 +6884,7 @@ function bHero(bd) {
 function bSubline(bd) {
   var ar = LANG === 'ar';
   var hk = bHeroKind(bd);
-  var parts = ['<span class="bvalid">' + bValidLabel(bd) + '</span>']; /* v138: validity first, bold */
+  var parts = []; // Validity is displayed next to the price.
   if (bd.note) parts.push(B(bd.note));
   var kinds = bd.kinds || [];
   var seen = {};
@@ -6911,7 +6908,7 @@ function bSubline(bd) {
       if (k.kind === 'tv') parts.push(label);
       else parts.push(ar ? 'غير محدود' : 'Unlimited' + ' ' + label);
     } else {
-      parts.push(fmtN(k.cap) + ' ' + (k.uom === 'GB' ? (ar ? 'غيغا' : 'GB') : k.uom === 'min' ? (ar ? 'دقيقة' : 'min') : k.uom) + (k.kind === 'data' || k.kind === 'roaming' ? '' : ' ' + label));
+      parts.push(fmtN(k.cap) + ' ' + (k.uom === 'GB' ? (ar ? 'غيغا' : 'GB') : k.uom === 'min' ? (ar ? 'دقيقة' : 'min') : k.uom) + (['data', 'roaming', 'minutes', 'sms'].includes(k.kind) ? '' : ' ' + label));
       if (k.kind === 'data' || k.kind === 'roaming' || k.kind === 'social' || k.kind === 'night' || k.kind === 'bonus') {
         if (k.kind !== 'data' && k.kind !== 'roaming') parts[parts.length - 1] = fmtN(k.cap) + ' ' + (k.uom === 'GB' ? (ar ? 'غيغا' : 'GB') : k.uom) + ' ' + label;
       }
@@ -6940,11 +6937,11 @@ function bCardElement(bd, best) {
     ? `<span class="bpill-act ${autoOn ? 'bpill-auto' : 'bpill-grey'}">${T('b_activated')}${autoOn ? ' <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' : ''}</span>`
     : (bd.offer ? `<span class="bpill-act bpill-offer">${T('b_offer')}</span>` : ''); /* v47: ONE tag, top-right like the old Activated tag; Activated replaces Special offer on activation */
   if (tagHtml) b.style.marginTop = '14px';
-  const priceLabel = b4PriceNum(bd) === 0 ? (LANG === 'ar' ? 'مجاني' : 'Free') : fmtN(bd.p) + ' ' + T('syp'); /* v138: price above the hero */
+  const priceLabel = b4PriceNum(bd) === 0 ? (LANG === 'ar' ? 'مجاني' : 'Free') : fmtN(bd.p) + ' ' + T('syp'); /* Price and validity share the second content row. */
   b.innerHTML = `${tagHtml}
       <span class="bu-corner" aria-hidden="true" data-hero="${hk}" data-icon="${cornerIcon}" style="background:${cornerBg}"><img class="bu-corner-ic" alt="" src="${ZI(cornerIcon)}"></span>
-      <span class="bp bhero"><span class="bprice num">${priceLabel}</span><span class="p num">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>
-      <span class="bt"><span class="t">${B(bd.n)}</span><span class="d" style="display:block">${bSubline(bd)}</span></span>`;
+      <span class="bp bhero"><span class="p num">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>
+      <span class="bt"><span class="t">${B(bd.n)}</span><span class="bmeta"><span class="bprice num">${priceLabel}</span><span aria-hidden="true">|</span><span class="bvalid">${bValidLabel(bd)}</span></span><span class="d" style="display:block">${bSubline(bd)}</span></span>`;
   b.onclick = () => openBundle(bd);
   return b;
 }
