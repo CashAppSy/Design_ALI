@@ -301,7 +301,7 @@ input{caret-color:var(--btn-bg)}
 /* r4: her/dark tab headers sit directly on the light-pink gradient — white fails, dark maroon passes */
 #stage[data-world="her"][data-theme="dark"] .tabhead .micro,
 #stage[data-world="her"][data-theme="dark"] .tabhead .title{color:#4a1030}
-#home-hero .nm{font-size:24px;font-weight:800;letter-spacing:-.015em}
+#home-hero .nm{font-size:var(--greeting-size,18px);font-weight:800;letter-spacing:-.015em;white-space:nowrap}
 .ubar{margin-top:12px}
 .ubar .lbl{display:flex;justify-content:space-between;font-size:var(--f-cap);font-weight:700;margin-bottom:6px}
 .ubar .lbl .num{color:var(--ink)}
@@ -1503,6 +1503,10 @@ body.perf-lite .uc-anim .uc-slot{animation:none !important}
    ================================================================ */
 .h-idrow{display:flex;align-items:flex-start;gap:14px}
 .h-idmain{flex:1;min-width:0}
+.h-idrow.wide-greeting{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px}
+.h-idrow.wide-greeting .h-idmain{display:contents}
+.h-idrow.wide-greeting .h-bal{grid-area:1 / 2}
+.h-idrow.wide-greeting .nm{grid-column:1 / -1}
 .h-bal{flex:none;text-align:end;display:flex;flex-direction:column;gap:1px;padding-top:3px}
 .h-bal-l{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
 [dir="rtl"] .h-bal-l{letter-spacing:0}
@@ -2539,8 +2543,10 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <div class="grab" aria-hidden="true"></div>
   <p class="st" id="sh-prof-t" data-k="prof_t">Edit profile</p>
   <form id="prof-form">
-    <div class="fld"><label for="prof-in-name" data-k="mvp_first_name">First name</label><input class="in" id="prof-in-name" autocomplete="given-name" maxlength="60"></div>
-    <div class="fld"><label for="prof-in-family" data-k="mvp_family_name">Last name</label><input class="in" id="prof-in-family" autocomplete="family-name" maxlength="60"></div>
+    <div class="fld"><label for="prof-in-name" data-k="mvp_first_name">First name</label><input class="in" id="prof-in-name" autocomplete="given-name" maxlength="10" aria-describedby="prof-name-limit"></div>
+    <div class="fld"><label for="prof-in-family" data-k="mvp_family_name">Last name</label><input class="in" id="prof-in-family" autocomplete="family-name" maxlength="10" aria-describedby="prof-name-limit"></div>
+    <p class="mvp-field-help" id="prof-name-limit" data-k="mvp_name_limit">Up to 10 characters per name.</p>
+    <p class="aerr" id="prof-name-error" role="alert"><span data-k="mvp_name_limit">Up to 10 characters per name.</span></p>
     <div class="fld"><label for="prof-in-email" data-k="mvp_email">Email</label><input class="in" id="prof-in-email" type="email" autocomplete="email" maxlength="254" dir="ltr"></div>
     <p class="mvp-field-help" id="prof-email-status"></p>
     <div class="srow">
@@ -6492,6 +6498,7 @@ Object.assign(I18N.en, {
   mvp_edit_profile:"Edit profile",
   mvp_welcome:"Welcome",
   mvp_first_name:"First name",
+  mvp_name_limit:"Up to 10 characters per name.",
   mvp_family_name:"Last name",
   mvp_email:"Email",
   mvp_email_hint:"An email is optional. Confirm a new address with a code before saving it.",
@@ -6566,6 +6573,7 @@ Object.assign(I18N.ar, {
   mvp_edit_profile:"تعديل الملف الشخصي",
   mvp_welcome:"مرحباً",
   mvp_first_name:"الاسم",
+  mvp_name_limit:"الحد الأقصى 10 محارف لكل اسم.",
   mvp_family_name:"الكنية",
   mvp_email:"البريد الإلكتروني",
   mvp_email_hint:"البريد الإلكتروني اختياري. أكّد العنوان الجديد برمز قبل حفظه.",
@@ -7238,7 +7246,10 @@ function goTab(name, first) {
   const btns = [...document.querySelectorAll('#tabbar button')];
   btns.forEach(b => { const on = b.dataset.go === name; b.classList.toggle('on', on); if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
   placePill();
-  if (name === 'home') requestAnimationFrame(animBars);
+  if (name === 'home') {
+    fitHomeGreeting();
+    requestAnimationFrame(animBars);
+  }
   if (name === 'bundles') syncBundleCardSize(); /* v48 fix: tab switches don't re-render, so sync when the tab becomes visible */
   $('tabs').scrollTop = 0;
 }
@@ -8921,9 +8932,23 @@ function renderMvpProfile() {
   $('prof-name').textContent = name;
   $('home-name').textContent = name;
   $('avatar').textContent = name.charAt(0).toUpperCase();
+  fitHomeGreeting();
+}
+function fitHomeGreeting() {
+  const greeting = $('home-name').parentElement;
+  const row = greeting.closest('.h-idrow');
+  row.classList.remove('wide-greeting');
+  greeting.style.removeProperty('--greeting-size');
+  if (!greeting.clientWidth || greeting.scrollWidth <= greeting.clientWidth) return;
+  row.classList.add('wide-greeting');
+  if (greeting.scrollWidth > greeting.clientWidth) {
+    const size = parseFloat(getComputedStyle(greeting).fontSize);
+    greeting.style.setProperty('--greeting-size', Math.floor(size * greeting.clientWidth / greeting.scrollWidth) + 'px');
+  }
 }
 function openMvpProfile(reset = true) {
   const profile = mvpProfile();
+  clearErr('prof-name-error');
   if (reset) {
     $('prof-in-name').value = profile.first;
     $('prof-in-family').value = profile.family;
@@ -9016,14 +9041,23 @@ function openMvpNotifications() {
 }
 function bindProfile() {
   $('btn-edit-prof').onclick = () => openMvpProfile();
+  $('prof-form').addEventListener('input', () => clearErr('prof-name-error'));
+  document.fonts?.ready.then(fitHomeGreeting);
+  window.addEventListener('resize', fitHomeGreeting);
   $('mvp-remember-after-removal').onclick = () => $('mvp-remember-yes').click();
   $('prof-in-email').addEventListener('input', renderMvpEmailStatus);
   $('prof-form').addEventListener('submit', event => {
     event.preventDefault();
     if (!S.authed || openEl !== $('sh-profile')) return;
     const profile = mvpProfile();
-    const first = $('prof-in-name').value.trim();
-    const family = $('prof-in-family').value.trim();
+    const nameFields = [$('prof-in-name'), $('prof-in-family')];
+    const invalidName = nameFields.find(field => field.value.trim().length > field.maxLength);
+    if (invalidName) {
+      setErr('prof-name-error', 'mvp_name_limit');
+      invalidName.focus();
+      return;
+    }
+    const [first, family] = nameFields.map(field => field.value.trim());
     const email = $('prof-in-email').value.trim();
     const save = () => {
       if (!S.authed || mvpProfile() !== profile) return;
