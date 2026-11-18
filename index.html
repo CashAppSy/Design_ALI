@@ -6499,6 +6499,7 @@ function setWorld(id) {
 /* MVP authentication wording and 9-digit suffix (+963 fixed). */
 Object.assign(I18N.en, {
   mvp_edit_profile:"Edit profile",
+  mvp_customer_name:"Dear Customer",
   mvp_first_name:"First name",
   mvp_family_name:"Last name",
   mvp_email:"Email",
@@ -6570,6 +6571,7 @@ mvp_remember_demo:"Prototype only: remembered-phone recognition is simulated in 
 });
 Object.assign(I18N.ar, {
   mvp_edit_profile:"تعديل الملف الشخصي",
+  mvp_customer_name:"عميلنا العزيز",
   mvp_first_name:"الاسم",
   mvp_family_name:"الكنية",
   mvp_email:"البريد الإلكتروني",
@@ -7186,7 +7188,13 @@ showScreen = function (id) {
   }
 };
 const _applyLangAuth = applyLang;
-applyLang = function () { _applyLangAuth(); syncLangPills(); if (AUTH.otpNumber && otpVisible()) mvpOtpDestination(AUTH.otpNumber); authTick(); };
+applyLang = function () {
+  _applyLangAuth();
+  syncLangPills();
+  if (S.authed) renderMvpProfile();
+  if (AUTH.otpNumber && otpVisible()) mvpOtpDestination(AUTH.otpNumber);
+  authTick();
+};
 syncLangPills();
 
 function enterApp() {
@@ -8898,7 +8906,7 @@ function openAbout() {
 }
 function renderMvpProfile() {
   const profile = mvpProfile();
-  const name = [profile.first, profile.family].filter(Boolean).join(' ') || AUTH.number || T('mvp_edit_profile');
+  const name = [profile.first, profile.family].map(part => part.trim()).filter(Boolean).join(' ') || T('mvp_customer_name');
   $('prof-name').textContent = name;
   $('home-name').textContent = name;
   $('avatar').textContent = name[0].toUpperCase();
