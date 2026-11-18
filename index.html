@@ -707,10 +707,10 @@ img{-webkit-user-drag:none}
 .sheet .sd{font-size:var(--f-body);color:var(--ink-soft)}
 .sheet .srow{display:flex;gap:10px;margin-top:6px}
 .sheet .srow .btn{flex:1}
-.dlg{position:absolute;left:34px;right:34px;top:50%;z-index:67;
-  background:var(--glass);border:1px solid var(--glass-brd);border-radius:var(--r-xl);
+.dlg,#mvp-consent-card{background:var(--glass);border:1px solid var(--glass-brd);border-radius:var(--r-xl);
   backdrop-filter:blur(30px) saturate(160%);-webkit-backdrop-filter:blur(30px) saturate(160%);
-  box-shadow:0 24px 64px rgba(0,0,0,.3);padding:26px 24px;text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,.3);padding:26px 24px;text-align:center}
+.dlg{position:absolute;left:34px;right:34px;top:50%;z-index:67;
   display:flex;flex-direction:column;gap:10px;align-items:center;opacity:0;visibility:hidden}
 .dlg.on{opacity:1;visibility:visible;will-change:transform}
 .dlg img.zm{width:84px;height:84px;filter:drop-shadow(0 0 14px rgba(255,255,255,.5))}
@@ -1765,14 +1765,11 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 }
 
 /* Sign-in decision record v0.5 — additional MVP front-end states (prototype only) */
-#mvp-consent-card{width:min(338px,calc(100% - 32px));max-height:calc(100% - 32px);margin:auto;padding:16px;border-radius:19px;background:var(--surface,#fff);border:1px solid rgba(19,48,55,.17);color:var(--ink,#163237);box-shadow:0 12px 32px rgba(0,0,0,.2);font-family:inherit}
-#mvp-consent-card::backdrop{background:var(--scrim)}
-#mvp-consent-card .mvp-consent-title{font-size:15px;font-weight:750;line-height:1.4;margin:0 0 7px}
-#mvp-consent-card .mvp-consent-text{font-size:12px;line-height:1.6;margin:0 0 11px}
-#mvp-consent-card .mvp-consent-acts{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-#mvp-consent-card button{min-height:40px;border:0;border-radius:22px;background:#21abb3;padding:7px 18px;color:#063039;font-family:inherit;cursor:pointer}
-#mvp-consent-card .mvp-consent-link{background:none;border:1px solid currentColor;border-radius:22px;padding:7px 12px;font-size:12px}
-#mvp-consent-card .mvp-consent-proto{font-size:10px;opacity:.78;margin:10px 0 0}
+#mvp-consent-card{width:min(334px,calc(100% - 32px));max-height:calc(100% - 32px);margin:auto;color:var(--ink)}
+#mvp-consent-card[open]{display:flex;flex-direction:column;gap:10px;align-items:center}
+#mvp-consent-card::backdrop{background:var(--scrim);backdrop-filter:blur(2px) saturate(150%)}
+#mvp-consent-read{color:var(--ink-soft);font-size:var(--f-body);cursor:default}
+#mvp-consent-card .mvp-consent-proto{font-size:var(--f-cap);color:var(--ink-soft)}
 #mvp-delete-dialog[hidden]{display:none!important}
 #mvp-delete-dialog{position:absolute;inset:0;background:rgba(8,27,31,.68);display:flex;align-items:center;justify-content:center;padding:22px;z-index:1008}
 #mvp-delete-dialog .mvp-delete-box{width:100%;max-width:350px;border-radius:24px;background:#fff;color:#163237;padding:22px;box-shadow:0 15px 45px #0003;max-height:90%;overflow:auto}
@@ -2414,9 +2411,10 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- OVERLAYS -->
 <dialog id="mvp-consent-card" aria-labelledby="mvp-consent-title" aria-describedby="mvp-consent-text">
-  <p id="mvp-consent-title" class="mvp-consent-title" data-k="mvp_consent_title">Terms and privacy notice</p>
-  <p id="mvp-consent-text" class="mvp-consent-text" data-k="mvp_consent_text">By using the app you agree to our terms and privacy notice.</p>
-  <div class="mvp-consent-acts"><button id="mvp-consent-yes" type="button" data-k="mvp_consent_agree">Agree</button><button class="mvp-consent-link" id="mvp-consent-read" type="button" data-k="mvp_consent_view">View terms and privacy</button></div>
+  <p id="mvp-consent-title" class="st title" data-k="mvp_consent_title">Terms and privacy notice</p>
+  <p id="mvp-consent-text" class="sd body" data-k="mvp_consent_text">By using the app you agree to our terms and privacy notice.</p>
+  <button class="btn block" id="mvp-consent-yes" type="button" data-k="mvp_consent_agree">Agree</button>
+  <button id="mvp-consent-read" type="button" data-k="mvp_consent_view" disabled>View terms and privacy</button>
   <p class="mvp-consent-proto" data-k="mvp_consent_demo">Prototype only: final legal links and server consent records are pending.</p>
 </dialog>
 <div id="scrim"></div>
@@ -6451,7 +6449,6 @@ Object.assign(I18N.en, {
   mvp_delete_requested:"Deletion request saved in this browser only (demo).",
   mvp_idle_end:"Session expired after 15 minutes of inactivity. Sign in with a code.",
   mvp_consent_saved:"Agreement recorded in this browser only (demo).",
-  mvp_consent_legal_pending:"Official privacy notice must be connected after Legal approval.",
   mvp_signin_sub:"Sign in using your Zain mobile or ADSL number.",
   mvp_number_label:"Mobile or ADSL number",
   mvp_help_mobile:"Mobile: enter 9 digits without 0 (e.g. 944000000).",
@@ -6488,7 +6485,6 @@ Object.assign(I18N.ar, {
   mvp_delete_requested:"تم حفظ طلب تجريبي في المتصفح فقط، دون إرساله إلى زين.",
   mvp_idle_end:"انتهت الجلسة بعد 15 دقيقة دون نشاط. سجّل الدخول برمز جديد.",
   mvp_consent_saved:"تم تسجيل الموافقة في المتصفح فقط للتجربة.",
-  mvp_consent_legal_pending:"يجب ربط إشعار الخصوصية الرسمي بعد موافقة الفريق القانوني.",
   mvp_signin_sub:"سجّل الدخول باستخدام رقم الموبايل أو ADSL من زين.",
    mvp_number_label:"رقم الموبايل أو ADSL",
    mvp_help_mobile:"الموبايل: أدخل 9 أرقام دون الصفر الأول، مثال: 944000000.",
@@ -7678,10 +7674,6 @@ function closeOverlays(silent) {
   if (openEl) {
     const el = openEl; openEl = null;
     jobs.push(new Promise(res => cardOut(el, res, el.classList.contains('dd') ? { y: -14, sc: 0.94 } : {})));
-    if (el.id === 'sh-terms' && el.dataset.fromConsent) {
-      delete el.dataset.fromConsent;
-      jobs[0].then(() => { if (!openEl && S.authed) window.mvpRefreshConsent(); });
-    }
   }
   $('btn-bell').setAttribute('aria-expanded', 'false');
   const bn = $('btn-num'); if (bn) bn.setAttribute('aria-expanded', 'false');
@@ -11181,12 +11173,6 @@ renderUCard();
     try{localStorage.setItem(CONSENT_KEY, JSON.stringify(consentSession));}catch(e){}
     window.mvpRefreshConsent();toast(T('mvp_consent_saved'));
   });
-  $m('mvp-consent-read').addEventListener('click',function(){
-    $m('mvp-consent-card').close();
-    $m('sh-terms').dataset.fromConsent = 'true';
-    openTerms();
-    toast(T('mvp_consent_legal_pending'));
-  });
   window.mvpOpenDeleteProfile=function(){ $m('mvp-delete-dialog').hidden=false; };
   $m('mvp-delete-cancel').addEventListener('click',function(){ $m('mvp-delete-dialog').hidden=true; });
   $m('mvp-delete-confirm').addEventListener('click',function(){
@@ -11200,7 +11186,6 @@ renderUCard();
     if(typeof S==='undefined'||!S.authed || mvpSessionRemembered || Date.now()-mvpSessionActivityAt<15*60*1000)return;
     S.authed=false;AUTH.otpLive=false;AUTH.otpAfter=null;
     if ($m('mvp-consent-card').open) $m('mvp-consent-card').close();
-    if (openEl === $m('sh-terms') && openEl.dataset.fromConsent) closeOverlays(true);
     try{localStorage.removeItem(MVP_AUTH_KEY);}catch(e){}
     mvpSanitizePhone($m('a-num'), AUTH.number || '');
     showScreen('scr-login');toast(T('mvp_idle_end'));
