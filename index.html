@@ -6208,7 +6208,6 @@ const B4_SERVICES = [
   "link": null
  }
 ];
-const B4_SECTIONS = ["Just for you", "Recommended", "All bundles", "Plans", "Add-ons"];
 
 /* The v4 catalogue is SHARED across all worlds (no per-world catalogue).
    Every world key points at the same B4 array, so BUNDLES[S.world] is
@@ -6218,8 +6217,8 @@ const BUNDLES = { consumer: B4, business: B4, vip: B4, her: B4 };
 
 Object.assign(I18N.en, {
 b_daily:"Daily",b_weekly:"Weekly",b_monthly:"Monthly",
-b_just:"Just for you",b_recommended:"Recommended",
-b_allbundles:"All bundles",b_sec_plan:"Plans",b_sec_addon:"Add-ons",b_finder:"Find your bundle",
+b_just:"Just for you",
+b_sec_combo:"Combo",b_sec_data:"Data",b_sec_roaming:"Roaming",b_finder:"Find your bundle",
 b_finder_s:"Tell us what you need, see bundles that fit.",b_results:"Results",b_best_first:"Best match first",
 b_empty:"No bundles here yet",
 b_empty_hint:"Try another validity or clear the offers filter.",
@@ -6243,8 +6242,8 @@ f_try_band:"Try {band} ({n})",f_from_usage:"Start from my current usage",f_empty
 });
 Object.assign(I18N.ar, {
 b_daily:"يومي",b_weekly:"أسبوعي",b_monthly:"شهري",
-b_just:"مخصّص لك",b_recommended:"موصى بها",
-b_allbundles:"كل الباقات",b_sec_plan:"الخطط",b_sec_addon:"الباقات الإضافية",b_finder:"اعثر على باقتك",
+b_just:"مخصّص لك",
+b_sec_combo:"الباقات الشاملة",b_sec_data:"البيانات",b_sec_roaming:"التجوال",b_finder:"اعثر على باقتك",
 b_finder_s:"أخبرنا بما تحتاجه، وشاهد الباقات المناسبة لك.",b_results:"النتائج",b_best_first:"الأنسب أولاً",
 b_empty:"لا توجد باقات هنا بعد",
 b_empty_hint:"جرّب صلاحية أخرى أو ألغِ فلتر العروض.",
@@ -7700,6 +7699,15 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
   syncBundleCardSize();
   syncFinderCardSize();
 });
+function bundleCatalogSection(bd) {
+  if (bd.segment === 'btl' || !bd.segment) return bd.segment;
+  const kinds = bd.kinds.map(benefit => benefit.kind);
+  if (bd.roaming || kinds.includes('roaming')) return 'roaming';
+  if (kinds.includes('all')) return 'combo';
+  const dataKinds = ['data', 'social', 'night', 'bonus'];
+  if (!kinds.some(kind => dataKinds.includes(kind))) return null;
+  return bd.services?.length || kinds.some(kind => !dataKinds.includes(kind)) ? 'combo' : 'data';
+}
 function renderBundles() {
   const bands = [['all', T('all')], ['daily', T('b_daily')], ['weekly', T('b_weekly')], ['monthly', T('b_monthly')]];
   const ch = $('b-chips'); ch.innerHTML = '';
@@ -7715,7 +7723,8 @@ function renderBundles() {
   const hb = $('btn-history'); if (hb) { hb.onclick = () => openHistory(); hb.setAttribute('aria-label', T('h_title')); }
   const hs = $('h-search'); if (hs) hs.oninput = () => { S.hQuery = hs.value.trim().toLowerCase(); renderHistory(); };
   if ($('view-history')) renderHistory();
-  const all = BUNDLES[S.world];
+  const pinnedIds = S.bPinned || [];
+  const all = BUNDLES[S.world].filter(bd => bundleCatalogSection(bd) || pinnedIds.includes(bd.id));
   const filtered = all.filter(bd => (S.bFilter === 'all' || bBand(bd) === S.bFilter) && (!S.bOffers || bd.offer));
   const list = $('b-list'); list.innerHTML = '';
   if (!filtered.length) {
@@ -7744,9 +7753,13 @@ function renderBundles() {
     emp.appendChild(row);
     list.appendChild(emp);
   } else {
-    const pinnedItems = (S.bPinned || []).map(id => filtered.find(bd => bd.id === id && bd.segment !== 'btl')).filter(Boolean);
-    [['btl', T('b_just')], ['pinned', T('b_pinned')], ['foryou', T('b_recommended')], ['atl', T('b_allbundles')], ['plan', T('b_sec_plan')], ['addon', T('b_sec_addon')]].forEach(([seg, title]) => {
-      const items = seg === 'pinned' ? pinnedItems : filtered.filter(bd => bd.segment === seg && (seg === 'btl' || !(S.bPinned && S.bPinned.includes(bd.id))));
+    const pinnedItems = pinnedIds.map(id => filtered.find(bd => bd.id === id && bd.segment !== 'btl')).filter(Boolean);
+    const sections = [
+      ['btl', T('b_just')], ['pinned', T('b_pinned')], ['combo', T('b_sec_combo')],
+      ['data', T('b_sec_data')], ['roaming', T('b_sec_roaming')]
+    ];
+    sections.forEach(([seg, title]) => {
+      const items = seg === 'pinned' ? pinnedItems : filtered.filter(bd => bundleCatalogSection(bd) === seg && (seg === 'btl' || !pinnedIds.includes(bd.id)));
       if (!items.length) return;
       const collapsed = !!(S.bSecCollapsed && S.bSecCollapsed[seg]);
       const wrap = document.createElement('div'); wrap.className = 'bsec-wrap' + (collapsed ? ' collapsed' : '');
