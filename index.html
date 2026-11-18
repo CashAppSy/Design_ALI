@@ -1765,12 +1765,12 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 }
 
 /* Sign-in decision record v0.5 — additional MVP front-end states (prototype only) */
-#mvp-consent-card{margin:12px 12px 16px;padding:16px;border-radius:19px;background:var(--surface,#fff);border:1px solid rgba(19,48,55,.17);color:var(--ink,#163237);box-shadow:0 4px 16px rgba(0,0,0,.06);font-family:inherit}
-#mvp-consent-card[hidden]{display:none!important}
+#mvp-consent-card{width:min(338px,calc(100% - 32px));max-height:calc(100% - 32px);margin:auto;padding:16px;border-radius:19px;background:var(--surface,#fff);border:1px solid rgba(19,48,55,.17);color:var(--ink,#163237);box-shadow:0 12px 32px rgba(0,0,0,.2);font-family:inherit}
+#mvp-consent-card::backdrop{background:var(--scrim)}
 #mvp-consent-card .mvp-consent-title{font-size:15px;font-weight:750;line-height:1.4;margin:0 0 7px}
 #mvp-consent-card .mvp-consent-text{font-size:12px;line-height:1.6;margin:0 0 11px}
 #mvp-consent-card .mvp-consent-acts{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-#mvp-consent-card button{min-height:40px;border:0;border-radius:22px;background:#21abb3;padding:7px 18px;color:#063039;font-weight:750;font:inherit;cursor:pointer}
+#mvp-consent-card button{min-height:40px;border:0;border-radius:22px;background:#21abb3;padding:7px 18px;color:#063039;font-family:inherit;cursor:pointer}
 #mvp-consent-card .mvp-consent-link{background:none;border:1px solid currentColor;border-radius:22px;padding:7px 12px;font-size:12px}
 #mvp-consent-card .mvp-consent-proto{font-size:10px;opacity:.78;margin:10px 0 0}
 #mvp-delete-dialog[hidden]{display:none!important}
@@ -2217,12 +2217,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   </div>
 </div>
 <main id="tabs" style="flex:1;display:flex;flex-direction:column;min-height:0;position:relative;z-index:2">
-    <section id="tab-home" class="scroll" data-tab="home" aria-label="Home"><div id="mvp-consent-card" hidden aria-label="Terms and privacy notice">
-  <p class="mvp-consent-title" data-k="mvp_consent_title">Terms and privacy notice</p>
-  <p class="mvp-consent-text" data-k="mvp_consent_text">By using the app you agree to our terms and privacy notice.</p>
-  <div class="mvp-consent-acts"><button id="mvp-consent-yes" type="button" data-k="mvp_consent_agree">Agree</button><button class="mvp-consent-link" id="mvp-consent-read" type="button" data-k="mvp_consent_view">View terms and privacy</button></div>
-  <p class="mvp-consent-proto" data-k="mvp_consent_demo">Prototype only: final legal links and server consent records are pending.</p>
-</div>
+    <section id="tab-home" class="scroll" data-tab="home" aria-label="Home">
       <div class="card" id="home-hero">
         <div class="h-idrow"><div class="h-idmain"><p class="hello" data-k="hello">Your wonderful world</p>
         <p class="nm" id="home-name">Yaman Nouri</p></div>
@@ -2418,6 +2413,12 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 </section>
 
 <!-- OVERLAYS -->
+<dialog id="mvp-consent-card" aria-labelledby="mvp-consent-title" aria-describedby="mvp-consent-text">
+  <p id="mvp-consent-title" class="mvp-consent-title" data-k="mvp_consent_title">Terms and privacy notice</p>
+  <p id="mvp-consent-text" class="mvp-consent-text" data-k="mvp_consent_text">By using the app you agree to our terms and privacy notice.</p>
+  <div class="mvp-consent-acts"><button id="mvp-consent-yes" type="button" data-k="mvp_consent_agree">Agree</button><button class="mvp-consent-link" id="mvp-consent-read" type="button" data-k="mvp_consent_view">View terms and privacy</button></div>
+  <p class="mvp-consent-proto" data-k="mvp_consent_demo">Prototype only: final legal links and server consent records are pending.</p>
+</dialog>
 <div id="scrim"></div>
 <div class="dd" id="dd-bell" role="menu" aria-label="Notifications"></div>
 <div class="dd" id="dd-num" role="menu" aria-label="Lines"></div>
@@ -7677,6 +7678,10 @@ function closeOverlays(silent) {
   if (openEl) {
     const el = openEl; openEl = null;
     jobs.push(new Promise(res => cardOut(el, res, el.classList.contains('dd') ? { y: -14, sc: 0.94 } : {})));
+    if (el.id === 'sh-terms' && el.dataset.fromConsent) {
+      delete el.dataset.fromConsent;
+      jobs[0].then(() => { if (!openEl && S.authed) window.mvpRefreshConsent(); });
+    }
   }
   $('btn-bell').setAttribute('aria-expanded', 'false');
   const bn = $('btn-num'); if (bn) bn.setAttribute('aria-expanded', 'false');
@@ -11163,7 +11168,9 @@ renderUCard();
   window.mvpRefreshConsent = function(){
     const card=$m('mvp-consent-card'); if(!card) return;
     let row=consentSession; try{ row=JSON.parse(localStorage.getItem(CONSENT_KEY)||'null')||consentSession; }catch(e){}
-    card.hidden = !!(row && row.number===num() && row.version===CONSENT_VER);
+    const agreed = row && row.number === num() && row.version === CONSENT_VER;
+    if (agreed && card.open) card.close();
+    if (!agreed && !card.open) card.showModal();
   };
   window.mvpCancelPendingDeletion=function(){
     // A verified sign-in cancels an outstanding request; this affects local demo state only.
@@ -11175,7 +11182,9 @@ renderUCard();
     window.mvpRefreshConsent();toast(T('mvp_consent_saved'));
   });
   $m('mvp-consent-read').addEventListener('click',function(){
-    if(typeof openTerms==='function')openTerms();
+    $m('mvp-consent-card').close();
+    $m('sh-terms').dataset.fromConsent = 'true';
+    openTerms();
     toast(T('mvp_consent_legal_pending'));
   });
   window.mvpOpenDeleteProfile=function(){ $m('mvp-delete-dialog').hidden=false; };
@@ -11190,6 +11199,8 @@ renderUCard();
   setInterval(function(){
     if(typeof S==='undefined'||!S.authed || mvpSessionRemembered || Date.now()-mvpSessionActivityAt<15*60*1000)return;
     S.authed=false;AUTH.otpLive=false;AUTH.otpAfter=null;
+    if ($m('mvp-consent-card').open) $m('mvp-consent-card').close();
+    if (openEl === $m('sh-terms') && openEl.dataset.fromConsent) closeOverlays(true);
     try{localStorage.removeItem(MVP_AUTH_KEY);}catch(e){}
     mvpSanitizePhone($m('a-num'), AUTH.number || '');
     showScreen('scr-login');toast(T('mvp_idle_end'));
