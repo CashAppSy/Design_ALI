@@ -414,18 +414,15 @@ input{caret-color:var(--btn-bg)}
    hero bottom-left, price + validity bottom-right separated by a line.
    Grid: left column = hero, right column = title/desc (top) + price (bottom).
    Row 1 min 64px so the hero never slides under the 64px corner disc. */
-.bundle.card{display:grid;grid-template-columns:144px minmax(0,1fr);grid-template-rows:minmax(64px,1fr) auto;column-gap:12px;row-gap:4px;padding:8px 14px 6px;align-items:start}
+.bundle.card{display:grid;grid-template-columns:120px minmax(0,1fr);grid-template-rows:minmax(64px,1fr) auto;column-gap:12px;row-gap:4px;padding:8px 14px 6px;align-items:start}
 .bundle.card .bt{grid-column:2;grid-row:1;min-width:0;margin-top:10px}
 .bundle.card .bt .t{font-size:18px;font-weight:800;line-height:1.2;min-height:calc(1.2em * 1.5);max-height:calc(1.2em * 2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .bundle.card .bt .d{font-size:14px;color:var(--ink-soft);line-height:1.35;min-height:calc(1.35em * 2);max-height:calc(1.35em * 2);overflow:hidden}
 .bundle.card .bt .d .emo{display:block}
 .bundle.card .bt .d .ben{display:block}
-.bundle.card .bhero{grid-column:1;grid-row:1 / 3;align-self:center;width:auto;text-align:start;transform:translateY(11px)}
-.bundle.card .bp .p{font-size:34px;line-height:1.05;font-weight:900;white-space:nowrap}
+.bundle.card .bhero{grid-column:1;grid-row:1 / 3;align-self:center;width:auto;text-align:start;transform:translateY(23px)}
+.bundle.card .bp .p{font-size:28px;line-height:1.05;font-weight:900;white-space:nowrap}
 .bundle.card .bp .p svg{display:inline-block;vertical-align:middle}
-button.bundle.card{grid-template-columns:120px minmax(0,1fr)}
-button.bundle.card .bhero{transform:translateY(23px)}
-button.bundle.card .bp .p{font-size:28px}
 .bundle.card .bp .p .b-hero-gb{font-size:16px;font-weight:800;line-height:1}
 .bundle.card .bp .p .b-hero-gb.raised{position:relative;top:-.55em}
 .bundle.card .bp .u{font-size:13px;color:var(--ink-faint)}
@@ -1839,7 +1836,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
   <form id="a-signin-form" novalidate>
     <div class="fld"><label for="a-num" data-k="mvp_number_label">Mobile or ADSL number</label>
-      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" pattern="[0-9]{9}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
       <div class="mvp-field-help" id="mvp-login-guidance">
         <p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944000000).</p>
         <p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p>
@@ -2030,7 +2027,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <p class="body sub" data-k="a_change_s">Enter the correct number. We'll send a new code.</p>
   <form id="a-cn-form" novalidate>
     <div class="fld"><label for="a-cn-num" data-k="mvp_number_label">Mobile or ADSL number</label>
-      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-cn-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" pattern="[0-9]{9}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit mobile, data or landline number" aria-describedby="mvp-change-guidance" dir="ltr"></div>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-cn-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit mobile, data or landline number" aria-describedby="mvp-change-guidance" dir="ltr"></div>
       <div class="mvp-field-help" id="mvp-change-guidance"><p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944000000).</p><p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p></div>
     </div>
     <p class="aerr" id="a-cn-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944000000 · ADSL: 115430741.</span></p>
@@ -6588,20 +6585,50 @@ function mvpOtpDestination(num) {
   $('a-otp-num').textContent = contact ? '••••••••••' : maskedNum(num);
   $('mvp-otp-contact-hint').hidden = !contact;
 }
-function mvpSanitizePhone(el, v) {
-  var n = arToLatin(v == null ? el.value : v).replace(/\D/g, '');
-  if (n.startsWith('00963')) n = n.slice(5);
-  else if (n.startsWith('963') && n.length > 9) n = n.slice(3);
-  if (n.startsWith('0')) n = n.slice(1);
-  el.value = n.slice(0, 9);
-  return el.value;
+function mvpSanitizePhone(el, value) {
+  const raw = value ?? el.value;
+  const digits = arToLatin(raw).replace(/\D/g, '');
+  let local = digits;
+  if (local.startsWith('00963')) local = local.slice(5);
+  else if (local.startsWith('963') && local.length > 9) local = local.slice(3);
+  if (local.startsWith('0')) local = local.slice(1);
+
+  const suffix = local.slice(0, 9);
+  const formatted = (suffix.match(/.{1,3}/g) || []).join(' ');
+  if (el.value !== formatted) {
+    const digitsBeforeCaret = value == null
+      ? arToLatin(raw.slice(0, el.selectionStart)).replace(/\D/g, '').length
+      : digits.length;
+    const position = Math.max(0, Math.min(suffix.length, digitsBeforeCaret - (digits.length - local.length)));
+    const caret = position + Math.floor(Math.max(0, position - 1) / 3);
+    el.value = formatted;
+    el.setSelectionRange(caret, caret);
+  }
+  return suffix;
 }
 ['a-num', 'a-cn-num'].forEach(function (id) {
-  var el = $(id);
-  el.addEventListener('input', function () { mvpSanitizePhone(el); if (id === 'a-num') clearErr('a-signin-err'); });
-  el.addEventListener('paste', function (ev) {
-    ev.preventDefault(); mvpSanitizePhone(el, ev.clipboardData.getData('text'));
-    if (id === 'a-num') clearErr('a-signin-err');
+  const el = $(id);
+  const updatePhone = value => {
+    mvpSanitizePhone(el, value);
+    clearErr(id === 'a-num' ? 'a-signin-err' : 'a-cn-err');
+  };
+  el.addEventListener('input', () => updatePhone());
+  el.addEventListener('beforeinput', ev => {
+    const caret = el.selectionStart;
+    if (!ev.cancelable || caret !== el.selectionEnd) return;
+    if (ev.inputType === 'deleteContentBackward' && el.value[caret - 1] === ' ') {
+      ev.preventDefault();
+      el.setRangeText('', caret - 2, caret, 'start');
+      updatePhone();
+    } else if (ev.inputType === 'deleteContentForward' && el.value[caret] === ' ') {
+      ev.preventDefault();
+      el.setRangeText('', caret, caret + 2, 'start');
+      updatePhone();
+    }
+  });
+  el.addEventListener('paste', ev => {
+    ev.preventDefault();
+    updatePhone(ev.clipboardData.getData('text'));
   });
 });
 function mvpAfterOtp() {
@@ -6696,7 +6723,7 @@ $('a-su1-form').addEventListener('submit', e => {
 });
 $('a-su-gmail').onclick = () => { AUTH.flow = 'setup'; AUTH.setupPurpose = 'gmail-signup'; showScreen('scr-auth-setup'); };
 $('a-to-signup-email').onclick = () => showScreen('scr-auth-signup-email1');
-$('a-exists-signin').onclick = () => { $('a-num').value = AUTH.number || ''; showScreen('scr-login'); };
+$('a-exists-signin').onclick = () => { mvpSanitizePhone($('a-num'), AUTH.number || ''); showScreen('scr-login'); };
 $('a-exists-forgot').onclick = () => showScreen('scr-auth-forgot');
 function wireTc(chkId, btnId) { const c = $(chkId), b = $(btnId); c.addEventListener('change', () => { b.disabled = !c.checked; }); }
 wireTc('a-su-tc', 'a-su2-next'); wireTc('a-se-tc', 'a-se2-next');
@@ -6805,7 +6832,7 @@ $('a-otp-resend').onclick = () => {
   AUTH.otpDeadline = Date.now() + 3 * 60 * 1000; AUTH.resendAt = Date.now() + 30 * 1000;
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true; clearErr('a-otp-err'); clearBoxes(otpBoxes); otpBoxes[0].focus();
 };
-$('a-otp-wrongnum').onclick = () => { $('a-cn-num').value = (AUTH.number || '').replace(/^0/, ''); showScreen('scr-auth-changenum'); };
+$('a-otp-wrongnum').onclick = () => { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); };
 $('a-otp-back').onclick = () => showScreen(AUTH.otpReturn);
 $('a-cn-form').addEventListener('submit', e => {
   e.preventDefault();
@@ -6814,7 +6841,7 @@ $('a-cn-form').addEventListener('submit', e => {
   clearErr('a-cn-err');
   const num = '0' + suffix;
 AUTH.number = num;
-   $('a-num').value = suffix; // Keep Back / Wrong number coherent with the verified number.
+   mvpSanitizePhone($('a-num'), suffix); // Keep Back / Wrong number coherent with the verified number.
    startOtp(num, mvpAfterOtp, 'scr-login');
  });
 
@@ -7193,6 +7220,10 @@ function formatHeroAllowance(value) {
     return amount + ' <span class="' + unitClass + '">' + (englishUnit || arabicUnit) + '</span>';
   });
 }
+function bundleCardHero(bd) {
+  const hero = bHero(bd);
+  return `<span class="bp bhero"><span class="p num">${formatHeroAllowance(hero.big)}</span><span class="u" style="display:block">${hero.cap}</span></span>`;
+}
 function bSubline(bd) {
   var ar = LANG === 'ar';
   var hk = bHeroKind(bd);
@@ -7370,7 +7401,6 @@ function bCardElement(bd, best) {
   const b = document.createElement('button');
   b.className = 'bundle card' + (best ? ' best' : '');
   b.style.position = 'relative';
-  const hero = bHero(bd);
   const hk = bHeroKind(bd); /* v131: corner = hero benefit icon + colour, like the usage card */
   const cornerIcon = hk === 'all' ? bd.z : ucHeroZ(hk);
   const cornerBg = hk === 'all' ? 'var(--bu-data)' : ucCornerBg(hk);
@@ -7392,7 +7422,7 @@ function bCardElement(bd, best) {
   b.innerHTML = `${tagHtml}
       <span class="bu-corner" aria-hidden="true" data-hero="${hk}" data-icon="${cornerIcon}" style="background:${cornerBg}"><img class="bu-corner-ic" alt="" src="${ZI(cornerIcon)}"></span>
       <span class="bt"><span class="t">${B(bd.n)}</span><span class="d" style="display:block"><span class="emo">${emoText}</span><span class="ben" style="display:block"${descAttr}>${descText0}</span></span></span>
-      <span class="bp bhero"><span class="p num">${formatHeroAllowance(hero.big)}</span><span class="u" style="display:block">${hero.cap}</span></span>
+      ${bundleCardHero(bd)}
       <span class="bfoot">${priceHtml}<span class="bsep" aria-hidden="true"></span><span class="bvalid">${bValidSplit(bd)}</span></span>`;
   b.onclick = () => openBundle(bd);
   return b;
@@ -8411,12 +8441,11 @@ function renderHistory() {
     const [pc, pl] = hPill(e);
     const tagCls = pc === 'active' ? 'bpill-auto' : (pc === 'expiring' ? 'bpill-offer' : 'bpill-grey');
     const hasBd = !!bd.n;
-    const hero = hasBd ? bHero(bd) : null;
     const hk = hasBd ? bHeroKind(bd) : null;
     const cornerIcon = hasBd ? (hk === 'all' ? bd.z : ucHeroZ(hk)) : (bd.z || null);
     const cornerBg = hasBd ? (hk === 'all' ? 'var(--bu-data)' : ucCornerBg(hk)) : 'var(--bu-data)';
     const cornerHtml = cornerIcon ? `<span class="bu-corner" aria-hidden="true" data-hero="${hk || ''}" data-icon="${cornerIcon}" style="background:${cornerBg}"><img class="bu-corner-ic" alt="" src="${ZI(cornerIcon)}"></span>` : '';
-    const heroHtml = hero ? `<span class="bp bhero"><span class="p num">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>` : '';
+    const heroHtml = hasBd ? bundleCardHero(bd) : '';
     const priceHtml = `<span class="bprice num"><span class="bp-n">${fmtN(e.price)}</span> <span class="bp-c">${T('syp')}</span></span>`;
     const footHtml = hasBd ? `${priceHtml}<span class="bsep" aria-hidden="true"></span><span class="bvalid">${bValidSplit(bd)}</span>` : priceHtml;
     const row = document.createElement('div'); row.className = 'bundle card hrow'; row.setAttribute('role', 'button'); row.tabIndex = 0; row.setAttribute('aria-label', name + ', ' + pl);
@@ -11162,7 +11191,7 @@ renderUCard();
     if(typeof S==='undefined'||!S.authed || mvpSessionRemembered || Date.now()-mvpSessionActivityAt<15*60*1000)return;
     S.authed=false;AUTH.otpLive=false;AUTH.otpAfter=null;
     try{localStorage.removeItem(MVP_AUTH_KEY);}catch(e){}
-    $m('a-num').value=(AUTH.number||'').replace(/^0/,'');
+    mvpSanitizePhone($m('a-num'), AUTH.number || '');
     showScreen('scr-login');toast(T('mvp_idle_end'));
   },5000);
 })();
