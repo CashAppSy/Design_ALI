@@ -1874,7 +1874,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <div class="state-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
   <h1 class="title" data-k="a_locked_t">Too many attempts</h1>
   <p class="locktime num" id="a-lock-time" dir="ltr">15:00</p>
-  <p class="body sub" data-k="a_locked_s">For your security, sign-in is locked. Try again when the timer ends.</p>
+  <p class="body sub" id="a-lock-message" data-k="a_locked_s">For your security, sign-in is locked. Try again when the timer ends.</p>
   <div class="auth-links"><button class="linklike" id="a-lock-back" data-k="a_back_signin">Back to sign in</button></div>
 </section>
 
@@ -2641,14 +2641,19 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <div class="grab" aria-hidden="true"></div>
   <p class="st" id="al-t" data-k="lines_add">Add a line</p>
   <p class="sd" data-k="lines_add_s">Add another Zain number to switch between lines.</p>
-  <div class="imp-fld">
-    <input id="addline-num" class="imp-field num" inputmode="numeric" maxlength="14" placeholder="0933 000 000" dir="ltr">
-  </div>
-  <div class="login-err" id="addline-err" role="alert"></div>
-  <div class="srow">
-    <button class="btn ghost" data-close data-k="cancel">Cancel</button>
-    <button class="btn" id="btn-addline" data-k="lines_add">Add a line</button>
-  </div>
+  <form id="addline-form" novalidate>
+    <label class="micro" for="addline-num" data-k="mvp_number_label">Mobile or ADSL number</label>
+    <div class="phone-row" dir="ltr">
+      <span class="cc num">+963</span>
+      <input id="addline-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-describedby="addline-hint addline-err" dir="ltr" required>
+    </div>
+    <p class="mvp-field-help" id="addline-hint" data-k="mvp_nine_digits">Enter 9 digits after +963, without the leading 0.</p>
+    <p class="aerr" id="addline-err" role="alert"><span></span></p>
+    <div class="srow">
+      <button class="btn ghost" type="button" data-close data-k="cancel">Cancel</button>
+      <button class="btn" id="btn-addline" type="submit" data-k="lines_add">Add a line</button>
+    </div>
+  </form>
 </div>
 
 <!-- IMPORTED: RECEIPT -->
@@ -6436,6 +6441,7 @@ function setWorld(id) {
 
 /* MVP authentication wording and 9-digit suffix (+963 fixed). */
 Object.assign(I18N.en, {
+  mvp_addline_locked:"For your security, adding a line is locked. Try again when the timer ends.",
   mvp_consent_title:"Terms and privacy notice",
   mvp_consent_text:"By using the app you agree to our terms and privacy notice.",
   mvp_consent_agree:"Agree",
@@ -6472,6 +6478,7 @@ mvp_remember_demo:"Prototype only: remembered-phone recognition is simulated in 
    mvp_guide_3:"After verification, choose Remember Me or Not now. Signing out removes the remembered device and requires a new code."
 });
 Object.assign(I18N.ar, {
+  mvp_addline_locked:"حفاظاً على أمانك، تم قفل إضافة رقم. حاول مجدداً عند انتهاء المؤقّت.",
   mvp_consent_title:"الشروط وإشعار الخصوصية",
   mvp_consent_text:"باستخدام التطبيق، أنت توافق على الشروط وإشعار الخصوصية.",
   mvp_consent_agree:"موافق",
@@ -6520,7 +6527,7 @@ mvp_remember_demo:"للتجربة فقط: يتم محاكاة التعرف عل�
 const AUTH = {
   flow: null, setupPurpose: null, number: '', email: '', name: '',
 wrongPass: 0, lockUntil: 0, otpWrongTotal: 0,
-   otpAttempts: 3, otpDeadline: 0, resendAt: 0, otpAfter: null, otpReturn: 'scr-login', otpLive: false,
+   otpAttempts: 3, otpDeadline: 0, resendAt: 0, otpAfter: null, otpNumber: '', otpReturn: 'scr-login', otpLive: false,
   pin: '', pinPurpose: 'setup', pinBack: 'scr-login',
   bioEnrolled: false, bioPromptArmed: false, bioTouchSeen: false, gmailKnown: false,
   carrierField: null, carrierOk: null, failReturn: 'scr-auth-signup1', offlineReturn: 'scr-login'
@@ -6603,11 +6610,11 @@ function mvpSanitizePhone(el, value) {
   }
   return suffix;
 }
-['a-num', 'a-cn-num'].forEach(function (id) {
+Object.entries({'a-num': 'a-signin-err', 'a-cn-num': 'a-cn-err', 'addline-num': 'addline-err'}).forEach(([id, errorId]) => {
   const el = $(id);
   const updatePhone = value => {
     mvpSanitizePhone(el, value);
-    clearErr(id === 'a-num' ? 'a-signin-err' : 'a-cn-err');
+    clearErr(errorId);
   };
   el.addEventListener('input', () => updatePhone());
   el.addEventListener('beforeinput', ev => {
@@ -6684,7 +6691,10 @@ $('a-to-email').onclick = () => showScreen('scr-auth-email');
 $('a-to-signup').onclick = () => showScreen('scr-auth-signup1');
 $('a-to-forgot').onclick = () => showScreen('scr-auth-forgot');
 $('a-em-forgot').onclick = () => showScreen('scr-auth-forgot');
-$('a-lock-back').onclick = () => showScreen('scr-login');
+$('a-lock-back').onclick = () => {
+  if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
+  else showScreen('scr-login');
+};
 
 /* ---------- set up your number (07 / 08) ---------- */
 $('a-setup-form').addEventListener('submit', e => {
@@ -6767,8 +6777,9 @@ function startOtp(num, after, ret) {
   if (AUTH.lockUntil && Date.now() >= AUTH.lockUntil) {
     AUTH.lockUntil = 0; AUTH.otpWrongTotal = 0;
   }
+  AUTH.otpReturn = ret || 'scr-login';
   if (lockedNow()) { showScreen('scr-auth-locked'); return; }
-  AUTH.otpAfter = after; AUTH.otpReturn = ret || 'scr-login'; AUTH.otpAttempts = Math.max(0, 5 - AUTH.otpWrongTotal); AUTH.otpLive = true;
+  AUTH.otpNumber = num; AUTH.otpAfter = after; AUTH.otpAttempts = Math.max(0, 5 - AUTH.otpWrongTotal); AUTH.otpLive = true;
   AUTH.otpDeadline = Date.now() + 3 * 60 * 1000; AUTH.resendAt = Date.now() + 30 * 1000;
   mvpOtpDestination(num);
   var actionHint = $('mvp-otp-action-hint'); if (actionHint) { actionHint.hidden = !AUTH.otpAction; actionHint.textContent = AUTH.otpAction || ''; }
@@ -6787,7 +6798,7 @@ function verifyOtp(code) {
   if (!AUTH.otpLive) return;
   if (Date.now() > AUTH.otpDeadline) { otpDead('a_expired_msg'); return; }
   // Only a prototype: accept the published test code, not real SMS verification.
-if (AUTH.otpReturn === 'scr-login' && code !== '123456') {
+  if ((AUTH.otpReturn === 'scr-login' || AUTH.otpReturn === 'sh-addline') && code !== '123456') {
      AUTH.otpWrongTotal++;
      AUTH.otpAttempts = Math.max(0, 5 - AUTH.otpWrongTotal);
     VIB(30);
@@ -6820,7 +6831,7 @@ $('a-otp-verify').onclick = () => {
 };
 $('a-otp-sendnew').onclick = () => {
   if (lockedNow()) { showScreen('scr-auth-locked'); return; }
-  startOtp(AUTH.number, AUTH.otpAfter || (() => {}), AUTH.otpReturn);
+  startOtp(AUTH.otpNumber, AUTH.otpAfter || (() => {}), AUTH.otpReturn);
 };
 $('a-otp-resend').onclick = () => {
   if (lockedNow()) { showScreen('scr-auth-locked'); return; }
@@ -6829,8 +6840,14 @@ $('a-otp-resend').onclick = () => {
   AUTH.otpDeadline = Date.now() + 3 * 60 * 1000; AUTH.resendAt = Date.now() + 30 * 1000;
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true; clearErr('a-otp-err'); clearBoxes(otpBoxes); otpBoxes[0].focus();
 };
-$('a-otp-wrongnum').onclick = () => { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); };
-$('a-otp-back').onclick = () => showScreen(AUTH.otpReturn);
+$('a-otp-wrongnum').onclick = () => {
+  if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
+  else { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); }
+};
+$('a-otp-back').onclick = () => {
+  if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
+  else showScreen(AUTH.otpReturn);
+};
 $('a-cn-form').addEventListener('submit', e => {
   e.preventDefault();
   const suffix = mvpLocalPhone($('a-cn-num'));
@@ -6950,10 +6967,18 @@ showScreen = function (id) {
     /* No PIN or biometric sign-in in MVP. */
   }
   if (id === 'scr-auth-remember') { var src = $('login-logo').getAttribute('src'); if (src) $('mvp-remember-logo').setAttribute('src', src); syncLangPills(); }
-  if (id === 'scr-auth-locked') $('a-lock-time').textContent = mmss(AUTH.lockUntil - Date.now());
+  if (id === 'scr-auth-locked') {
+    const addingLine = AUTH.otpReturn === 'sh-addline';
+    for (const [id, key] of [['a-lock-message', addingLine ? 'mvp_addline_locked' : 'a_locked_s'], ['a-lock-back', addingLine ? 'back' : 'a_back_signin']]) {
+      const el = $(id);
+      el.dataset.k = key;
+      el.textContent = T(key);
+    }
+    $('a-lock-time').textContent = mmss(AUTH.lockUntil - Date.now());
+  }
 };
 const _applyLangAuth = applyLang;
-applyLang = function () { _applyLangAuth(); syncLangPills(); if (AUTH.number && $('scr-auth-otp').classList.contains('on')) mvpOtpDestination(AUTH.number); authTick(); };
+applyLang = function () { _applyLangAuth(); syncLangPills(); if (AUTH.otpNumber && $('scr-auth-otp').classList.contains('on')) mvpOtpDestination(AUTH.otpNumber); authTick(); };
 syncLangPills();
 
 function enterApp() {
@@ -9407,18 +9432,40 @@ function impOpenSupport() {
 function openTerms() { openSheet($('sh-terms')); }
 
 /* ================= ADD A LINE ================= */
-function openAddLine() { $('addline-err').textContent = ''; openSheet($('sh-addline')); }
+function openAddLine() {
+  clearErr('addline-err');
+  openSheet($('sh-addline'));
+}
+function returnToAddLine() {
+  AUTH.otpLive = false;
+  AUTH.otpAfter = null;
+  AUTH.otpReturn = 'scr-login';
+  if (!S.authed) { showScreen('scr-login'); return; }
+  showScreen('app');
+  openAddLine();
+}
 function bindAddLine() {
-  $('btn-addline').onclick = () => {
-    const v = $('addline-num').value.replace(/\D/g, '');
-    if (v.length !== 10) { $('addline-err').textContent = T('lines_bad'); VIB(30); return; }
-    if (S.lines.some(l => normNum(l) === normNum(v))) { $('addline-err').textContent = T('lines_dup'); VIB(30); return; }
-    $('addline-err').textContent = '';
-    const fmt = v.slice(0, 4) + ' ' + v.slice(4, 7) + ' ' + v.slice(7);
-    S.lines.push(fmt); S.billSel.push(S.lines.length - 1); saveState();
-    renderNum(); renderBillLines(); $('addline-num').value = '';
-    closeOverlays().then(() => toast(T('lines_added')));
-  };
+  $('addline-form').addEventListener('submit', e => {
+    e.preventDefault();
+    if (openEl !== $('sh-addline') || !S.authed) return;
+    const num = '0' + mvpLocalPhone($('addline-num'));
+    if (!validNum(num)) { setErr('addline-err', 'mvp_phone_error'); VIB(30); return; }
+    if (S.lines.some(line => normNum(line) === normNum(num))) { setErr('addline-err', 'lines_dup'); VIB(30); return; }
+    closeOverlays(true);
+    AUTH.otpAction = '';
+    startOtp(num, () => {
+      if (!S.authed) return;
+      AUTH.otpReturn = 'scr-login';
+      S.lines.push(num.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1 $2 $3'));
+      S.billSel.push(S.lines.length - 1);
+      saveState();
+      renderNum();
+      renderBillLines();
+      $('addline-num').value = '';
+      showScreen('app');
+      toast(T('lines_added'));
+    }, 'sh-addline');
+  });
 }
 
 /* ================= AUTO-PAY ================= */
