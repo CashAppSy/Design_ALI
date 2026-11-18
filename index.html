@@ -85,6 +85,9 @@ try {
    Screens follow the app's design language: stage tokens, .btn, .phone-row,
    .otp, sheets and dialogs. Copy: frames_copy (FigCraft journey v8), EN + AR. */
 .auth{align-items:stretch;justify-content:flex-start;padding:0 24px calc(18px + env(safe-area-inset-bottom));padding-bottom:calc(18px + max(env(safe-area-inset-bottom),18px));text-align:start;overflow-y:auto}
+.screen.auth>*{flex-shrink:0}
+.screen.auth:not(.state)::before,.screen.auth:not(.state)::after{content:"";flex:1 0 0}
+.screen.auth>.auth-top{order:-1}
 .auth-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:50px;margin-top:calc(10px + env(safe-area-inset-top));margin-top:calc(10px + max(env(safe-area-inset-top),28px));flex:0 0 auto}
 .auth-top .sp{flex:1}
 .auth-back{width:42px;height:42px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-brd);
@@ -125,7 +128,7 @@ try {
 .otp6 .otp{width:47px;height:58px;font-size:22px}
 .masked-num{font-weight:800}
 .locktime{font-size:44px;font-weight:800;letter-spacing:.02em;margin-top:8px}
-.auth.state{align-items:center;text-align:center;justify-content:center}
+.auth.state{align-items:center;text-align:center;justify-content:safe center}
 .auth.state .sub{max-width:290px}
 .state-art{width:96px;height:96px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-brd);
   display:flex;align-items:center;justify-content:center;margin-bottom:16px;
@@ -1736,12 +1739,12 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 .mvp-field-help{font-size:12px;line-height:1.4;color:var(--ink-soft);margin-top:5px}
 #scr-auth-remember .btn{margin-top:12px}
 #scr-auth-remember .hint{margin-top:18px;text-align:center}
-/* Auth layout v169: thumb-zone inputs without changing the visual identity. */
-#scr-login.auth{align-items:stretch;justify-content:flex-start;text-align:start;gap:0;padding:0 26px calc(18px + max(env(safe-area-inset-bottom),18px));overflow-y:auto;overscroll-behavior:contain}
+/* Sign-in uses the shared centered auth layout with full-width fields. */
+#scr-login.auth{gap:0;padding-inline:26px;padding-bottom:calc(18px + max(env(safe-area-inset-bottom),18px));overscroll-behavior:contain}
 #scr-login .auth-top{flex-shrink:0;width:100%}
 #scr-login h1.title{margin-top:4px}
 #scr-login .body.sub{margin-top:7px;line-height:1.5}
-#scr-login form{margin-top:clamp(25px,5.5vh,55px);width:100%}
+#scr-login form{margin-top:24px;width:100%}
 #scr-login form .fld{margin-top:0}
 #scr-login .auth-links{margin-top:12px}
 #scr-login .btn.block{min-height:52px}
@@ -1749,18 +1752,11 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 #scr-login .mvp-field-help,#scr-auth-changenum .mvp-field-help{margin-top:18px}
 .mvp-field-help{font-size:12px;line-height:1.55;color:var(--ink-soft);display:flex;flex-direction:column;gap:7px}
 .mvp-field-help p{margin:0}
-#scr-auth-otp .title{margin-top:clamp(112px,23vh,182px)}
 #scr-auth-otp .otp6{margin-top:23px}
 #scr-auth-otp .btn.block{min-height:52px}
 #scr-auth-remember .btn.block{min-height:52px}
-#scr-auth-changenum .title{margin-top:clamp(105px,21vh,168px)}
-#scr-auth-changenum form{margin-top:clamp(24px,5vh,44px)}
+#scr-auth-changenum form{margin-top:24px}
 .mvp-otp-contact-hint{font-size:12px;line-height:1.5;color:var(--ink-soft);margin:10px 0 0}
-@media (max-height:670px){
- #scr-login form{margin-top:22px}
- #scr-auth-otp .title{margin-top:clamp(66px,12vh,100px)}
- #scr-auth-changenum .title{margin-top:clamp(65px,13vh,105px)}
-}
 
 #a-otp-cancel{display:none}
 #sh-mvp-otp #scr-auth-otp{display:flex;flex-direction:column;gap:12px}
@@ -1851,13 +1847,13 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
   <form id="a-signin-form" novalidate>
     <div class="fld"><label for="a-num" data-k="mvp_number_label">Mobile or ADSL number</label>
-      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 222 111" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
       <div class="mvp-field-help" id="mvp-login-guidance">
-        <p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944000000).</p>
+        <p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944222111).</p>
         <p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p>
       </div>
     </div>
-    <p class="aerr" id="a-signin-err" role="alert"><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944000000 · ADSL: 115430741.</span></p>
+    <p class="aerr" id="a-signin-err" role="alert"><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944222111 · ADSL: 115430741.</span></p>
     <button class="btn block" id="a-signin-go" type="submit" data-k="a_continue">Continue</button>
   </form>
   <div class="auth-links"><button class="linklike" id="a-help" data-k="a_help_link">Sign-in help</button></div>
@@ -2004,8 +2000,8 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <section id="scr-auth-otp" class="screen auth" aria-label="Verify your number">
   <div class="auth-top"><button class="auth-back" id="a-otp-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
   <h1 class="title st" id="a-otp-title" data-k="a_otp_t">Verify your number</h1>
-  <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr">0944•••000</span></p>
-  <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" data-k="mvp_otp_contact_hint" hidden>The code is sent to the contact mobile number registered with the line.</p>
+  <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr"></span></p>
+  <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" hidden></p>
   <p id="mvp-otp-action-hint" hidden></p><div id="a-otp-live">
     <div class="otp6" dir="ltr">
       <input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 1"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 2"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 3"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 4"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 5"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 6">
@@ -2044,10 +2040,10 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <p class="body sub" data-k="a_change_s">Enter the correct number. We'll send a new code.</p>
   <form id="a-cn-form" novalidate>
     <div class="fld"><label for="a-cn-num" data-k="mvp_number_label">Mobile or ADSL number</label>
-      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-cn-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit mobile, data or landline number" aria-describedby="mvp-change-guidance" dir="ltr"></div>
-      <div class="mvp-field-help" id="mvp-change-guidance"><p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944000000).</p><p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p></div>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-cn-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 222 111" data-k-ph="mvp_phone_hint" aria-label="Nine-digit mobile, data or landline number" aria-describedby="mvp-change-guidance" dir="ltr"></div>
+      <div class="mvp-field-help" id="mvp-change-guidance"><p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944222111).</p><p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p></div>
     </div>
-    <p class="aerr" id="a-cn-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944000000 · ADSL: 115430741.</span></p>
+    <p class="aerr" id="a-cn-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944222111 · ADSL: 115430741.</span></p>
     <button class="btn block" type="submit" data-k="a_update">Update number</button>
   </form>
   <div class="auth-links"><button class="linklike" data-back-to="scr-auth-otp" data-k="a_cancel">Cancel</button></div>
@@ -2475,7 +2471,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   </div>
   <div class="demo-guide">
     <p class="micro" data-k="mvp_guide_heading">Prototype testing</p>
-    <p data-k="mvp_guide_1">Use the number 944000000 and the demonstration code 123456. No SMS or voice call is actually placed.</p>
+    <p data-k="mvp_guide_1">Use the number 944222111 and the demonstration code 123456. No SMS or voice call is actually placed.</p>
     <p data-k="mvp_guide_2">The code expires after 3 minutes. You can request another after 30 seconds; 5 incorrect attempts lock sign-in for 15 minutes.</p>
     <p data-k="mvp_guide_3">After a correct code, choose whether to remember this device. Sign out removes that choice and requires a new code.</p>
     <p><button class="linklike" id="a-g-offline" data-k="a_g_offline">Preview: You're offline</button> · <button class="linklike" id="a-g-session" data-k="a_g_session">Preview: Session expired</button></p>
@@ -2700,7 +2696,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
     <label class="micro" for="addline-num" data-k="mvp_number_label">Mobile or ADSL number</label>
     <div class="phone-row" dir="ltr">
       <span class="cc num">+963</span>
-      <input id="addline-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-describedby="addline-hint addline-err" dir="ltr" required>
+      <input id="addline-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 222 111" data-k-ph="mvp_phone_hint" aria-describedby="addline-hint addline-err" dir="ltr" required>
     </div>
     <p class="mvp-field-help" id="addline-hint" data-k="mvp_nine_digits">Enter 9 digits after +963, without the leading 0.</p>
     <p class="aerr" id="addline-err" role="alert"><span></span></p>
@@ -6519,7 +6515,7 @@ Object.assign(I18N.en, {
   mvp_remembered_session:"Remembered session",
   mvp_no_devices:"No remembered devices",
   mvp_remove_device:"Remove device",
-  mvp_remove_verify:"Confirm removal with a code for your sign-in number.",
+  mvp_remove_verify:"Enter the code to confirm device removal.",
   mvp_remove_locked:"Device removal is locked. Try again when the timer ends.",
   mvp_end_session:"End session",
   mvp_notifications:"Notification settings",
@@ -6549,13 +6545,16 @@ Object.assign(I18N.en, {
   mvp_consent_saved:"Agreement recorded in this browser only (demo).",
   mvp_signin_sub:"Sign in using your Zain mobile or ADSL number.",
   mvp_number_label:"Mobile or ADSL number",
-  mvp_help_mobile:"Mobile: enter 9 digits without 0 (e.g. 944000000).",
+  mvp_help_mobile:"Mobile: enter 9 digits without 0 (e.g. 944222111).",
   mvp_help_landline:"ADSL landline: enter 9 digits without 0 (e.g. 115430741).",
   mvp_otp_to_contact:"Enter the 6-digit code sent to the registered contact number",
-  mvp_otp_contact_hint:"The code goes to the contact mobile number registered with the line.",
-  mvp_phone_hint:"944 000 000",
+  mvp_otp_entry:"Enter the 6-digit verification code.",
+  mvp_otp_demo_contact:"Demo contact number for this line.",
+  mvp_otp_contact_unavailable:"The registered contact number is unavailable in this preview.",
+  mvp_phone_hint:"944 222 111",
   mvp_nine_digits:"Enter 9 digits after +963, without the leading 0.",
-  mvp_phone_error:"Enter exactly 9 digits without 0: mobile 944000000 or ADSL 115430741.",
+  mvp_phone_unregistered:"This number is not registered. Check the number and try again.",
+  mvp_phone_error:"Enter exactly 9 digits without 0: mobile 944222111 or ADSL 115430741.",
   mvp_otp_demo:"Prototype only: enter 123456. No SMS is sent.",
   mvp_remember_t:"Remember Me",
   mvp_remember_s:"Remember this phone to open your dashboard without entering a new code next time. You can sign out at any time.",
@@ -6563,9 +6562,9 @@ Object.assign(I18N.en, {
 mvp_remember_demo:"Prototype only: remembered-phone recognition is simulated in this browser.",
    mvp_otp_incomplete:"Enter all 6 digits of the verification code.",
    mvp_help_heading:"Sign in with a mobile or ADSL number",
-   mvp_help_text:"Use the same field for mobile and ADSL. Enter 9 digits after +963, without the leading 0. Example: 944000000 (mobile) or 115430741 (landline). When a contact number is registered for the line, the verification code goes to that number. No password or sign-up form is needed.",
+   mvp_help_text:"Use the same field for mobile and ADSL. Enter 9 digits after +963, without the leading 0. Example: 944222111 (mobile) or 115430741 (landline). When a contact number is registered for the line, the verification code goes to that number. No password or sign-up form is needed.",
    mvp_guide_heading:"Prototype testing",
-   mvp_guide_1:"Use the number 944000000 and the demonstration code 123456. No real SMS or voice call is placed.",
+   mvp_guide_1:"Use the number 944222111 and the demonstration code 123456. No real SMS or voice call is placed.",
    mvp_guide_2:"The code expires after 3 minutes. Request another after 30 seconds. Five incorrect attempts lock sign-in for 15 minutes.",
    mvp_guide_3:"After verification, choose Remember Me or Not now. Signing out removes the remembered device and requires a new code."
 });
@@ -6594,7 +6593,7 @@ Object.assign(I18N.ar, {
   mvp_remembered_session:"جلسة على جهاز متذكّر",
   mvp_no_devices:"لا توجد أجهزة متذكّرة",
   mvp_remove_device:"إزالة الجهاز",
-  mvp_remove_verify:"أكّد إزالة الجهاز برمز يُرسل إلى رقم تسجيل الدخول.",
+  mvp_remove_verify:"أدخل الرمز لتأكيد إزالة الجهاز.",
   mvp_remove_locked:"تم قفل إزالة الجهاز. حاول مجدداً عند انتهاء المؤقّت.",
   mvp_end_session:"إنهاء الجلسة",
   mvp_notifications:"إعدادات الإشعارات",
@@ -6624,13 +6623,16 @@ Object.assign(I18N.ar, {
   mvp_consent_saved:"تم تسجيل الموافقة في المتصفح فقط للتجربة.",
   mvp_signin_sub:"سجّل الدخول باستخدام رقم الموبايل أو ADSL من زين.",
    mvp_number_label:"رقم الموبايل أو ADSL",
-   mvp_help_mobile:"الموبايل: أدخل 9 أرقام دون الصفر الأول، مثال: 944000000.",
+   mvp_help_mobile:"الموبايل: أدخل 9 أرقام دون الصفر الأول، مثال: 944222111.",
    mvp_help_landline:"الخط الأرضي ADSL: أدخل 9 أرقام دون الصفر الأول، مثال: 115430741.",
    mvp_otp_to_contact:"أدخل رمز التحقق المؤلف من 6 أرقام المُرسل إلى رقم التواصل المسجّل",
-   mvp_otp_contact_hint:"يُرسل الرمز إلى رقم الموبايل المسجّل للتواصل مع صاحب الخط.",
-  mvp_phone_hint:"944 000 000",
+   mvp_otp_entry:"أدخل رمز التحقق المؤلف من 6 أرقام.",
+   mvp_otp_demo_contact:"رقم المتابعة التجريبي لهذا الخط.",
+   mvp_otp_contact_unavailable:"رقم المتابعة المسجّل غير متاح في هذه النسخة التجريبية.",
+  mvp_phone_hint:"944 222 111",
   mvp_nine_digits:"أدخل 9 أرقام بعد ‎+963 دون الصفر الأول.",
-  mvp_phone_error:"أدخل 9 أرقام دون الصفر الأول؛ مثال موبايل: 944000000 أو أرضي: 115430741.",
+  mvp_phone_unregistered:"هذا الرقم غير مسجّل لدينا. تحقّق من الرقم وحاول مجدداً.",
+  mvp_phone_error:"أدخل 9 أرقام دون الصفر الأول؛ مثال موبايل: 944222111 أو أرضي: 115430741.",
   mvp_otp_demo:"للتجربة فقط: أدخل 123456. لن تُرسل رسالة SMS حقيقية.",
   mvp_remember_t:"تذكرني",
   mvp_remember_s:"تذكّر هذا الهاتف لفتح حسابك دون إدخال رمز جديد في كل مرة. يمكنك تسجيل الخروج في أي وقت.",
@@ -6638,9 +6640,9 @@ Object.assign(I18N.ar, {
 mvp_remember_demo:"للتجربة فقط: يتم محاكاة التعرف على الهاتف المتذكّر في هذا المتصفح.",
    mvp_otp_incomplete:"أدخل جميع الأرقام الستة لرمز التحقق.",
    mvp_help_heading:"تسجيل الدخول برقم الموبايل أو ADSL",
-   mvp_help_text:"استخدم نفس الحقل للموبايل وADSL. أدخل 9 أرقام بعد ‎+963 دون الصفر الأول. مثال: 944000000 للموبايل أو 115430741 للأرضي. عند وجود رقم تواصل مسجّل للخط، يصل رمز التحقق إلى ذلك الرقم. لا حاجة لكلمة مرور أو إنشاء حساب.",
+   mvp_help_text:"استخدم نفس الحقل للموبايل وADSL. أدخل 9 أرقام بعد ‎+963 دون الصفر الأول. مثال: 944222111 للموبايل أو 115430741 للأرضي. عند وجود رقم تواصل مسجّل للخط، يصل رمز التحقق إلى ذلك الرقم. لا حاجة لكلمة مرور أو إنشاء حساب.",
    mvp_guide_heading:"اختبار النموذج",
-   mvp_guide_1:"استخدم الرقم 944000000 ورمز التجربة 123456. لن يتم إرسال SMS أو إجراء مكالمة حقيقية.",
+   mvp_guide_1:"استخدم الرقم 944222111 ورمز التجربة 123456. لن يتم إرسال SMS أو إجراء مكالمة حقيقية.",
    mvp_guide_2:"تنتهي صلاحية الرمز بعد 3 دقائق. يمكن طلب رمز آخر بعد 30 ثانية. يتم قفل تسجيل الدخول 15 دقيقة بعد 5 محاولات خاطئة.",
    mvp_guide_3:"بعد التحقق اختر تذكرني أو ليس الآن. تسجيل الخروج يلغي تذكر الجهاز ويتطلب رمزاً جديداً."
 });
@@ -6691,6 +6693,7 @@ function syncLangPills() { document.querySelectorAll('[data-langpick]').forEach(
 
 /* Prototype session flags, NOT production authentication. Backend and signed
    device tokens are required for real network recognition/Remember Me. */
+const MVP_SIGNIN_NUMBERS = new Set(['0944222111', '0947222548', '0115430741']);
 const MVP_AUTH_KEY = 'zain_mvp_remembered_demo_v1';
 const MVP_PROFILE_KEY = 'zain_mvp_profile_demo_v1';
 const MVP_DEVICE_LIMIT = 3;
@@ -6729,12 +6732,24 @@ function forgetCurrentDevice() {
 let mvpSessionRemembered = false;
 let mvpSessionActivityAt = Date.now();
 function mvpRemembered() {
-  try { const x = JSON.parse(localStorage.getItem(MVP_AUTH_KEY) || 'null'); return x && /^0[1-9]\d{8}$/.test(x.number) ? x : null; }
+  try { const x = JSON.parse(localStorage.getItem(MVP_AUTH_KEY) || 'null'); return x && MVP_SIGNIN_NUMBERS.has(x.number) ? x : null; }
   catch (e) { return null; }
 }
 function mvpLocalPhone(el) {
   // +963 is displayed separately. The same field accepts 9-digit mobile/data and 1xxxxxxxx landlines.
   return mvpSanitizePhone(el);
+}
+function mvpSignInNumber(fieldId, errorId) {
+  const number = '0' + mvpLocalPhone($(fieldId));
+  const error = !validNum(number) ? 'mvp_phone_error'
+    : !MVP_SIGNIN_NUMBERS.has(number) ? 'mvp_phone_unregistered' : '';
+  if (error) {
+    $(errorId).querySelector('span').dataset.k = error;
+    setErr(errorId, error);
+    return null;
+  }
+  clearErr(errorId);
+  return number;
 }
 function mvpLineKind(local) {
   const n = arToLatin(String(local || '')).replace(/\D/g, '').replace(/^0/, '');
@@ -6743,7 +6758,16 @@ function mvpLineKind(local) {
   if (n === '964000000') return 'data';
   return 'mobile';
 }
+// Masked contact fixtures for the prototype's sample lines. Live data comes from BSS.
+const MVP_DEMO_OTP_CONTACTS = {
+  '0115430741': '0944•••000',
+  '0114444444': '0945•••741',
+  '0964000000': '0947•••548'
+};
 function mvpOtpDestination(num) {
+  const label = $('a-otp-sent-label');
+  const destination = $('a-otp-num');
+  const hint = $('mvp-otp-contact-hint');
   const email = AUTH.otpReturn === 'sh-profile';
   for (const [id, key] of [['a-otp-title', email ? 'mvp_email_title' : 'a_otp_t'], ['a-otp-demo', email ? 'mvp_email_demo' : 'mvp_otp_demo'], ['a-otp-wrongnum', email ? 'mvp_email_wrong' : AUTH.otpReturn === 'sh-mvp-devices' ? 'back' : 'a_wrongnum']]) {
     const element = $(id);
@@ -6751,22 +6775,21 @@ function mvpOtpDestination(num) {
     element.textContent = T(key);
   }
   if (email) {
-    const label = $('a-otp-sent-label');
     label.dataset.k = 'mvp_email_sent';
     label.textContent = T('mvp_email_sent');
     const [local, domain] = num.split('@');
-    $('a-otp-num').textContent = local.slice(0,1) + '•••@' + domain;
-    $('mvp-otp-contact-hint').hidden = true;
+    destination.textContent = local.slice(0,1) + '•••@' + domain;
+    hint.hidden = true;
     return;
   }
-  const kind = mvpLineKind(num);
-  const contact = (kind === 'adsl' || kind === 'data');
-  const label = $('a-otp-sent-label');
-  label.textContent = contact ? T('mvp_otp_to_contact') : T('a_otp_s');
-  label.dataset.k = contact ? 'mvp_otp_to_contact' : 'a_otp_s';
-  // Never fabricate an actual contact number. Production uses a BSS-masked contact.
-  $('a-otp-num').textContent = contact ? '••••••••••' : maskedNum(num);
-  $('mvp-otp-contact-hint').hidden = !contact;
+  const number = '0' + arToLatin(String(num || '')).replace(/\D/g, '').replace(/^0/, '');
+  const usesContact = mvpLineKind(number) !== 'mobile';
+  const masked = usesContact ? MVP_DEMO_OTP_CONTACTS[number] : (validNum(number) ? maskedNum(number) : '');
+  label.dataset.k = masked ? (usesContact ? 'mvp_otp_to_contact' : 'a_otp_s') : 'mvp_otp_entry';
+  label.textContent = T(label.dataset.k);
+  destination.textContent = masked || '';
+  hint.hidden = !usesContact;
+  hint.textContent = usesContact ? T(masked ? 'mvp_otp_demo_contact' : 'mvp_otp_contact_unavailable') : '';
 }
 function mvpSanitizePhone(el, value) {
   const raw = value ?? el.value;
@@ -6849,10 +6872,9 @@ function wrongPassword(errId) {
 $('a-signin-form').addEventListener('submit', e => {
   e.preventDefault();
   if (lockedNow()) { showScreen('scr-auth-locked'); return; }
-  const suffix = mvpLocalPhone($('a-num'));
-  if (!/^[1-9]\d{8}$/.test(suffix)) { setErr('a-signin-err', 'mvp_phone_error'); return; }
-  const num = '0' + suffix; // display +963 + nine digits; internal BSS format stays 09xxxxxxxx
-  clearErr('a-signin-err'); AUTH.number = num;
+  const num = mvpSignInNumber('a-num', 'a-signin-err');
+  if (!num) return;
+  AUTH.number = num;
   // No password, no guest mode: OTP is always required on manual sign-in.
   AUTH.otpAction = '';
   startOtp(num, mvpAfterOtp, 'scr-login');
@@ -7048,24 +7070,32 @@ $('a-otp-wrongnum').onclick = () => {
   if (AUTH.otpReturn === 'sh-mvp-devices') returnToMvpDevices();
   else if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
   else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
-  else { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); }
+  else {
+    AUTH.otpLive = false;
+    AUTH.otpAfter = null;
+    mvpSanitizePhone($('a-cn-num'), AUTH.number || '');
+    clearErr('a-cn-err');
+    showScreen('scr-auth-changenum');
+  }
 };
 $('a-otp-back').onclick = () => {
   if (AUTH.otpReturn === 'sh-mvp-devices') returnToMvpDevices();
   else if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
   else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
-  else showScreen(AUTH.otpReturn);
+  else {
+    AUTH.otpLive = false;
+    AUTH.otpAfter = null;
+    showScreen(AUTH.otpReturn);
+  }
 };
 $('a-cn-form').addEventListener('submit', e => {
   e.preventDefault();
-  const suffix = mvpLocalPhone($('a-cn-num'));
-  if (!/^[1-9]\d{8}$/.test(suffix)) { setErr('a-cn-err', 'mvp_phone_error'); return; }
-  clearErr('a-cn-err');
-  const num = '0' + suffix;
-AUTH.number = num;
-   mvpSanitizePhone($('a-num'), suffix); // Keep Back / Wrong number coherent with the verified number.
-   startOtp(num, mvpAfterOtp, 'scr-login');
- });
+  const num = mvpSignInNumber('a-cn-num', 'a-cn-err');
+  if (!num) return;
+  AUTH.number = num;
+  mvpSanitizePhone($('a-num'), num); // Keep Back / Wrong number coherent with the verified number.
+  startOtp(num, mvpAfterOtp, 'scr-login');
+});
 
 /* ---------- PIN (13a / 13b / enter) ---------- */
 const pin1Boxes = [...document.querySelectorAll('.a-pin1-box')];
