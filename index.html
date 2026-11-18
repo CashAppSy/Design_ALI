@@ -1765,17 +1765,25 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 }
 
 #a-otp-cancel{display:none}
-#sh-addline-otp #scr-auth-otp{display:flex;flex-direction:column;gap:12px}
-#sh-addline-otp .auth-top{display:none}
-#sh-addline-otp .title{margin:0}
-#sh-addline-otp .sub{margin:0;color:var(--ink-soft)}
-#sh-addline-otp .mvp-otp-contact-hint{margin:0}
-#sh-addline-otp .otp6{margin:0 0 12px;gap:8px}
-#sh-addline-otp .otp6 .otp{flex:1;min-width:0;height:56px}
-#sh-addline-otp .otp-actions{display:flex;gap:10px;margin-top:12px}
-#sh-addline-otp .otp-actions .btn{flex:1;width:auto;min-height:var(--tap);margin:0}
-#sh-addline-otp #a-otp-cancel{display:inline-flex}
-#sh-addline-otp .auth-links{flex-flow:row wrap;justify-content:space-between;gap:0 10px;margin:0}
+#sh-mvp-otp #scr-auth-otp{display:flex;flex-direction:column;gap:12px}
+#sh-mvp-otp .auth-top{display:none}
+#sh-mvp-otp .title{margin:0}
+#sh-mvp-otp .sub{margin:0;color:var(--ink-soft)}
+#sh-mvp-otp .mvp-otp-contact-hint{margin:0}
+#sh-mvp-otp .otp6{margin:0 0 12px;gap:8px}
+#sh-mvp-otp .otp6 .otp{flex:1;min-width:0;height:56px}
+#sh-mvp-otp .otp-actions{display:flex;gap:10px;margin-top:12px}
+#sh-mvp-otp .otp-actions .btn{flex:1;width:auto;min-height:var(--tap);margin:0}
+#sh-mvp-otp #a-otp-cancel{display:inline-flex}
+#sh-mvp-otp .auth-links{flex-flow:row wrap;justify-content:space-between;gap:0 10px;margin:0}
+
+#sh-profile .fld input{width:100%}
+#sh-profile .fld{margin-top:4px}
+#sh-mvp-devices [hidden],#sh-mvp-notifications [hidden]{display:none}
+.mvp-device-list{display:grid;gap:8px}
+.mvp-device-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:var(--r-md);background:var(--glass-deep)}
+.mvp-settings-control{display:flex;align-items:center;gap:10px;min-height:44px}
+.mvp-settings-control input{accent-color:var(--btn-bg)}
 
 /* Sign-in decision record v0.5 — additional MVP front-end states (prototype only) */
 #mvp-consent-card{width:min(334px,calc(100% - 32px));max-height:calc(100% - 32px);margin:auto;color:var(--ink)}
@@ -2010,7 +2018,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
       <button class="btn ghost" id="a-otp-cancel" type="button" data-k="cancel">Cancel</button>
       <button class="btn block" id="a-otp-verify" data-k="a_verify">Verify</button>
     </div>
-    <p class="hint" style="text-align:center" data-k="mvp_otp_demo">Prototype only: enter 123456. No SMS is sent.</p>
+    <p class="hint" id="a-otp-demo" style="text-align:center" data-k="mvp_otp_demo">Prototype only: enter 123456. No SMS is sent.</p>
   </div>
   <div id="a-otp-dead" hidden>
     <p class="aerr on" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span id="a-otp-dead-txt" data-k="a_expired_msg">This code has expired.</span></p>
@@ -2538,12 +2546,41 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <div class="sheet" id="sh-profile" role="dialog" aria-modal="true" aria-labelledby="sh-prof-t">
   <div class="grab" aria-hidden="true"></div>
   <p class="st" id="sh-prof-t" data-k="prof_t">Edit profile</p>
-  <label class="micro" for="prof-in-name" data-k="prof_name">Name</label>
-  <input id="prof-in-name" class="num" style="min-height:52px;border-radius:var(--r-md);border:1px solid var(--glass-brd);background:var(--field);color:var(--ink);padding:0 14px;font-size:var(--f-body);width:100%" value="Yaman Nouri">
-  <div class="srow">
-    <button class="btn ghost" data-close data-k="cancel">Cancel</button>
-    <button class="btn" id="btn-prof-save" data-k="save">Save</button>
-  </div>
+  <form id="prof-form">
+    <div class="fld"><label for="prof-in-name" data-k="mvp_first_name">First name</label><input class="in" id="prof-in-name" autocomplete="given-name" maxlength="60"></div>
+    <div class="fld"><label for="prof-in-family" data-k="mvp_family_name">Last name</label><input class="in" id="prof-in-family" autocomplete="family-name" maxlength="60"></div>
+    <div class="fld"><label for="prof-in-email" data-k="mvp_email">Email</label><input class="in" id="prof-in-email" type="email" autocomplete="email" maxlength="254" dir="ltr"></div>
+    <p class="mvp-field-help" id="prof-email-status"></p>
+    <div class="srow">
+      <button class="btn ghost" type="button" data-close data-k="cancel">Cancel</button>
+      <button class="btn" id="btn-prof-save" type="submit" data-k="save">Save</button>
+    </div>
+  </form>
+</div>
+
+<div class="sheet" id="sh-mvp-devices" role="dialog" aria-modal="true" aria-labelledby="mvp-devices-title">
+  <div class="grab" aria-hidden="true"></div>
+  <p class="st" id="mvp-devices-title" data-k="mvp_devices">Sessions and trusted devices</p>
+  <p class="sd" id="mvp-device-limit" hidden data-k="mvp_device_limit">Remove a remembered device before remembering this one.</p>
+  <p class="micro" id="mvp-current-session-title" data-k="mvp_current_session">Current session</p>
+  <div class="mvp-device-row" id="mvp-current-session"></div>
+  <p class="micro" data-k="mvp_remembered_devices">Remembered devices</p>
+  <div class="mvp-device-list" id="mvp-device-list"></div>
+  <p class="sd" data-k="mvp_devices_demo">Device and session management is simulated in this browser.</p>
+  <button class="btn block" id="mvp-remember-after-removal" type="button" hidden data-k="mvp_remember_yes">Remember this phone</button>
+  <button class="btn block" type="button" data-close data-k="close">Close</button>
+</div>
+
+<div class="sheet" id="sh-mvp-notifications" role="dialog" aria-modal="true" aria-labelledby="mvp-notifications-title">
+  <div class="grab" aria-hidden="true"></div>
+  <p class="st" id="mvp-notifications-title" data-k="mvp_notifications">Notification settings</p>
+  <p class="sd" id="mvp-notification-permission" role="status"></p>
+  <button class="btn ghost" id="mvp-notification-request" type="button" data-k="mvp_notifications_allow">Allow notifications</button>
+  <label class="mvp-settings-control"><input type="checkbox" id="mvp-promo-opt-in"><span data-k="mvp_promotions">Promotional notifications</span></label>
+  <p class="sd" data-k="mvp_promo_detail">Promotional notifications require both this preference and device permission.</p>
+  <div class="mvp-device-row"><span data-k="mvp_security_alerts">Security notifications</span><strong data-k="mvp_always_on">Always on</strong></div>
+  <p class="sd" data-k="mvp_security_sms">Without device permission, security alerts are delivered by SMS in the live app.</p>
+  <button class="btn block" type="button" data-close data-k="close">Close</button>
 </div>
 
 <div class="dlg" id="dlg-payok" role="alertdialog" aria-modal="true" aria-labelledby="payok-t">
@@ -2652,7 +2689,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   </div>
 </div>
 
-<div class="sheet" id="sh-addline-otp" role="dialog" aria-modal="true" aria-labelledby="a-otp-title">
+<div class="sheet" id="sh-mvp-otp" role="dialog" aria-modal="true" aria-labelledby="a-otp-title">
   <div class="grab" aria-hidden="true"></div>
 </div>
 
@@ -6461,6 +6498,40 @@ function setWorld(id) {
 
 /* MVP authentication wording and 9-digit suffix (+963 fixed). */
 Object.assign(I18N.en, {
+  mvp_edit_profile:"Edit profile",
+  mvp_first_name:"First name",
+  mvp_family_name:"Last name",
+  mvp_email:"Email",
+  mvp_email_hint:"An email is optional. Confirm a new address with a code before saving it.",
+  mvp_email_verified:"Verified email",
+  mvp_email_wrong:"Wrong email?",
+  mvp_email_title:"Verify your email",
+  mvp_email_sent:"Enter the 6-digit confirmation code for",
+  mvp_email_demo:"Prototype only: enter 123456. No email is sent.",
+  mvp_email_locked:"For your security, email verification is locked. Try again when the timer ends.",
+  mvp_devices:"Sessions and trusted devices",
+  mvp_device_limit:"Remove a remembered device before remembering this one.",
+  mvp_current_session:"Current session",
+  mvp_remembered_devices:"Remembered devices",
+  mvp_devices_demo:"Device and session management is simulated in this browser.",
+  mvp_this_device:"This device",
+  mvp_other_device:"Remembered device",
+  mvp_temporary_session:"Temporary session",
+  mvp_remembered_session:"Remembered session",
+  mvp_no_devices:"No remembered devices",
+  mvp_remove_device:"Remove device",
+  mvp_end_session:"End session",
+  mvp_notifications:"Notification settings",
+  mvp_notifications_allow:"Allow notifications",
+  mvp_notifications_allowed:"Device permission: allowed",
+  mvp_notifications_blocked:"Device permission is blocked. Change it in your browser settings.",
+  mvp_notifications_default:"Device permission has not been granted.",
+  mvp_notifications_unavailable:"Device permission is unavailable in this browser.",
+  mvp_promotions:"Promotional notifications",
+  mvp_promo_detail:"Promotional notifications require both this preference and device permission.",
+  mvp_security_alerts:"Security notifications",
+  mvp_always_on:"Always on",
+  mvp_security_sms:"Without device permission, security alerts are delivered by SMS in the live app.",
   mvp_addline_locked:"For your security, adding a line is locked. Try again when the timer ends.",
   mvp_consent_title:"Terms and privacy notice",
   mvp_consent_text:"By using the app you agree to our terms and privacy notice.",
@@ -6498,6 +6569,40 @@ mvp_remember_demo:"Prototype only: remembered-phone recognition is simulated in 
    mvp_guide_3:"After verification, choose Remember Me or Not now. Signing out removes the remembered device and requires a new code."
 });
 Object.assign(I18N.ar, {
+  mvp_edit_profile:"تعديل الملف الشخصي",
+  mvp_first_name:"الاسم",
+  mvp_family_name:"الكنية",
+  mvp_email:"البريد الإلكتروني",
+  mvp_email_hint:"البريد الإلكتروني اختياري. أكّد العنوان الجديد برمز قبل حفظه.",
+  mvp_email_verified:"بريد إلكتروني مؤكّد",
+  mvp_email_wrong:"بريد إلكتروني خاطئ؟",
+  mvp_email_title:"تحقّق من بريدك الإلكتروني",
+  mvp_email_sent:"أدخل رمز التأكيد المؤلف من 6 أرقام للبريد",
+  mvp_email_demo:"للتجربة فقط: أدخل 123456. لن تُرسل رسالة بريد إلكتروني.",
+  mvp_email_locked:"حفاظاً على أمانك، تم قفل التحقق من البريد. حاول مجدداً عند انتهاء المؤقّت.",
+  mvp_devices:"الجلسات والأجهزة الموثوقة",
+  mvp_device_limit:"أزل جهازاً متذكّراً قبل تذكّر هذا الجهاز.",
+  mvp_current_session:"الجلسة الحالية",
+  mvp_remembered_devices:"الأجهزة المتذكّرة",
+  mvp_devices_demo:"إدارة الأجهزة والجلسات محاكاة في هذا المتصفح.",
+  mvp_this_device:"هذا الجهاز",
+  mvp_other_device:"جهاز متذكّر",
+  mvp_temporary_session:"جلسة مؤقتة",
+  mvp_remembered_session:"جلسة على جهاز متذكّر",
+  mvp_no_devices:"لا توجد أجهزة متذكّرة",
+  mvp_remove_device:"إزالة الجهاز",
+  mvp_end_session:"إنهاء الجلسة",
+  mvp_notifications:"إعدادات الإشعارات",
+  mvp_notifications_allow:"السماح بالإشعارات",
+  mvp_notifications_allowed:"إذن الجهاز: مسموح",
+  mvp_notifications_blocked:"الإذن محظور. غيّره من إعدادات المتصفح.",
+  mvp_notifications_default:"لم يُمنح إذن الجهاز بعد.",
+  mvp_notifications_unavailable:"إذن الجهاز غير متاح في هذا المتصفح.",
+  mvp_promotions:"الإشعارات الترويجية",
+  mvp_promo_detail:"تتطلب الإشعارات الترويجية تفعيل هذا الخيار وإذن الجهاز.",
+  mvp_security_alerts:"إشعارات الأمان",
+  mvp_always_on:"مفعّلة دائماً",
+  mvp_security_sms:"عند غياب إذن الجهاز، تُرسل تنبيهات الأمان عبر SMS في التطبيق الفعلي.",
   mvp_addline_locked:"حفاظاً على أمانك، تم قفل إضافة رقم. حاول مجدداً عند انتهاء المؤقّت.",
   mvp_consent_title:"الشروط وإشعار الخصوصية",
   mvp_consent_text:"باستخدام التطبيق، أنت توافق على الشروط وإشعار الخصوصية.",
@@ -6582,6 +6687,40 @@ function syncLangPills() { document.querySelectorAll('[data-langpick]').forEach(
 /* Prototype session flags, NOT production authentication. Backend and signed
    device tokens are required for real network recognition/Remember Me. */
 const MVP_AUTH_KEY = 'zain_mvp_remembered_demo_v1';
+const MVP_PROFILE_KEY = 'zain_mvp_profile_demo_v1';
+const MVP_DEVICE_LIMIT = 3;
+const mvpProfiles = Object.create(null);
+function mvpProfile() {
+  const number = AUTH.number || 'demo';
+  if (!mvpProfiles[number]) {
+    let saved;
+    try { saved = JSON.parse(localStorage.getItem(MVP_PROFILE_KEY + ':' + number)); } catch (e) {}
+    const seeded = number === 'demo' || number === '0944000000';
+    mvpProfiles[number] = {
+      first: seeded ? 'Yaman' : '', family: seeded ? 'Nouri' : '',
+      email: '', promotions: false, permission: 'default', devices: [], ...saved
+    };
+  }
+  return mvpProfiles[number];
+}
+function saveMvpProfile() {
+  try { localStorage.setItem(MVP_PROFILE_KEY + ':' + (AUTH.number || 'demo'), JSON.stringify(mvpProfile())); } catch (e) {}
+}
+let mvpDeviceId;
+try {
+  mvpDeviceId = localStorage.getItem('zain_mvp_demo_installation');
+  if (!mvpDeviceId) {
+    mvpDeviceId = crypto.randomUUID();
+    localStorage.setItem('zain_mvp_demo_installation', mvpDeviceId);
+  }
+} catch (e) { mvpDeviceId = 'local-preview'; }
+function forgetCurrentDevice() {
+  const profile = mvpProfile();
+  profile.devices = profile.devices.filter(device => device.id !== mvpDeviceId);
+  saveMvpProfile();
+  mvpSessionRemembered = false;
+  try { localStorage.removeItem(MVP_AUTH_KEY); } catch (e) {}
+}
 let mvpSessionRemembered = false;
 let mvpSessionActivityAt = Date.now();
 function mvpRemembered() {
@@ -6600,6 +6739,21 @@ function mvpLineKind(local) {
   return 'mobile';
 }
 function mvpOtpDestination(num) {
+  const email = AUTH.otpReturn === 'sh-profile';
+  for (const [id, key] of [['a-otp-title', email ? 'mvp_email_title' : 'a_otp_t'], ['a-otp-demo', email ? 'mvp_email_demo' : 'mvp_otp_demo'], ['a-otp-wrongnum', email ? 'mvp_email_wrong' : 'a_wrongnum']]) {
+    const element = $(id);
+    element.dataset.k = key;
+    element.textContent = T(key);
+  }
+  if (email) {
+    const label = $('a-otp-sent-label');
+    label.dataset.k = 'mvp_email_sent';
+    label.textContent = T('mvp_email_sent');
+    const [local, domain] = num.split('@');
+    $('a-otp-num').textContent = local.slice(0,1) + '•••@' + domain;
+    $('mvp-otp-contact-hint').hidden = true;
+    return;
+  }
   const kind = mvpLineKind(num);
   const contact = (kind === 'adsl' || kind === 'data');
   const label = $('a-otp-sent-label');
@@ -6660,13 +6814,19 @@ function mvpAfterOtp() {
   showScreen('scr-auth-remember');
 }
 $('mvp-remember-yes').onclick = function () {
+  const profile = mvpProfile();
+  if (!profile.devices.some(device => device.id === mvpDeviceId)) {
+    if (profile.devices.length >= MVP_DEVICE_LIMIT) { openMvpDevices(true); return; }
+    profile.devices.push({id:mvpDeviceId, rememberedAt:Date.now()});
+    saveMvpProfile();
+  }
+  if (openEl === $('sh-mvp-devices')) closeOverlays(true);
   mvpSessionRemembered = true;
   try { localStorage.setItem(MVP_AUTH_KEY, JSON.stringify({ number: AUTH.number })); } catch (e) {}
   signInSuccess();
 };
 $('mvp-remember-no').onclick = function () {
-  mvpSessionRemembered = false;
-  try { localStorage.removeItem(MVP_AUTH_KEY); } catch (e) {}
+  forgetCurrentDevice();
   signInSuccess();
 };
 
@@ -6712,7 +6872,8 @@ $('a-to-signup').onclick = () => showScreen('scr-auth-signup1');
 $('a-to-forgot').onclick = () => showScreen('scr-auth-forgot');
 $('a-em-forgot').onclick = () => showScreen('scr-auth-forgot');
 $('a-lock-back').onclick = () => {
-  if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
+  if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
+  else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else showScreen('scr-login');
 };
 
@@ -6794,7 +6955,7 @@ const d = arToLatin(e.clipboardData.getData('text') || '').replace(/\D/g, '');
 }
 function clearBoxes(boxes) { boxes.forEach(b => { b.value = ''; b.classList.remove('err'); }); }
 function otpVisible() {
-  return openEl === $('sh-addline-otp') || $('scr-auth-otp').classList.contains('on');
+  return openEl === $('sh-mvp-otp') || $('scr-auth-otp').classList.contains('on');
 }
 function startOtp(num, after, ret) {
   if (AUTH.lockUntil && Date.now() >= AUTH.lockUntil) {
@@ -6809,8 +6970,8 @@ function startOtp(num, after, ret) {
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true;
   clearErr('a-otp-err'); clearBoxes(otpBoxes);
   const panel = $('scr-auth-otp');
-  const sheet = $('sh-addline-otp');
-  if (ret === 'sh-addline') {
+  const sheet = $('sh-mvp-otp');
+  if (ret === 'sh-addline' || ret === 'sh-profile') {
     panel.classList.remove('screen', 'auth', 'on');
     sheet.appendChild(panel);
     if (openEl !== sheet) openSheet(sheet);
@@ -6834,7 +6995,7 @@ function verifyOtp(code) {
   if (!AUTH.otpLive) return;
   if (Date.now() > AUTH.otpDeadline) { otpDead('a_expired_msg'); return; }
   // Only a prototype: accept the published test code, not real SMS verification.
-  if ((AUTH.otpReturn === 'scr-login' || AUTH.otpReturn === 'sh-addline') && code !== '123456') {
+  if ((AUTH.otpReturn === 'scr-login' || AUTH.otpReturn === 'sh-addline' || AUTH.otpReturn === 'sh-profile') && code !== '123456') {
      AUTH.otpWrongTotal++;
      AUTH.otpAttempts = Math.max(0, 5 - AUTH.otpWrongTotal);
     VIB(30);
@@ -6876,13 +7037,15 @@ $('a-otp-resend').onclick = () => {
   AUTH.otpDeadline = Date.now() + 3 * 60 * 1000; AUTH.resendAt = Date.now() + 30 * 1000;
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true; clearErr('a-otp-err'); clearBoxes(otpBoxes); otpBoxes[0].focus();
 };
-$('a-otp-cancel').onclick = () => returnToAddLine();
+$('a-otp-cancel').onclick = () => $('a-otp-back').click();
 $('a-otp-wrongnum').onclick = () => {
-  if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
+  if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
+  else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); }
 };
 $('a-otp-back').onclick = () => {
-  if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
+  if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
+  else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else showScreen(AUTH.otpReturn);
 };
 $('a-cn-form').addEventListener('submit', e => {
@@ -6996,18 +7159,25 @@ showScreen = function (id) {
   // Redirect before animating: login -> locked -> login in 60ms caused both
   // screens to disappear when the older exit spring finished later.
   if (id === 'scr-login' && lockedNow()) id = 'scr-auth-locked';
-  if (id !== 'app' && openEl === $('sh-addline-otp')) closeOverlays(true);
+  if (id !== 'app' && openEl === $('sh-mvp-otp')) closeOverlays(true);
   _showScreenAuth(id);
   if (id === 'scr-login') {
     var remembered = mvpRemembered();
-    if (remembered) { AUTH.number = remembered.number; mvpSessionRemembered = true; enterApp(); return; }
+    if (remembered) { AUTH.number = remembered.number; mvpSessionRemembered = true;
+      const profile = mvpProfile();
+      if (!profile.devices.some(device => device.id === mvpDeviceId) && profile.devices.length < MVP_DEVICE_LIMIT) {
+        profile.devices.push({id:mvpDeviceId, rememberedAt:Date.now()});
+        saveMvpProfile();
+      }
+      enterApp(); return; }
     syncLangPills();
     /* No PIN or biometric sign-in in MVP. */
   }
   if (id === 'scr-auth-remember') { var src = $('login-logo').getAttribute('src'); if (src) $('mvp-remember-logo').setAttribute('src', src); syncLangPills(); }
   if (id === 'scr-auth-locked') {
-    const addingLine = AUTH.otpReturn === 'sh-addline';
-    for (const [id, key] of [['a-lock-message', addingLine ? 'mvp_addline_locked' : 'a_locked_s'], ['a-lock-back', addingLine ? 'back' : 'a_back_signin']]) {
+    const messages = {'sh-profile':'mvp_email_locked', 'sh-addline':'mvp_addline_locked'};
+    const message = messages[AUTH.otpReturn];
+    for (const [id, key] of [['a-lock-message', message || 'a_locked_s'], ['a-lock-back', message ? 'back' : 'a_back_signin']]) {
       const el = $(id);
       el.dataset.k = key;
       el.textContent = T(key);
@@ -7030,7 +7200,7 @@ function enterApp() {
     if (profileNumber) profileNumber.textContent = current;
     if (typeof window.__ucOnLineChange === 'function') window.__ucOnLineChange();
   }
-  S.authed = true; mvpSessionActivityAt = Date.now(); showScreen('app'); goTab('home', true); if (typeof window.mvpRefreshConsent === 'function') window.mvpRefreshConsent(); if (typeof window.mvpCancelPendingDeletion === 'function') window.mvpCancelPendingDeletion(); setTimeout(animBars, 400);
+  S.authed = true; mvpSessionActivityAt = Date.now(); renderMvpProfile(); renderMore(); showScreen('app'); goTab('home', true); if (typeof window.mvpRefreshConsent === 'function') window.mvpRefreshConsent(); if (typeof window.mvpCancelPendingDeletion === 'function') window.mvpCancelPendingDeletion(); setTimeout(animBars, 400);
 }
 function openAbout() {
   $('sh-usage-t').textContent = T('about_t');
@@ -7653,14 +7823,16 @@ function renderMore() {
   const rows = [
     { id:'lang', t:T('lang_r'), v: LANG === 'ar' ? 'العربية' : 'English' },
     { id:'theme', t:T('theme_r'), v: S.theme === 'light' ? T('theme_l') : T('theme_d') },
-    { id:'notif', t:T('notif_r'), v:T('notif_v') },
+    { id:'profile', t:T('mvp_edit_profile'), v:'' },
+    { id:'devices', t:T('mvp_devices'), v:'' },
+    { id:'notif', t:T('mvp_notifications'), v:'' },
     { id:'help', t:T('help_r'), v:'' },
     { id:'about', t:T('about_r'), v:'' },
     { id:'usecases', t:T('uc_menu_t'), v:'' },
     { id:'deleteprofile', t:T('mvp_delete_title'), v:'' },
     { id:'out', t:T('out_r'), v:'' },
   ];
-  const icons = { lang:'sun', theme:'planet', notif:'shooting_star', help:'phone', about:'star', usecases:'medal', deleteprofile:'star', out:'rocket' };
+  const icons = { lang:'sun', theme:'planet', profile:'star', devices:'phone', notif:'shooting_star', help:'phone', about:'star', usecases:'medal', deleteprofile:'star', out:'rocket' };
   rows.forEach(r => {
     const b = document.createElement('button');
     b.className = 'prow card';
@@ -7736,7 +7908,7 @@ function closeOverlays(silent) {
   const jobs = [];
   if (openEl) {
     const el = openEl; openEl = null;
-    if (el.id === 'sh-addline-otp') {
+    if (el.id === 'sh-mvp-otp') {
       AUTH.otpLive = false;
       AUTH.otpAfter = null;
     }
@@ -8683,8 +8855,22 @@ function moreGo(id) {
   else if (id === 'help') openSupport();
   else if (id === 'about') openAbout();
   else if (id === 'deleteprofile') window.mvpOpenDeleteProfile();
-  else if (id === 'notif') toast(T('notif_r') + ': ' + T('notif_v'));
-  else if (id === 'out') { mvpSessionRemembered = false; S.authed = false; AUTH.bioPromptArmed = false; AUTH.otpLive = false; AUTH.otpAfter = null; AUTH.otpWrongTotal = 0; try { localStorage.removeItem(MVP_AUTH_KEY); } catch (e) {} closeOverlays(true); $('a-num').value = (AUTH.number || '').replace(/^0/, ''); showScreen('scr-login'); toast(T('signed_out')); }
+  else if (id === 'profile') openMvpProfile();
+  else if (id === 'devices') openMvpDevices();
+  else if (id === 'notif') openMvpNotifications();
+  else if (id === 'out') endMvpSession();
+}
+function endMvpSession() {
+  forgetCurrentDevice();
+  S.authed = false;
+  AUTH.bioPromptArmed = false;
+  AUTH.otpLive = false;
+  AUTH.otpAfter = null;
+  AUTH.otpWrongTotal = 0;
+  closeOverlays(true);
+  mvpSanitizePhone($('a-num'), AUTH.number || '');
+  showScreen('scr-login');
+  toast(T('signed_out'));
 }
 function setTheme(t) {
   S.theme = t; stage().dataset.theme = t;
@@ -8710,15 +8896,122 @@ function openAbout() {
     <p class="sd">${T('about_d')}</p></div>`;
   openSheet($('sh-usage'));
 }
+function renderMvpProfile() {
+  const profile = mvpProfile();
+  const name = [profile.first, profile.family].filter(Boolean).join(' ') || AUTH.number || T('mvp_edit_profile');
+  $('prof-name').textContent = name;
+  $('home-name').textContent = name;
+  $('avatar').textContent = name[0].toUpperCase();
+}
+function openMvpProfile(reset = true) {
+  const profile = mvpProfile();
+  if (reset) {
+    $('prof-in-name').value = profile.first;
+    $('prof-in-family').value = profile.family;
+    $('prof-in-email').value = profile.email;
+  }
+  renderMvpEmailStatus();
+  openSheet($('sh-profile'));
+}
+function renderMvpEmailStatus() {
+  const saved = mvpProfile().email;
+  const verified = saved && $('prof-in-email').value.trim() === saved;
+  $('prof-email-status').textContent = T(verified ? 'mvp_email_verified' : 'mvp_email_hint');
+}
+function returnToMvpEmail() {
+  AUTH.otpLive = false;
+  AUTH.otpAfter = null;
+  AUTH.otpReturn = 'scr-login';
+  if (!S.authed) { showScreen('scr-login'); return; }
+  showScreen('app');
+  openMvpProfile(false);
+}
+function openMvpDevices(atLimit = false) {
+  const profile = mvpProfile();
+  const list = $('mvp-device-list');
+  const session = $('mvp-current-session');
+  const full = profile.devices.length >= MVP_DEVICE_LIMIT;
+  $('mvp-device-limit').hidden = !atLimit || !full;
+  $('mvp-remember-after-removal').hidden = !atLimit || full;
+  session.hidden = !S.authed;
+  $('mvp-current-session-title').hidden = !S.authed;
+  session.replaceChildren();
+  function addDeviceAction(row, title, action, handler) {
+    const label = document.createElement('span');
+    label.textContent = title;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'linklike';
+    button.textContent = action;
+    button.onclick = handler;
+    row.append(label, button);
+  }
+  if (S.authed) addDeviceAction(session, T(mvpSessionRemembered ? 'mvp_remembered_session' : 'mvp_temporary_session'), T('mvp_end_session'), endMvpSession);
+  list.replaceChildren();
+  if (!profile.devices.length) list.textContent = T('mvp_no_devices');
+  for (const device of profile.devices) {
+    const row = document.createElement('div');
+    row.className = 'mvp-device-row';
+    const current = device.id === mvpDeviceId;
+    const date = new Date(device.rememberedAt).toLocaleDateString(LANG === 'ar' ? 'ar-SY' : 'en-GB');
+    addDeviceAction(row, T(current ? 'mvp_this_device' : 'mvp_other_device') + ' · ' + date, T('mvp_remove_device'), () => {
+      if (current) forgetCurrentDevice();
+      else {
+        profile.devices = profile.devices.filter(item => item.id !== device.id);
+        saveMvpProfile();
+      }
+      openMvpDevices(atLimit);
+    });
+    list.appendChild(row);
+  }
+  if (openEl !== $('sh-mvp-devices')) openSheet($('sh-mvp-devices'));
+}
+function renderMvpNotifications() {
+  const profile = mvpProfile();
+  const permission = window.Notification?.permission || 'unavailable';
+  const labels = {granted:'mvp_notifications_allowed', denied:'mvp_notifications_blocked', default:'mvp_notifications_default', unavailable:'mvp_notifications_unavailable'};
+  $('mvp-notification-permission').textContent = T(labels[permission]);
+  $('mvp-notification-request').hidden = permission !== 'default';
+  $('mvp-promo-opt-in').checked = profile.promotions;
+  if (profile.permission !== permission) { profile.permission = permission; saveMvpProfile(); }
+}
+function openMvpNotifications() {
+  renderMvpNotifications();
+  openSheet($('sh-mvp-notifications'));
+}
 function bindProfile() {
-  $('btn-edit-prof').onclick = () => {
-    $('prof-in-name').value = $('prof-name').textContent;
-    openSheet($('sh-profile'));
+  $('btn-edit-prof').onclick = () => openMvpProfile();
+  $('mvp-remember-after-removal').onclick = () => $('mvp-remember-yes').click();
+  $('prof-in-email').addEventListener('input', renderMvpEmailStatus);
+  $('prof-form').addEventListener('submit', event => {
+    event.preventDefault();
+    if (!S.authed || openEl !== $('sh-profile')) return;
+    const profile = mvpProfile();
+    const first = $('prof-in-name').value.trim();
+    const family = $('prof-in-family').value.trim();
+    const email = $('prof-in-email').value.trim();
+    const save = () => {
+      if (!S.authed || mvpProfile() !== profile) return;
+      Object.assign(profile, {first, family, email});
+      saveMvpProfile();
+      renderMvpProfile();
+      closeOverlays(true);
+      AUTH.otpReturn = 'scr-login';
+      toast(T('prof_saved'));
+    };
+    if (email && email !== profile.email) {
+      closeOverlays(true);
+      AUTH.otpAction = '';
+      startOtp(email, save, 'sh-profile');
+    } else save();
+  });
+  $('mvp-promo-opt-in').onchange = event => {
+    mvpProfile().promotions = event.target.checked;
+    saveMvpProfile();
   };
-  $('btn-prof-save').onclick = () => {
-    const v = $('prof-in-name').value.trim();
-    if (v) { $('prof-name').textContent = v; $('home-name').textContent = v; $('avatar').textContent = v.trim()[0].toUpperCase(); }
-    VIB(10); closeOverlays().then(() => toast(T('prof_saved')));
+  $('mvp-notification-request').onclick = async () => {
+    try { await Notification.requestPermission(); } catch (e) {}
+    if (openEl === $('sh-mvp-notifications')) renderMvpNotifications();
   };
 }
 
