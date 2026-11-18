@@ -423,6 +423,10 @@ input{caret-color:var(--btn-bg)}
 .bundle.card .bhero{grid-column:1;grid-row:1 / 3;align-self:center;width:auto;text-align:start;transform:translateY(11px)}
 .bundle.card .bp .p{font-size:34px;line-height:1.05;font-weight:900;white-space:nowrap}
 .bundle.card .bp .p svg{display:inline-block;vertical-align:middle}
+button.bundle.card{grid-template-columns:128px minmax(0,1fr);column-gap:8px;padding-block:8px}
+button.bundle.card .bhero{transform:none}
+button.bundle.card .bp .p{font-size:28px}
+.bundle.card .b-hero-gb.raised{display:inline-block;transform:translateY(-.7em)}
 .bundle.card .bp .u{font-size:13px;color:var(--ink-faint)}
 .bundle.card .bfoot{grid-column:2;grid-row:2;align-self:end;display:flex;align-items:baseline;justify-content:flex-end;gap:8px;min-width:0}
 .bundle.card .bfoot .bprice{font-size:17px;font-weight:800;color:var(--ink);white-space:nowrap}
@@ -529,6 +533,7 @@ input{caret-color:var(--btn-bg)}
 .fbtnrow .btn{flex:1}
 .fempty{padding:18px 16px;border-radius:var(--r-lg);background:var(--glass);border:1px solid var(--glass-brd);text-align:center}
 .fempty .st{font-size:var(--f-head);font-weight:800;margin-bottom:6px}
+#sh-bundle-t{line-height:1.2}
 .fempty .sd{font-size:var(--f-cap);color:var(--ink-soft);margin-bottom:12px}
 /* finder empty state cannot use .st/.sd — view CSS hides both inside .scrbody */
 .fempty .ftitle{font-size:var(--f-head);font-weight:800;margin-bottom:6px}
@@ -1831,12 +1836,12 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
   <img decoding="async" class="logo" id="login-logo" src="" alt="Zain" width="104">
   <h1 class="title" data-k="a_signin_t">Sign in</h1>
-  <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile, Data, or ADSL number to continue.</p>
+  <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
   <form id="a-signin-form" novalidate>
-    <div class="fld"><label for="a-num" data-k="mvp_number_label">Mobile, Data or ADSL number</label>
-      <div class="phone-row"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" pattern="[0-9]{9}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
+    <div class="fld"><label for="a-num" data-k="mvp_number_label">Mobile or ADSL number</label>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" pattern="[0-9]{9}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
       <div class="mvp-field-help" id="mvp-login-guidance">
-        <p data-k="mvp_help_mobile">Mobile or Data: enter 9 digits without the leading 0 (e.g. 944000000).</p>
+        <p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944000000).</p>
         <p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p>
       </div>
     </div>
@@ -1886,7 +1891,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <p class="body sub" data-k="a_setup_s">Link your Zain number to finish creating your account.</p>
   <form id="a-setup-form" novalidate>
     <div class="fld"><label for="a-setup-num" data-k="a_zain_number">Zain number</label>
-      <div class="phone-row"><span class="cc num" dir="ltr">+963</span><input id="a-setup-num" class="num" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="0944 000 000" data-k-ph="a_num_ph" aria-label="Zain number" dir="ltr"></div>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-setup-num" class="num" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="0944 000 000" data-k-ph="a_num_ph" aria-label="Zain number" dir="ltr"></div>
     </div>
     <p class="aerr" id="a-setup-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span data-k="a_err_number">Enter a valid 10-digit number.</span></p>
     <button class="btn block" type="submit" data-k="a_continue">Continue</button>
@@ -1912,7 +1917,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
     <div class="fld"><label for="a-su-name" data-k="a_name">Full name</label>
       <input id="a-su-name" class="in" type="text" autocomplete="name" aria-label="Full name"></div>
     <div class="fld"><label for="a-su-num" data-k="a_number">Subscriber number</label>
-      <div class="phone-row"><span class="cc num" dir="ltr">+963</span><input id="a-su-num" class="num" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="0944 000 000" data-k-ph="a_num_ph" aria-label="Subscriber number" dir="ltr"></div>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-su-num" class="num" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="0944 000 000" data-k-ph="a_num_ph" aria-label="Subscriber number" dir="ltr"></div>
     </div>
     <p class="aerr" id="a-su1-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span data-k="a_err_fields">Enter your name and a valid 10-digit number.</span></p>
     <button class="btn block" type="submit" data-k="a_next">Next</button>
@@ -1988,7 +1993,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <div class="auth-top"><button class="auth-back" id="a-otp-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
   <h1 class="title" data-k="a_otp_t">Verify your number</h1>
   <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr">0944•••000</span></p>
-  <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" data-k="mvp_otp_contact_hint" hidden>For Data and ADSL, the code is sent to the contact mobile number registered with the line.</p>
+  <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" data-k="mvp_otp_contact_hint" hidden>The code is sent to the contact mobile number registered with the line.</p>
   <p id="mvp-otp-action-hint" hidden></p><div id="a-otp-live">
     <div class="otp6" dir="ltr">
       <input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 1"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 2"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 3"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 4"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 5"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 6">
@@ -2003,9 +2008,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   </div>
   <div class="auth-links">
     <button class="linklike" id="a-otp-resend" data-k="a_resend">Request a new code</button>
-    <button class="linklike" id="a-otp-call" data-k="a_call">Call me instead</button>
     <button class="linklike" id="a-otp-wrongnum" data-k="a_wrongnum">Wrong number?</button>
-    <button class="linklike" id="a-otp-back2" data-k="a_back">Back</button>
   </div>
 </section>
 
@@ -2026,9 +2029,9 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
   <h1 class="title" data-k="a_change_t">Change number</h1>
   <p class="body sub" data-k="a_change_s">Enter the correct number. We'll send a new code.</p>
   <form id="a-cn-form" novalidate>
-    <div class="fld"><label for="a-cn-num" data-k="mvp_number_label">Mobile, Data or ADSL number</label>
-      <div class="phone-row"><span class="cc num" dir="ltr">+963</span><input id="a-cn-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" pattern="[0-9]{9}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit mobile, data or landline number" aria-describedby="mvp-change-guidance" dir="ltr"></div>
-      <div class="mvp-field-help" id="mvp-change-guidance"><p data-k="mvp_help_mobile">Mobile or Data: enter 9 digits without the leading 0 (e.g. 944000000).</p><p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p></div>
+    <div class="fld"><label for="a-cn-num" data-k="mvp_number_label">Mobile or ADSL number</label>
+      <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-cn-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="9" pattern="[0-9]{9}" placeholder="944 000 000" data-k-ph="mvp_phone_hint" aria-label="Nine-digit mobile, data or landline number" aria-describedby="mvp-change-guidance" dir="ltr"></div>
+      <div class="mvp-field-help" id="mvp-change-guidance"><p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944000000).</p><p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p></div>
     </div>
     <p class="aerr" id="a-cn-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944000000 · ADSL: 115430741.</span></p>
     <button class="btn block" type="submit" data-k="a_update">Update number</button>
@@ -2882,10 +2885,9 @@ a_err_email_exists:"This email already has an account — try signing in.",
 a_pass_e2_s:"Set your password to finish creating your account.",
 a_otp_t:"Verify your number", a_otp_s:"Enter the 6-digit code sent to", a_verify:"Verify",
 a_demo_otp:"Demo: any 6 digits work.", a_expired_msg:"This code has expired.", a_send_new:"Send a new code",
-a_resend:"Request a new code", a_resend_in:"Resend code in {t}", a_call:"Call me instead", a_wrongnum:"Wrong number?",
+a_resend:"Request a new code", a_resend_in:"Resend code in {t}", a_wrongnum:"Wrong number?",
 a_otp_wrong:"Incorrect code. {n} attempts left.", a_otp_wrong1:"Incorrect code. 1 attempt left.",
 a_otp_invalid:"Too many wrong codes — this code is no longer valid. Request a new one.",
-a_call_toast:"We'll call you with your code shortly.",
 a_change_t:"Change number", a_change_s:"Enter the correct number. We'll send a new code.", a_update:"Update number", a_cancel:"Cancel",
 a_pin_t:"Set up a PIN", a_pin_s:"Choose a 6-digit PIN for quick sign-in.", a_err_pin6:"Enter all 6 digits.",
 a_pin2_t:"Confirm your PIN", a_pin2_s:"Enter your PIN again.", a_err_pinmatch:"PINs don't match. Try again.", a_confirm:"Confirm",
@@ -2941,10 +2943,9 @@ a_err_email_exists:"هذا البريد مسجّل مسبقاً — جرّب ت�
 a_pass_e2_s:"عيّن كلمة المرور لإنهاء إنشاء حسابك.",
 a_otp_t:"تأكيد رقمك", a_otp_s:"أدخل الرمز المؤلف من 6 أرقام المرسل إلى", a_verify:"تأكيد",
 a_demo_otp:"عرض تجريبي: أي 6 أرقام تعمل.", a_expired_msg:"انتهت صلاحية هذا الرمز.", a_send_new:"إرسال رمز جديد",
-a_resend:"طلب رمز جديد", a_resend_in:"إعادة الإرسال خلال {t}", a_call:"اتصلوا بي بدلاً من ذلك", a_wrongnum:"رقم خاطئ؟",
+a_resend:"طلب رمز جديد", a_resend_in:"إعادة الإرسال خلال {t}", a_wrongnum:"رقم خاطئ؟",
 a_otp_wrong:"رمز غير صحيح. المحاولات المتبقية: {n}", a_otp_wrong1:"رمز غير صحيح. المحاولات المتبقية: 1",
 a_otp_invalid:"محاولات خاطئة كثيرة — لم يعد هذا الرمز صالحاً. اطلب رمزاً جديداً.",
-a_call_toast:"سنتصل بك ونزوّدك بالرمز قريباً.",
 a_change_t:"تغيير الرقم", a_change_s:"أدخل الرقم الصحيح. سنرسل رمزاً جديداً.", a_update:"تحديث الرقم", a_cancel:"إلغاء",
 a_pin_t:"إعداد رمز PIN", a_pin_s:"اختر رمز PIN من 6 أرقام لتسجيل دخول سريع.", a_err_pin6:"أدخل الأرقام الستة كلها.",
 a_pin2_t:"تأكيد رمز PIN", a_pin2_s:"أدخل رمز PIN مجدداً.", a_err_pinmatch:"رمزا PIN غير متطابقين. حاول مجدداً.", a_confirm:"تأكيد",
@@ -6453,12 +6454,12 @@ Object.assign(I18N.en, {
   mvp_idle_end:"Session expired after 15 minutes of inactivity. Sign in with a code.",
   mvp_consent_saved:"Agreement recorded in this browser only (demo).",
   mvp_consent_legal_pending:"Official privacy notice must be connected after Legal approval.",
-  mvp_signin_sub:"Sign in using your Zain mobile, Data SIM or ADSL line number.",
-  mvp_number_label:"Mobile, Data or ADSL number",
-  mvp_help_mobile:"Mobile / Data: enter 9 digits without 0 (e.g. 944000000).",
+  mvp_signin_sub:"Sign in using your Zain mobile or ADSL number.",
+  mvp_number_label:"Mobile or ADSL number",
+  mvp_help_mobile:"Mobile: enter 9 digits without 0 (e.g. 944000000).",
   mvp_help_landline:"ADSL landline: enter 9 digits without 0 (e.g. 115430741).",
   mvp_otp_to_contact:"Enter the 6-digit code sent to the registered contact number",
-  mvp_otp_contact_hint:"For Data and ADSL lines, the code goes to their registered contact mobile number.",
+  mvp_otp_contact_hint:"The code goes to the contact mobile number registered with the line.",
   mvp_phone_hint:"944 000 000",
   mvp_nine_digits:"Enter 9 digits after +963, without the leading 0.",
   mvp_phone_error:"Enter exactly 9 digits without 0: mobile 944000000 or ADSL 115430741.",
@@ -6468,9 +6469,8 @@ Object.assign(I18N.en, {
   mvp_remember_yes:"Remember this phone", mvp_remember_no:"Not now",
 mvp_remember_demo:"Prototype only: remembered-phone recognition is simulated in this browser.",
    mvp_otp_incomplete:"Enter all 6 digits of the verification code.",
-   mvp_voice_demo:"Voice verification requires the Zain IVR service. For this demo, use code 123456.",
-   mvp_help_heading:"Sign in with a mobile, Data or ADSL number",
-   mvp_help_text:"Use the same field for mobile, Data SIM and ADSL. Enter 9 digits after +963, without the leading 0. Example: 944000000 (mobile) or 115430741 (landline). For Data/ADSL, a code goes to the contact number registered for that line. No password or sign-up form is needed.",
+   mvp_help_heading:"Sign in with a mobile or ADSL number",
+   mvp_help_text:"Use the same field for mobile and ADSL. Enter 9 digits after +963, without the leading 0. Example: 944000000 (mobile) or 115430741 (landline). When a contact number is registered for the line, the verification code goes to that number. No password or sign-up form is needed.",
    mvp_guide_heading:"Prototype testing",
    mvp_guide_1:"Use the number 944000000 and the demonstration code 123456. No real SMS or voice call is placed.",
    mvp_guide_2:"The code expires after 3 minutes. Request another after 30 seconds. Five incorrect attempts lock sign-in for 15 minutes.",
@@ -6491,12 +6491,12 @@ Object.assign(I18N.ar, {
   mvp_idle_end:"انتهت الجلسة بعد 15 دقيقة دون نشاط. سجّل الدخول برمز جديد.",
   mvp_consent_saved:"تم تسجيل الموافقة في المتصفح فقط للتجربة.",
   mvp_consent_legal_pending:"يجب ربط إشعار الخصوصية الرسمي بعد موافقة الفريق القانوني.",
-  mvp_signin_sub:"سجّل الدخول باستخدام رقم الموبايل أو خط البيانات أو ADSL من زين.",
-   mvp_number_label:"رقم الموبايل أو خط البيانات أو ADSL",
-   mvp_help_mobile:"الموبايل / خط البيانات: أدخل 9 أرقام دون الصفر الأول، مثال: 944000000.",
+  mvp_signin_sub:"سجّل الدخول باستخدام رقم الموبايل أو ADSL من زين.",
+   mvp_number_label:"رقم الموبايل أو ADSL",
+   mvp_help_mobile:"الموبايل: أدخل 9 أرقام دون الصفر الأول، مثال: 944000000.",
    mvp_help_landline:"الخط الأرضي ADSL: أدخل 9 أرقام دون الصفر الأول، مثال: 115430741.",
    mvp_otp_to_contact:"أدخل رمز التحقق المؤلف من 6 أرقام المُرسل إلى رقم التواصل المسجّل",
-   mvp_otp_contact_hint:"لخطوط البيانات وADSL، يُرسل الرمز إلى رقم الموبايل المسجّل للتواصل مع صاحب الخط.",
+   mvp_otp_contact_hint:"يُرسل الرمز إلى رقم الموبايل المسجّل للتواصل مع صاحب الخط.",
   mvp_phone_hint:"944 000 000",
   mvp_nine_digits:"أدخل 9 أرقام بعد ‎+963 دون الصفر الأول.",
   mvp_phone_error:"أدخل 9 أرقام دون الصفر الأول؛ مثال موبايل: 944000000 أو أرضي: 115430741.",
@@ -6506,9 +6506,8 @@ Object.assign(I18N.ar, {
   mvp_remember_yes:"تذكّر هذا الهاتف", mvp_remember_no:"ليس الآن",
 mvp_remember_demo:"للتجربة فقط: يتم محاكاة التعرف على الهاتف المتذكّر في هذا المتصفح.",
    mvp_otp_incomplete:"أدخل جميع الأرقام الستة لرمز التحقق.",
-   mvp_voice_demo:"التحقق الصوتي يحتاج إلى نظام IVR الخاص بزين. للتجربة استخدم الرمز 123456.",
-   mvp_help_heading:"تسجيل الدخول برقم الموبايل أو البيانات أو ADSL",
-   mvp_help_text:"استخدم نفس الحقل للموبايل وخطوط البيانات وADSL. أدخل 9 أرقام بعد ‎+963 دون الصفر الأول. مثال: 944000000 للموبايل أو 115430741 للأرضي. لخطوط البيانات وADSL يصل رمز التحقق إلى رقم التواصل المسجّل. لا حاجة لكلمة مرور أو إنشاء حساب.",
+   mvp_help_heading:"تسجيل الدخول برقم الموبايل أو ADSL",
+   mvp_help_text:"استخدم نفس الحقل للموبايل وADSL. أدخل 9 أرقام بعد ‎+963 دون الصفر الأول. مثال: 944000000 للموبايل أو 115430741 للأرضي. عند وجود رقم تواصل مسجّل للخط، يصل رمز التحقق إلى ذلك الرقم. لا حاجة لكلمة مرور أو إنشاء حساب.",
    mvp_guide_heading:"اختبار النموذج",
    mvp_guide_1:"استخدم الرقم 944000000 ورمز التجربة 123456. لن يتم إرسال SMS أو إجراء مكالمة حقيقية.",
    mvp_guide_2:"تنتهي صلاحية الرمز بعد 3 دقائق. يمكن طلب رمز آخر بعد 30 ثانية. يتم قفل تسجيل الدخول 15 دقيقة بعد 5 محاولات خاطئة.",
@@ -6806,10 +6805,8 @@ $('a-otp-resend').onclick = () => {
   AUTH.otpDeadline = Date.now() + 3 * 60 * 1000; AUTH.resendAt = Date.now() + 30 * 1000;
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true; clearErr('a-otp-err'); clearBoxes(otpBoxes); otpBoxes[0].focus();
 };
-$('a-otp-call').onclick = () => toast(T('mvp_voice_demo'));
 $('a-otp-wrongnum').onclick = () => { $('a-cn-num').value = (AUTH.number || '').replace(/^0/, ''); showScreen('scr-auth-changenum'); };
 $('a-otp-back').onclick = () => showScreen(AUTH.otpReturn);
-$('a-otp-back2').onclick = () => showScreen(AUTH.otpReturn);
 $('a-cn-form').addEventListener('submit', e => {
   e.preventDefault();
   const suffix = mvpLocalPhone($('a-cn-num'));
@@ -7147,7 +7144,7 @@ function bHeroKind(bd) {
   if (bd.unlim === 'sms' || bd.s) return 'sms';
   return null;
 }
-const INF_SVG = '<svg width="60" height="28" viewBox="8 72 240 112" fill="currentColor" aria-hidden="true"><path d="M244,128a52,52,0,0,1-88.76953,36.76953q-.0857-.0857-.166-.17676L95.02832,96.80371a44,44,0,1,0,0,62.39258l8.60449-9.71533a4,4,0,1,1,5.98926,5.30371l-8.68652,9.8081q-.08057.09083-.166.17676a52,52,0,1,1,0-73.53906q.0857.0857.166.17676l60.03613,67.78906a44,44,0,1,0,0-62.39258l-8.60449,9.71533a4,4,0,1,1-5.98926-5.30371l8.68652-9.8081q.08057-.09082.166-.17676A52,52,0,0,1,244,128Z"/></svg>'; /* v153: Yaman's infinity-thin SVG (SVG Repo) — replaces my hand-drawn lemniscate */ /* v152: clean SVG infinity (was a text glyph — too bold, ugly, small) */
+const INF_SVG = '<svg width="60" height="28" viewBox="8 72 240 112" fill="currentColor" aria-hidden="true"><path d="M244,128a52,52,0,0,1-88.76953,36.76953q-.0857-.0857-.166-.17676L95.02832,96.80371a44,44,0,1,0,0,62.39258l8.60449-9.71533a4,4,0,1,1,5.98926,5.30371l-8.68652,9.8081q-.08057.09083-.166.17676a52,52,0,1,1,0-73.53906q.0857.0857.166.17676l60.03613,67.78906a44,44,0,1,0,0-62.39258l-8.60449,9.71533a4,4,0,1,1-5.98926-5.30371l8.68652-9.8081q.08057-.09082.166-.17676A52,52,0,0,1,244,128Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></svg>'; /* v153: Yaman's infinity-thin SVG (SVG Repo) — replaces my hand-drawn lemniscate */ /* v152: clean SVG infinity (was a text glyph — too bold, ugly, small) */
 function bHero(bd) {
   var ar = LANG === 'ar';
   var hk = bHeroKind(bd);
@@ -7188,6 +7185,13 @@ function bHero(bd) {
   if (bd.m) return { big: fmtN(bd.m), cap: ar ? 'دقائق' : 'Minutes' };
   if (bd.s) return { big: fmtN(bd.s), cap: ar ? 'رسائل' : 'SMS' };
   return { big: B(bd.d), cap: '' };
+}
+function formatHeroAllowance(value) {
+  return value.replace(/^(.*) (?:<span class="b-hero-gb">(GB)<\/span>|(غيغا))$/, (_, amount, englishUnit, arabicUnit) => {
+    const large = /^\p{Nd}{4,}$/u.test(amount.replace(/[,٬]/g, ''));
+    const unitClass = large ? 'b-hero-gb raised' : 'b-hero-gb';
+    return amount + ' <span class="' + unitClass + '">' + (englishUnit || arabicUnit) + '</span>';
+  });
 }
 function bSubline(bd) {
   var ar = LANG === 'ar';
@@ -7389,7 +7393,7 @@ function bCardElement(bd, best) {
   b.innerHTML = `${tagHtml}
       <span class="bu-corner" aria-hidden="true" data-hero="${hk}" data-icon="${cornerIcon}" style="background:${cornerBg}"><img class="bu-corner-ic" alt="" src="${ZI(cornerIcon)}"></span>
       <span class="bt"><span class="t">${B(bd.n)}</span><span class="d" style="display:block"><span class="emo">${emoText}</span><span class="ben" style="display:block"${descAttr}>${descText0}</span></span></span>
-      <span class="bp bhero"><span class="p num">${hero.big}</span><span class="u" style="display:block">${hero.cap}</span></span>
+      <span class="bp bhero"><span class="p num">${formatHeroAllowance(hero.big)}</span><span class="u" style="display:block">${hero.cap}</span></span>
       <span class="bfoot">${priceHtml}<span class="bsep" aria-hidden="true"></span><span class="bvalid">${bValidSplit(bd)}</span></span>`;
   b.onclick = () => openBundle(bd);
   return b;
@@ -7463,31 +7467,9 @@ function renderBundles() {
     emp.appendChild(row);
     list.appendChild(emp);
   } else {
-    { const pinnedItems = (S.bPinned || []).map(id => filtered.find(bd => bd.id === id)).filter(Boolean);
-      if (pinnedItems.length) {
-        const seg = 'pinned', title = T('b_pinned');
-        const collapsed = !!(S.bSecCollapsed && S.bSecCollapsed[seg]);
-        const wrap = document.createElement('div'); wrap.className = 'bsec-wrap' + (collapsed ? ' collapsed' : '');
-        const sec = document.createElement('div'); sec.className = 'bsec';
-        sec.innerHTML = `<span class="micro">${title}</span><button type="button" class="bsec-toggle" aria-expanded="${collapsed ? 'false' : 'true'}" aria-label="${title}"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg></button>`;
-        wrap.appendChild(sec);
-        const body = document.createElement('div'); body.className = 'bsec-body';
-        const bodyIn = document.createElement('div'); bodyIn.className = 'bsec-body-in';
-        pinnedItems.forEach(bd => bodyIn.appendChild(bCardElement(bd, false)));
-        body.appendChild(bodyIn);
-        wrap.appendChild(body);
-        list.appendChild(wrap);
-        sec.querySelector('.bsec-toggle').onclick = () => {
-          const nowCollapsed = !wrap.classList.contains('collapsed');
-          wrap.classList.toggle('collapsed', nowCollapsed);
-          S.bSecCollapsed = S.bSecCollapsed || {};
-          S.bSecCollapsed[seg] = nowCollapsed;
-          sec.querySelector('.bsec-toggle').setAttribute('aria-expanded', nowCollapsed ? 'false' : 'true');
-        };
-      }
-    }
-    [['btl', T('b_just')], ['foryou', T('b_recommended')], ['atl', T('b_allbundles')], ['plan', T('b_sec_plan')], ['addon', T('b_sec_addon')]].forEach(([seg, title]) => {
-      const items = filtered.filter(bd => bd.segment === seg && !(S.bPinned && S.bPinned.includes(bd.id)));
+    const pinnedItems = (S.bPinned || []).map(id => filtered.find(bd => bd.id === id)).filter(Boolean);
+    [['btl', T('b_just')], ['pinned', T('b_pinned')], ['foryou', T('b_recommended')], ['atl', T('b_allbundles')], ['plan', T('b_sec_plan')], ['addon', T('b_sec_addon')]].forEach(([seg, title]) => {
+      const items = seg === 'pinned' ? pinnedItems : filtered.filter(bd => bd.segment === seg && !(S.bPinned && S.bPinned.includes(bd.id)));
       if (!items.length) return;
       const collapsed = !!(S.bSecCollapsed && S.bSecCollapsed[seg]);
       const wrap = document.createElement('div'); wrap.className = 'bsec-wrap' + (collapsed ? ' collapsed' : '');
@@ -7924,6 +7906,10 @@ function b4ScrollFrames(root) {
 /* --- v4 bundle popup: the workbook sections in the usage-popup language --- */
 function openBundle(bd) {
   var ar = LANG === 'ar';
+  var popHk = bHeroKind(bd);
+  var popHeroIcon = popHk === 'all' ? bd.z : ucHeroZ(popHk);
+  var popHeroBg = popHk === 'all' ? 'var(--bu-data)' : ucCornerBg(popHk);
+  var popHeroTone = (popHk === 'minutes' || popHk === 'sms' || popHk === 'social' || popHk === 'tv' || popHk === 'night' || popHk === 'restricted') ? 'WHITE' : 'INK';
   var lt = b4LineType();
   var elig = b4Elig(bd);
   var cta = b4Cta(bd);
@@ -7934,6 +7920,7 @@ function openBundle(bd) {
     : (bd.offer ? '<span class="bpill-sm bpill-offer" style="flex:none;min-height:24px;padding:0 11px">' + T('b_offer') + '</span>' : '');
   var shareable = bd.segment !== 'btl' || !!bd.offer;
   var isPinned = !!(S.bPinned && S.bPinned.includes(bd.id));
+  var pinnable = bd.segment !== 'btl' || isPinned;
   var shareLink = 'https://zain.sy/bundles/' + bd.id;
   var actPur = bd.activated ? PURCHASES.find(function (x) { return x.bid === bd.id && x.status === 'active' && x.vt; }) : null;
   var validRow = actPur
@@ -7974,10 +7961,10 @@ function openBundle(bd) {
   $('bundle-body').innerHTML = ''
     + '<div class="bpop-head">'
     + '<div style="display:flex;gap:14px;align-items:center">'
-    + '<span class="bi" style="width:60px;height:60px;border-radius:18px;background:var(--glass-deep);border:1px solid var(--glass-brd);display:flex;align-items:center;justify-content:center"><img decoding="async" src="' + ZI(bd.z) + '" alt="" width="32" height="32"></span>'
+    + '<span class="bi" style="width:60px;height:60px;border-start-start-radius:18px;border-start-end-radius:18px;border-end-start-radius:18px;border-end-end-radius:30px;background:' + popHeroBg + ';display:flex;align-items:center;justify-content:center"><img decoding="async" src="' + Z(popHeroIcon, popHeroTone) + '" alt="" width="32" height="32"></span>'
     + '<div style="flex:1;min-width:0"><p class="st" id="sh-bundle-t">' + B(bd.n) + '</p></div>'
-    + '<button class="icobtn pinbtn' + (isPinned ? ' pinned' : '') + '" id="b-pin" type="button" aria-label="' + (isPinned ? T('b_pinned') : T('b_pin')) + '" aria-pressed="' + (isPinned ? 'true' : 'false') + '" style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10l-1.5 6h-7L7 4z"/><path d="M12 10v11"/></svg></button>'
     + '<button class="icobtn sharebtn" id="b-share" type="button" aria-label="' + T('b_share') + '"' + (shareable ? '' : ' disabled') + ' style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.49" x2="8.59" y2="10.49"/></svg></button>'
+    + (pinnable ? '<button class="icobtn pinbtn' + (isPinned ? ' pinned' : '') + '" id="b-pin" type="button" aria-label="' + (isPinned ? T('b_pinned') : T('b_pin')) + '" aria-pressed="' + (isPinned ? 'true' : 'false') + '" style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10l-1.5 6h-7L7 4z"/><path d="M12 10v11"/></svg></button>' : '')
     + '</div>'
     + (popTag ? '<div style="padding-inline-start:74px;margin-top:-15px">' + popTag + '</div>' : '')
     + '</div>'
@@ -8008,7 +7995,7 @@ function openBundle(bd) {
   var shb = $('b-share');
   if (shb) shb.onclick = function () { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(shareLink).then(function () { toast(T('b_link_copied')); }, function () { toast(T('b_link_copied')); }); else toast(T('b_link_copied')); };
   var pnb = $('b-pin');
-  if (pnb) pnb.onclick = function () { var pinned = !(S.bPinned && S.bPinned.includes(bd.id)); S.bPinned = S.bPinned || []; if (pinned) S.bPinned.unshift(bd.id); else S.bPinned = S.bPinned.filter(function (x) { return x !== bd.id; }); pnb.classList.toggle('pinned', pinned); pnb.setAttribute('aria-pressed', pinned ? 'true' : 'false'); pnb.setAttribute('aria-label', pinned ? T('b_pinned') : T('b_pin')); toast(pinned ? T('b_pinned') : T('b_unpinned')); renderBundles(); };
+  if (pnb) pnb.onclick = function () { var pinned = !(S.bPinned && S.bPinned.includes(bd.id)); S.bPinned = S.bPinned || []; if (pinned) S.bPinned.unshift(bd.id); else S.bPinned = S.bPinned.filter(function (x) { return x !== bd.id; }); pnb.classList.toggle('pinned', pinned); pnb.setAttribute('aria-pressed', pinned ? 'true' : 'false'); pnb.setAttribute('aria-label', pinned ? T('b_pinned') : T('b_pin')); toast(pinned ? T('b_pinned') : T('b_unpinned')); renderBundles(); if (pinned) { var pws = document.querySelectorAll('#b-list .bsec-wrap'); for (var pi = 0; pi < pws.length; pi++) { var phm = pws[pi].querySelector('.bsec .micro'); if (phm && phm.textContent.trim() === T('b_pinned')) { pws[pi].scrollIntoView(); break; } } } if (bd.segment === 'btl' && !pinned) pnb.remove(); };
   var uc = $('b-ussd-copy');
   if (uc) uc.onclick = function () { var code = bd.ussd; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(function () { toast(T('b_link_copied')); }, function () { toast(T('b_link_copied')); }); else toast(T('b_link_copied')); };
   document.querySelectorAll('#bundle-body [data-b4-service]').forEach(function (el) {
