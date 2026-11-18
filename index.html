@@ -225,7 +225,7 @@ input{caret-color:var(--btn-bg)}
   background:var(--glass);border:1px solid var(--glass-brd);
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 18px 44px rgba(0,0,0,.16)}
 .ob-art img{width:104px;height:104px;filter:drop-shadow(0 0 14px rgba(255,255,255,.55))}
-.ob-dots{display:flex;gap:8px;justify-content:center;margin:6px 0 2px}
+.ob-dots{display:flex;gap:8px;justify-content:center;margin:6px 0 12px}
 .ob-dots i{width:8px;height:8px;border-radius:99px;background:var(--ink-faint);transition:width .25s ease,background-color .25s ease}
 .ob-dots i.on{width:26px;background:var(--btn-bg)}
 .ob-foot{padding:0 24px calc(28px + env(safe-area-inset-bottom));padding-bottom:calc(28px + max(env(safe-area-inset-bottom),18px));display:flex;flex-direction:column;gap:12px}
@@ -250,7 +250,6 @@ input{caret-color:var(--btn-bg)}
 #scr-login{align-items:center;justify-content:center;padding:0 30px;gap:14px;text-align:center}
 #scr-login>*{max-width:100%}
 #scr-login .btn.block{width:100%}
-#scr-login .logo{width:120px;margin-bottom:6px}
 .phone-row{display:flex;align-items:center;gap:10px;width:100%;max-width:100%;margin-top:8px}
 .phone-row .cc{flex:0 0 auto;min-height:56px;padding:0 16px;border-radius:var(--r-md);
   background:var(--glass);border:1px solid var(--glass-brd);display:flex;align-items:center;
@@ -758,7 +757,6 @@ body.perf-lite #stage[data-theme="dark"]{--glass:rgba(4,30,35,.9);--glass-deep:r
 
 /* hub layout overrides — must follow the original #scr-login rules */
 #scr-login{align-items:stretch;justify-content:flex-start;text-align:start}
-#scr-login .logo{width:72px;margin:2px auto 0}
 #scr-login .auth-top{min-height:44px;margin-top:calc(4px + env(safe-area-inset-top));margin-top:calc(4px + max(env(safe-area-inset-top),28px))}
 #scr-login .auth-links .linklike{min-height:34px}
 
@@ -1737,7 +1735,6 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 /* Auth layout v169: thumb-zone inputs without changing the visual identity. */
 #scr-login.auth{align-items:stretch;justify-content:flex-start;text-align:start;gap:0;padding:0 26px calc(18px + max(env(safe-area-inset-bottom),18px));overflow-y:auto;overscroll-behavior:contain}
 #scr-login .auth-top{flex-shrink:0;width:100%}
-#scr-login .logo{width:112px;margin:clamp(56px,11vh,104px) auto 8px;flex:0 0 auto}
 #scr-login h1.title{margin-top:4px}
 #scr-login .body.sub{margin-top:7px;line-height:1.5}
 #scr-login form{margin-top:clamp(25px,5.5vh,55px);width:100%}
@@ -1751,16 +1748,13 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 #scr-auth-otp .title{margin-top:clamp(112px,23vh,182px)}
 #scr-auth-otp .otp6{margin-top:23px}
 #scr-auth-otp .btn.block{min-height:52px}
-#scr-auth-remember .logo{width:104px;margin:clamp(78px,17vh,132px) auto 10px}
 #scr-auth-remember .btn.block{min-height:52px}
 #scr-auth-changenum .title{margin-top:clamp(105px,21vh,168px)}
 #scr-auth-changenum form{margin-top:clamp(24px,5vh,44px)}
 .mvp-otp-contact-hint{font-size:12px;line-height:1.5;color:var(--ink-soft);margin:10px 0 0}
 @media (max-height:670px){
- #scr-login .logo{margin-top:clamp(30px,6vh,62px)}
  #scr-login form{margin-top:22px}
  #scr-auth-otp .title{margin-top:clamp(66px,12vh,100px)}
- #scr-auth-remember .logo{margin-top:clamp(40px,8vh,70px)}
  #scr-auth-changenum .title{margin-top:clamp(65px,13vh,105px)}
 }
 
@@ -1849,7 +1843,6 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <!-- MVP LOGIN — number + OTP prototype; no backend SMS, header enrichment, or secure device registration -->
 <section id="scr-login" class="screen auth" aria-label="Sign in">
   <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
-  <img decoding="async" class="logo" id="login-logo" src="" alt="Zain" width="104">
   <h1 class="title" data-k="a_signin_t">Sign in</h1>
   <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
   <form id="a-signin-form" novalidate>
@@ -2033,7 +2026,6 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <!-- MVP REMEMBER ME — after validated OTP, never a primary account or PIN -->
 <section id="scr-auth-remember" class="screen auth" aria-label="Remember this phone">
   <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
-  <img decoding="async" class="logo" id="mvp-remember-logo" src="" alt="Zain" width="104">
   <h1 class="title" data-k="mvp_remember_t">Remember Me</h1>
   <p class="body sub" data-k="mvp_remember_s">Remember this phone to open your Zain dashboard without entering a new code next time. You can sign out at any time.</p>
   <button class="btn block" type="button" id="mvp-remember-yes" data-k="mvp_remember_yes">Remember this phone</button>
@@ -2241,7 +2233,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
     <section id="tab-home" class="scroll" data-tab="home" aria-label="Home">
       <div class="card" id="home-hero">
         <div class="h-idrow"><div class="h-idmain"><p class="hello" data-k="hello">Your wonderful world</p>
-        <p class="nm" id="home-name">Yaman Nouri</p></div>
+        <p class="nm"><span data-k="mvp_welcome">Welcome</span> <bdi id="home-name"></bdi></p></div>
         <div class="h-bal"><span class="h-bal-l" id="u-bal-l">Available balance</span><span class="h-bal-v"><span id="u-bal-v">18,450</span> <span class="h-bal-u" id="u-bal-u">SYP</span></span></div></div>
         <div class="h-act">
           <button class="btn" id="btn-recharge" data-k="recharge">Recharge</button>
@@ -2560,7 +2552,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <div class="sheet" id="sh-mvp-devices" role="dialog" aria-modal="true" aria-labelledby="mvp-devices-title">
   <div class="grab" aria-hidden="true"></div>
-  <p class="st" id="mvp-devices-title" data-k="mvp_devices">Sessions and trusted devices</p>
+  <p class="st" id="mvp-devices-title" data-k="mvp_devices">Sessions and logged in devices</p>
   <p class="sd" id="mvp-device-limit" hidden data-k="mvp_device_limit">Remove a remembered device before remembering this one.</p>
   <p class="micro" id="mvp-current-session-title" data-k="mvp_current_session">Current session</p>
   <div class="mvp-device-row" id="mvp-current-session"></div>
@@ -6398,9 +6390,9 @@ function syncLogos() {
   const src = tone === 'BLACK' ? 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy40LjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iWmFpbl9Mb2dvX0JsYWNrIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiDQoJIHk9IjBweCIgdmlld0JveD0iMCAwIDg0MS44OSA1OTUuMjgiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDg0MS44OSA1OTUuMjg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik01NjEuOTQsMzU5LjA0di04MS40NWMwLTYuMzUtMS42OC0xMC42NC00LjgtMTMuOGMtMy4zNC0zLjM4LTguMjctNS4yMS0xNC4yLTUuMjFjLTAuNDUsMC0xLjAzLDAtMS40NiwwLjA2djgxLjQ1DQoJYzAsNi4zLDEuNjYsMTAuNjIsNC44LDEzLjc3YzMuMywzLjM2LDguMjcsNS4yMiwxNC4xNiw1LjIyQzU2MC45LDM1OS4wOCw1NjEuNDUsMzU5LjA4LDU2MS45NCwzNTkuMDRMNTYxLjk0LDM1OS4wNHoNCgkgTTU2My44MSwyMzguODZjMC02LjY1LTUuNDItMTIuMDYtMTIuMS0xMi4wNmMtNi42NywwLTEyLjA5LDUuNDEtMTIuMDksMTIuMDZjMCw2LjcsNS40MiwxMi4xMywxMi4wOSwxMi4xMw0KCUM1NTguMzksMjUwLjk5LDU2My44MSwyNDUuNTUsNTYzLjgxLDIzOC44Nkw1NjMuODEsMjM4Ljg2eiBNNTAyLjQ4LDMxOS41N3YyMC41MmMwLDYuMywxLjY2LDEwLjYyLDQuODIsMTMuNzcNCgljMy4zMSwzLjM2LDguMyw1LjIyLDE0LjE5LDUuMjJjMC40OCwwLDEuMDEsMCwxLjQ5LTAuMDR2LTQzLjc2YzAtMTguODMtNS4xMy0zMS41LTE0LjI3LTQxLjM2Yy05LjQxLTEwLjEyLTIzLjQ5LTE1Ljk4LTM5Ljc4LTE1Ljk4DQoJYy0zMS4yNywwLTUyLjkzLDIyLjg5LTUyLjkzLDUyLjcxYzAsMjkuMywyMC4wNiw0OC44NSw0Ni4wOCw0OC44NWMyMC4wNiwwLDMyLjExLTExLjkzLDMyLjExLTI1LjkyYzAtNS4yMi0xLjY0LTEwLjgyLTUuMjEtMTYuMTQNCgljLTIuODksMTUuMDQtMTEuMjEsMjMuMzEtMjQuNiwyMy4zMWMtMTQuMywwLTI2Ljg4LTEwLjg1LTI2Ljg4LTMwLjYyYzAtMTkuNDQsMTIuNjEtMzIuNzMsMzEuNS0zMi43M2M5LjQ2LDAsMTcuMDYsMy4zLDIyLjgxLDguOTUNCglDNDk4LjU0LDI5My4wNiw1MDIuNDgsMzAzLjMzLDUwMi40OCwzMTkuNTdMNTAyLjQ4LDMxOS41N3ogTTY2Mi4zNSwzMzIuMTRjLTAuMjMsMC0wLjQyLTAuMTMtMC42Mi0wLjM5DQoJYy0xNC42OS0xOS4xMy00MS42Ny01NC4zOS00Ny41Mi02Mi4wOWMtNi4xOS04LjA1LTExLjAzLTEwLjctMTcuNDMtMTAuN2MtNC43MywwLTguNTUsMS43NC0xMS4xOCw0LjUzDQoJYy0yLjk0LDMuMTQtNC40MSw4LTQuNDEsMTMuNTJ2NjMuMDhjMCw2LjMsMS42MywxMC42Miw0LjgsMTMuNzdjMy4zMywzLjM2LDguMDgsNS4yMiwxMy44NCw1LjIyYzAuNDUsMCwwLjc1LDAsMS4xNi0wLjA0di03Mi4zMg0KCWMwLTAuNTIsMC4yMy0wLjgxLDAuNTgtMC44MWMwLjI2LDAsMC40MiwwLjEyLDAuNjIsMC40MmM4LjYyLDExLjIxLDQxLjMyLDUzLjk3LDQ3LjU4LDYyLjAxYzYuMTksOC4wNCwxMS4wMSwxMC43NSwxNy4zNywxMC43NQ0KCWM0Ljc2LDAsOC41OS0xLjcyLDExLjE5LTQuNWMyLjkyLTMuMTUsNC40Mi03Ljk1LDQuNDItMTMuNTJ2LTYzLjFjMC02LjMtMS42OC0xMC42My00LjgyLTEzLjgyYy0zLjM0LTMuMzMtOC4wNS01LjE4LTEzLjg3LTUuMTgNCgljLTAuNCwwLTAuNzEsMC0xLjE0LDAuMDN2NzIuMzdDNjYyLjkzLDMzMS44OCw2NjIuNjksMzMyLjE0LDY2Mi4zNSwzMzIuMTRMNjYyLjM1LDMzMi4xNHogTTM0MC4yMSwzMzkuNjkNCgljLTAuODEsMC0xLjI3LTAuMjctMS4yNy0wLjgxYzAtMC4yOSwwLjIzLTAuNjUsMC42OS0xLjAxYzYuMjktNS4wOSw0Ny45LTM4LjY2LDU0LjI1LTQzLjg4YzExLjAzLTguODgsMTMuMzUtMTMuMjIsMTMuMzUtMTkuNTINCgljMC0zLjkzLTEuODQtNy43Mi00LjYxLTEwLjA0Yy0zLjM0LTIuODMtOC4zMy00LjM3LTE2LjQtNC4zN2gtNzAuODhjMCwwLjM1LDAsMC43NSwwLDEuMTNjMCwzLjY3LDAuOCw3LjY3LDIuNjIsMTAuMw0KCWMyLjg2LDQuMTEsOC4yNyw2LjQ4LDE1LjU4LDYuNDhoNDYuNTJjMC44MiwwLDEuMjcsMC4yNSwxLjI3LDAuNjdjMCwwLjM2LTAuMiwwLjYxLTAuNzIsMWMtNi41OCw1LjM0LTQ0Ljk5LDM2LjMzLTU0LjU3LDQzLjk4DQoJYy0xMS4wNiw4Ljg4LTEzLjI2LDEzLjMtMTMuMjYsMTkuNmMwLDMuOTEsMS44NSw3LjY5LDQuNjMsOS45OWMzLjM0LDIuODUsOC4zNCw0LjQxLDE2LjQ0LDQuNDFoNzQuMTNjMC0wLjMsMC0wLjQ4LDAtMC43MQ0KCWMwLTUuMjYtMS40OS05Ljc5LTQuNjQtMTIuNjVjLTMuNjItMy4zNC04LjMtNC41Ni0xNy4wOC00LjU2SDM0MC4yMUwzNDAuMjEsMzM5LjY5eiIvPg0KPHBhdGggZD0iTTI2Ni4zLDI3OS41N2MwLTExLjgtOS4wOC0yMC43NC0yMi4wNC0xOS43NGMtMjcuNSwyLjExLTMxLjA1LDMzLjM5LTEzLjE1LDM1LjM5YzE4LjcxLDIuMDksMjUuNDEtMTcuNywyNS43Ny0xOC44MQ0KCWMwLTAuMDEsMC4wMi0wLjAxLDAuMDIsMGMwLjA0LDEuMzQsMS4wNCwyOC41Ny0yNi43MywyOC41N2MtMTQuNDMsMC0yMS44Ni0xMS43OS0yMS44Ni0yMi4wMWMwLTE1LjE1LDE0Ljc0LTMwLjIyLDM1LjUzLTMxLjAyDQoJYzExLjY1LTAuNDUsMTkuMzIsMi4zLDI1LjMzLDguMzFjMTIuMjUsMTIuMjUsOC43MiwzNS4yMi0xLjE5LDQ2LjU2Yy0xNS43NCwxOC0zNy44NiwyMi41OC01OC40NywxMy4zNHMtMjgtMzYtMTUuNTEtNTguMzkNCgljNC41OS04LjIzLDIxLjI4LTI2LjU4LDQ5Ljk1LTI2LjU4YzM2LjQsMCw1NC44NiwyNS44LDUxLjUzLDU2LjExYy0yLjU1LDIzLjIyLTE2LjY2LDQwLjA1LTIzLjIsNDcuMTUNCgljLTI4LjczLDMxLjIzLTcwLjk2LDM3LjQ1LTk3LjU2LDIxLjIxYy0xNC42NC04Ljk0LTIzLjE2LTI0Ljk4LTIxLjI3LTQzLjE0YzEuNjIsMTMuMTEsOC4xNiwyNC40NiwxOS4wNCwzMS44Nw0KCWMyMS43NSwxNC44Myw1OC4xMSwxNi44Nyw4NC40LTEyLjA0Yy0yNi40MiwxOS43My01Ny4yOCwxOS40NC03OC4zNiw1LjdjLTE5LjM0LTEyLjYtMjQuNjYtMzcuNzUtMTUuMTktNjIuNjMNCgljLTQuNzUsMjIuMTgsMi44OCw0Mi43NCwxOS42Niw1My40NmMyNi4xNSwxNi43LDY0LjI0LDcuMSw4OC4yNC0xOS44YzguMTgtOS4xNywxMi44Ny0yMS41MywxMi43Mi0zMi44MQ0KCWMtMC4yNS0xOC44MS0xMy4zNi0zNS43LTM5LjgzLTM1LjdjLTI3LjE3LDAtNDUuODMsMjEtNDUuODMsMzguNDhjMCwxOS40LDEzLjMyLDMwLjQ4LDMwLjY5LDMwLjQ4DQoJQzI0Ni4xNywzMTMuNTQsMjY2LjMsMzAyLjcsMjY2LjMsMjc5LjU3eiIvPg0KPC9zdmc+DQo=' : 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy40LjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iWmFpbl9Mb2dvX0JsYWNrIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiDQoJIHk9IjBweCIgdmlld0JveD0iMCAwIDg0MS44OSA1OTUuMjgiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDg0MS44OSA1OTUuMjg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik01NjEuOTQsMzU5LjA0di04MS40NWMwLTYuMzUtMS42OC0xMC42NC00LjgtMTMuOGMtMy4zNC0zLjM4LTguMjctNS4yMS0xNC4yLTUuMjFjLTAuNDUsMC0xLjAzLDAtMS40NiwwLjA2DQoJCXY4MS40NWMwLDYuMywxLjY2LDEwLjYyLDQuOCwxMy43N2MzLjMsMy4zNiw4LjI3LDUuMjIsMTQuMTYsNS4yMkM1NjAuOSwzNTkuMDgsNTYxLjQ1LDM1OS4wOCw1NjEuOTQsMzU5LjA0TDU2MS45NCwzNTkuMDR6DQoJCSBNNTYzLjgxLDIzOC44NmMwLTYuNjUtNS40Mi0xMi4wNi0xMi4xLTEyLjA2Yy02LjY3LDAtMTIuMDksNS40MS0xMi4wOSwxMi4wNmMwLDYuNyw1LjQyLDEyLjEzLDEyLjA5LDEyLjEzDQoJCUM1NTguMzksMjUwLjk5LDU2My44MSwyNDUuNTUsNTYzLjgxLDIzOC44Nkw1NjMuODEsMjM4Ljg2eiBNNTAyLjQ4LDMxOS41N3YyMC41MmMwLDYuMywxLjY2LDEwLjYyLDQuODIsMTMuNzcNCgkJYzMuMzEsMy4zNiw4LjMsNS4yMiwxNC4xOSw1LjIyYzAuNDgsMCwxLjAxLDAsMS40OS0wLjA0di00My43NmMwLTE4LjgzLTUuMTMtMzEuNS0xNC4yNy00MS4zNg0KCQljLTkuNDEtMTAuMTItMjMuNDktMTUuOTgtMzkuNzgtMTUuOThjLTMxLjI3LDAtNTIuOTMsMjIuODktNTIuOTMsNTIuNzFjMCwyOS4zLDIwLjA2LDQ4Ljg1LDQ2LjA4LDQ4Ljg1DQoJCWMyMC4wNiwwLDMyLjExLTExLjkzLDMyLjExLTI1LjkyYzAtNS4yMi0xLjY0LTEwLjgyLTUuMjEtMTYuMTRjLTIuODksMTUuMDQtMTEuMjEsMjMuMzEtMjQuNiwyMy4zMQ0KCQljLTE0LjMsMC0yNi44OC0xMC44NS0yNi44OC0zMC42MmMwLTE5LjQ0LDEyLjYxLTMyLjczLDMxLjUtMzIuNzNjOS40NiwwLDE3LjA2LDMuMywyMi44MSw4Ljk1DQoJCUM0OTguNTQsMjkzLjA2LDUwMi40OCwzMDMuMzMsNTAyLjQ4LDMxOS41N0w1MDIuNDgsMzE5LjU3eiBNNjYyLjM1LDMzMi4xNGMtMC4yMywwLTAuNDItMC4xMy0wLjYyLTAuMzkNCgkJYy0xNC42OS0xOS4xMy00MS42Ny01NC4zOS00Ny41Mi02Mi4wOWMtNi4xOS04LjA1LTExLjAzLTEwLjctMTcuNDMtMTAuN2MtNC43MywwLTguNTUsMS43NC0xMS4xOCw0LjUzDQoJCWMtMi45NCwzLjE0LTQuNDEsOC00LjQxLDEzLjUydjYzLjA4YzAsNi4zLDEuNjMsMTAuNjIsNC44LDEzLjc3YzMuMzMsMy4zNiw4LjA4LDUuMjIsMTMuODQsNS4yMmMwLjQ1LDAsMC43NSwwLDEuMTYtMC4wNHYtNzIuMzINCgkJYzAtMC41MiwwLjIzLTAuODEsMC41OC0wLjgxYzAuMjYsMCwwLjQyLDAuMTIsMC42MiwwLjQyYzguNjIsMTEuMjEsNDEuMzIsNTMuOTcsNDcuNTgsNjIuMDFjNi4xOSw4LjA0LDExLjAxLDEwLjc1LDE3LjM3LDEwLjc1DQoJCWM0Ljc2LDAsOC41OS0xLjcyLDExLjE5LTQuNWMyLjkyLTMuMTUsNC40Mi03Ljk1LDQuNDItMTMuNTJ2LTYzLjFjMC02LjMtMS42OC0xMC42My00LjgyLTEzLjgyYy0zLjM0LTMuMzMtOC4wNS01LjE4LTEzLjg3LTUuMTgNCgkJYy0wLjQsMC0wLjcxLDAtMS4xNCwwLjAzdjcyLjM3QzY2Mi45MywzMzEuODgsNjYyLjY5LDMzMi4xNCw2NjIuMzUsMzMyLjE0TDY2Mi4zNSwzMzIuMTR6IE0zNDAuMjEsMzM5LjY5DQoJCWMtMC44MSwwLTEuMjctMC4yNy0xLjI3LTAuODFjMC0wLjI5LDAuMjMtMC42NSwwLjY5LTEuMDFjNi4yOS01LjA5LDQ3LjktMzguNjYsNTQuMjUtNDMuODhjMTEuMDMtOC44OCwxMy4zNS0xMy4yMiwxMy4zNS0xOS41Mg0KCQljMC0zLjkzLTEuODQtNy43Mi00LjYxLTEwLjA0Yy0zLjM0LTIuODMtOC4zMy00LjM3LTE2LjQtNC4zN2gtNzAuODhjMCwwLjM1LDAsMC43NSwwLDEuMTNjMCwzLjY3LDAuOCw3LjY3LDIuNjIsMTAuMw0KCQljMi44Niw0LjExLDguMjcsNi40OCwxNS41OCw2LjQ4aDQ2LjUyYzAuODIsMCwxLjI3LDAuMjUsMS4yNywwLjY3YzAsMC4zNi0wLjIsMC42MS0wLjcyLDFjLTYuNTgsNS4zNC00NC45OSwzNi4zMy01NC41Nyw0My45OA0KCQljLTExLjA2LDguODgtMTMuMjYsMTMuMy0xMy4yNiwxOS42YzAsMy45MSwxLjg1LDcuNjksNC42Myw5Ljk5YzMuMzQsMi44NSw4LjM0LDQuNDEsMTYuNDQsNC40MWg3NC4xM2MwLTAuMywwLTAuNDgsMC0wLjcxDQoJCWMwLTUuMjYtMS40OS05Ljc5LTQuNjQtMTIuNjVjLTMuNjItMy4zNC04LjMtNC41Ni0xNy4wOC00LjU2SDM0MC4yMUwzNDAuMjEsMzM5LjY5eiIvPg0KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yNjYuMywyNzkuNTdjMC0xMS44LTkuMDgtMjAuNzQtMjIuMDQtMTkuNzRjLTI3LjUsMi4xMS0zMS4wNSwzMy4zOS0xMy4xNSwzNS4zOQ0KCQljMTguNzEsMi4wOSwyNS40MS0xNy43LDI1Ljc3LTE4LjgxYzAtMC4wMSwwLjAyLTAuMDEsMC4wMiwwYzAuMDQsMS4zNCwxLjA0LDI4LjU3LTI2LjczLDI4LjU3Yy0xNC40MywwLTIxLjg2LTExLjc5LTIxLjg2LTIyLjAxDQoJCWMwLTE1LjE1LDE0Ljc0LTMwLjIyLDM1LjUzLTMxLjAyYzExLjY1LTAuNDUsMTkuMzIsMi4zLDI1LjMzLDguMzFjMTIuMjUsMTIuMjUsOC43MiwzNS4yMi0xLjE5LDQ2LjU2DQoJCWMtMTUuNzQsMTgtMzcuODYsMjIuNTgtNTguNDcsMTMuMzRzLTI4LTM2LTE1LjUxLTU4LjM5YzQuNTktOC4yMywyMS4yOC0yNi41OCw0OS45NS0yNi41OGMzNi40LDAsNTQuODYsMjUuOCw1MS41Myw1Ni4xMQ0KCQljLTIuNTUsMjMuMjItMTYuNjYsNDAuMDUtMjMuMiw0Ny4xNWMtMjguNzMsMzEuMjMtNzAuOTYsMzcuNDUtOTcuNTYsMjEuMjFjLTE0LjY0LTguOTQtMjMuMTYtMjQuOTgtMjEuMjctNDMuMTQNCgkJYzEuNjIsMTMuMTEsOC4xNiwyNC40NiwxOS4wNCwzMS44N2MyMS43NSwxNC44Myw1OC4xMSwxNi44Nyw4NC40LTEyLjA0Yy0yNi40MiwxOS43My01Ny4yOCwxOS40NC03OC4zNiw1LjcNCgkJYy0xOS4zNC0xMi42LTI0LjY2LTM3Ljc1LTE1LjE5LTYyLjYzYy00Ljc1LDIyLjE4LDIuODgsNDIuNzQsMTkuNjYsNTMuNDZjMjYuMTUsMTYuNyw2NC4yNCw3LjEsODguMjQtMTkuOA0KCQljOC4xOC05LjE3LDEyLjg3LTIxLjUzLDEyLjcyLTMyLjgxYy0wLjI1LTE4LjgxLTEzLjM2LTM1LjctMzkuODMtMzUuN2MtMjcuMTcsMC00NS44MywyMS00NS44MywzOC40OA0KCQljMCwxOS40LDEzLjMyLDMwLjQ4LDMwLjY5LDMwLjQ4QzI0Ni4xNywzMTMuNTQsMjY2LjMsMzAyLjcsMjY2LjMsMjc5LjU3eiIvPg0KPC9nPg0KPC9zdmc+DQo=';
 /* EN lockup viewBox 841.89x595.28 (h/w .707) vs AR 1350x1080 (h/w .8):
    EN needs x1.131 width so its rendered height matches the AR lockup */
-const LOGO_W = { 'splash-logo': 172, 'login-logo': 120, 'app-logo': 74 };
+const LOGO_W = { 'splash-logo': 172, 'app-logo': 74 };
 const EN_LOGO_K = 0.8 / (595.28 / 841.89);
-  ['splash-logo', 'login-logo', 'app-logo'].forEach(id => {
+  ['splash-logo', 'app-logo'].forEach(id => {
     const im = $(id); if (!im) return;
     if (id === 'app-logo') {
       /* App header — sized by VISIBLE artwork, not the padded canvas.
@@ -6499,7 +6491,7 @@ function setWorld(id) {
 /* MVP authentication wording and 9-digit suffix (+963 fixed). */
 Object.assign(I18N.en, {
   mvp_edit_profile:"Edit profile",
-  mvp_customer_name:"Dear Customer",
+  mvp_welcome:"Welcome",
   mvp_first_name:"First name",
   mvp_family_name:"Last name",
   mvp_email:"Email",
@@ -6510,7 +6502,7 @@ Object.assign(I18N.en, {
   mvp_email_sent:"Enter the 6-digit confirmation code for",
   mvp_email_demo:"Prototype only: enter 123456. No email is sent.",
   mvp_email_locked:"For your security, email verification is locked. Try again when the timer ends.",
-  mvp_devices:"Sessions and trusted devices",
+  mvp_devices:"Sessions and logged in devices",
   mvp_device_limit:"Remove a remembered device before remembering this one.",
   mvp_current_session:"Current session",
   mvp_remembered_devices:"Remembered devices",
@@ -6521,6 +6513,8 @@ Object.assign(I18N.en, {
   mvp_remembered_session:"Remembered session",
   mvp_no_devices:"No remembered devices",
   mvp_remove_device:"Remove device",
+  mvp_remove_verify:"Confirm removal with a code for your sign-in number.",
+  mvp_remove_locked:"Device removal is locked. Try again when the timer ends.",
   mvp_end_session:"End session",
   mvp_notifications:"Notification settings",
   mvp_notifications_allow:"Allow notifications",
@@ -6571,7 +6565,7 @@ mvp_remember_demo:"Prototype only: remembered-phone recognition is simulated in 
 });
 Object.assign(I18N.ar, {
   mvp_edit_profile:"تعديل الملف الشخصي",
-  mvp_customer_name:"عميلنا العزيز",
+  mvp_welcome:"مرحباً",
   mvp_first_name:"الاسم",
   mvp_family_name:"الكنية",
   mvp_email:"البريد الإلكتروني",
@@ -6582,7 +6576,7 @@ Object.assign(I18N.ar, {
   mvp_email_sent:"أدخل رمز التأكيد المؤلف من 6 أرقام للبريد",
   mvp_email_demo:"للتجربة فقط: أدخل 123456. لن تُرسل رسالة بريد إلكتروني.",
   mvp_email_locked:"حفاظاً على أمانك، تم قفل التحقق من البريد. حاول مجدداً عند انتهاء المؤقّت.",
-  mvp_devices:"الجلسات والأجهزة الموثوقة",
+  mvp_devices:"الجلسات والأجهزة المسجّل دخولها",
   mvp_device_limit:"أزل جهازاً متذكّراً قبل تذكّر هذا الجهاز.",
   mvp_current_session:"الجلسة الحالية",
   mvp_remembered_devices:"الأجهزة المتذكّرة",
@@ -6593,6 +6587,8 @@ Object.assign(I18N.ar, {
   mvp_remembered_session:"جلسة على جهاز متذكّر",
   mvp_no_devices:"لا توجد أجهزة متذكّرة",
   mvp_remove_device:"إزالة الجهاز",
+  mvp_remove_verify:"أكّد إزالة الجهاز برمز يُرسل إلى رقم تسجيل الدخول.",
+  mvp_remove_locked:"تم قفل إزالة الجهاز. حاول مجدداً عند انتهاء المؤقّت.",
   mvp_end_session:"إنهاء الجلسة",
   mvp_notifications:"إعدادات الإشعارات",
   mvp_notifications_allow:"السماح بالإشعارات",
@@ -6742,7 +6738,7 @@ function mvpLineKind(local) {
 }
 function mvpOtpDestination(num) {
   const email = AUTH.otpReturn === 'sh-profile';
-  for (const [id, key] of [['a-otp-title', email ? 'mvp_email_title' : 'a_otp_t'], ['a-otp-demo', email ? 'mvp_email_demo' : 'mvp_otp_demo'], ['a-otp-wrongnum', email ? 'mvp_email_wrong' : 'a_wrongnum']]) {
+  for (const [id, key] of [['a-otp-title', email ? 'mvp_email_title' : 'a_otp_t'], ['a-otp-demo', email ? 'mvp_email_demo' : 'mvp_otp_demo'], ['a-otp-wrongnum', email ? 'mvp_email_wrong' : AUTH.otpReturn === 'sh-mvp-devices' ? 'back' : 'a_wrongnum']]) {
     const element = $(id);
     element.dataset.k = key;
     element.textContent = T(key);
@@ -6874,7 +6870,8 @@ $('a-to-signup').onclick = () => showScreen('scr-auth-signup1');
 $('a-to-forgot').onclick = () => showScreen('scr-auth-forgot');
 $('a-em-forgot').onclick = () => showScreen('scr-auth-forgot');
 $('a-lock-back').onclick = () => {
-  if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
+  if (AUTH.otpReturn === 'sh-mvp-devices') returnToMvpDevices();
+  else if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
   else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else showScreen('scr-login');
 };
@@ -6973,7 +6970,7 @@ function startOtp(num, after, ret) {
   clearErr('a-otp-err'); clearBoxes(otpBoxes);
   const panel = $('scr-auth-otp');
   const sheet = $('sh-mvp-otp');
-  if (ret === 'sh-addline' || ret === 'sh-profile') {
+  if (ret === 'sh-addline' || ret === 'sh-profile' || ret === 'sh-mvp-devices') {
     panel.classList.remove('screen', 'auth', 'on');
     sheet.appendChild(panel);
     if (openEl !== sheet) openSheet(sheet);
@@ -6997,7 +6994,7 @@ function verifyOtp(code) {
   if (!AUTH.otpLive) return;
   if (Date.now() > AUTH.otpDeadline) { otpDead('a_expired_msg'); return; }
   // Only a prototype: accept the published test code, not real SMS verification.
-  if ((AUTH.otpReturn === 'scr-login' || AUTH.otpReturn === 'sh-addline' || AUTH.otpReturn === 'sh-profile') && code !== '123456') {
+  if ((AUTH.otpReturn === 'scr-login' || AUTH.otpReturn === 'sh-addline' || AUTH.otpReturn === 'sh-profile' || AUTH.otpReturn === 'sh-mvp-devices') && code !== '123456') {
      AUTH.otpWrongTotal++;
      AUTH.otpAttempts = Math.max(0, 5 - AUTH.otpWrongTotal);
     VIB(30);
@@ -7041,12 +7038,14 @@ $('a-otp-resend').onclick = () => {
 };
 $('a-otp-cancel').onclick = () => $('a-otp-back').click();
 $('a-otp-wrongnum').onclick = () => {
-  if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
+  if (AUTH.otpReturn === 'sh-mvp-devices') returnToMvpDevices();
+  else if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
   else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); }
 };
 $('a-otp-back').onclick = () => {
-  if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
+  if (AUTH.otpReturn === 'sh-mvp-devices') returnToMvpDevices();
+  else if (AUTH.otpReturn === 'sh-profile') returnToMvpEmail();
   else if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else showScreen(AUTH.otpReturn);
 };
@@ -7175,9 +7174,9 @@ showScreen = function (id) {
     syncLangPills();
     /* No PIN or biometric sign-in in MVP. */
   }
-  if (id === 'scr-auth-remember') { var src = $('login-logo').getAttribute('src'); if (src) $('mvp-remember-logo').setAttribute('src', src); syncLangPills(); }
+  if (id === 'scr-auth-remember') syncLangPills();
   if (id === 'scr-auth-locked') {
-    const messages = {'sh-profile':'mvp_email_locked', 'sh-addline':'mvp_addline_locked'};
+    const messages = {'sh-profile':'mvp_email_locked', 'sh-addline':'mvp_addline_locked', 'sh-mvp-devices':'mvp_remove_locked'};
     const message = messages[AUTH.otpReturn];
     for (const [id, key] of [['a-lock-message', message || 'a_locked_s'], ['a-lock-back', message ? 'back' : 'a_back_signin']]) {
       const el = $(id);
@@ -7745,9 +7744,9 @@ function renderBundles() {
     emp.appendChild(row);
     list.appendChild(emp);
   } else {
-    const pinnedItems = (S.bPinned || []).map(id => filtered.find(bd => bd.id === id)).filter(Boolean);
+    const pinnedItems = (S.bPinned || []).map(id => filtered.find(bd => bd.id === id && bd.segment !== 'btl')).filter(Boolean);
     [['btl', T('b_just')], ['pinned', T('b_pinned')], ['foryou', T('b_recommended')], ['atl', T('b_allbundles')], ['plan', T('b_sec_plan')], ['addon', T('b_sec_addon')]].forEach(([seg, title]) => {
-      const items = seg === 'pinned' ? pinnedItems : filtered.filter(bd => bd.segment === seg && !(S.bPinned && S.bPinned.includes(bd.id)));
+      const items = seg === 'pinned' ? pinnedItems : filtered.filter(bd => bd.segment === seg && (seg === 'btl' || !(S.bPinned && S.bPinned.includes(bd.id))));
       if (!items.length) return;
       const collapsed = !!(S.bSecCollapsed && S.bSecCollapsed[seg]);
       const wrap = document.createElement('div'); wrap.className = 'bsec-wrap' + (collapsed ? ' collapsed' : '');
@@ -8202,9 +8201,8 @@ function openBundle(bd) {
   var popTag = bd.activated
     ? '<span class="bpill-sm ' + (popAutoOn ? 'bpill-auto' : 'bpill-grey') + '" style="flex:none;min-height:24px;padding:0 11px;box-shadow:0 6px 14px rgba(10,25,30,.28)">' + T('b_activated') + (popAutoOn ? ' <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' : '') + '</span>'
     : (bd.offer ? '<span class="bpill-sm bpill-offer" style="flex:none;min-height:24px;padding:0 11px">' + T('b_offer') + '</span>' : '');
-  var shareable = bd.segment !== 'btl' || !!bd.offer;
+  var allowBundleActions = bd.segment !== 'btl';
   var isPinned = !!(S.bPinned && S.bPinned.includes(bd.id));
-  var pinnable = bd.segment !== 'btl' || isPinned;
   var shareLink = 'https://zain.sy/bundles/' + bd.id;
   var actPur = bd.activated ? PURCHASES.find(function (x) { return x.bid === bd.id && x.status === 'active' && x.vt; }) : null;
   var validRow = actPur
@@ -8247,8 +8245,8 @@ function openBundle(bd) {
     + '<div style="display:flex;gap:14px;align-items:center">'
     + '<span class="bi" style="width:60px;height:60px;border-start-start-radius:18px;border-start-end-radius:18px;border-end-start-radius:18px;border-end-end-radius:30px;background:' + popHeroBg + ';display:flex;align-items:center;justify-content:center"><img decoding="async" src="' + Z(popHeroIcon, popHeroTone) + '" alt="" width="32" height="32"></span>'
     + '<div style="flex:1;min-width:0"><p class="st" id="sh-bundle-t">' + B(bd.n) + '</p></div>'
-    + '<button class="icobtn sharebtn" id="b-share" type="button" aria-label="' + T('b_share') + '"' + (shareable ? '' : ' disabled') + ' style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.49" x2="8.59" y2="10.49"/></svg></button>'
-    + (pinnable ? '<button class="icobtn pinbtn' + (isPinned ? ' pinned' : '') + '" id="b-pin" type="button" aria-label="' + (isPinned ? T('b_pinned') : T('b_pin')) + '" aria-pressed="' + (isPinned ? 'true' : 'false') + '" style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10l-1.5 6h-7L7 4z"/><path d="M12 10v11"/></svg></button>' : '')
+    + (allowBundleActions ? '<button class="icobtn sharebtn" id="b-share" type="button" aria-label="' + T('b_share') + '" style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.49" x2="8.59" y2="10.49"/></svg></button>' : '')
+    + (allowBundleActions ? '<button class="icobtn pinbtn' + (isPinned ? ' pinned' : '') + '" id="b-pin" type="button" aria-label="' + (isPinned ? T('b_pinned') : T('b_pin')) + '" aria-pressed="' + (isPinned ? 'true' : 'false') + '" style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10l-1.5 6h-7L7 4z"/><path d="M12 10v11"/></svg></button>' : '')
     + '</div>'
     + (popTag ? '<div style="padding-inline-start:74px;margin-top:-15px">' + popTag + '</div>' : '')
     + '</div>'
@@ -8906,10 +8904,10 @@ function openAbout() {
 }
 function renderMvpProfile() {
   const profile = mvpProfile();
-  const name = [profile.first, profile.family].map(part => part.trim()).filter(Boolean).join(' ') || T('mvp_customer_name');
+  const name = [profile.first, profile.family].map(part => part.trim()).filter(Boolean).join(' ');
   $('prof-name').textContent = name;
   $('home-name').textContent = name;
-  $('avatar').textContent = name[0].toUpperCase();
+  $('avatar').textContent = name.charAt(0).toUpperCase();
 }
 function openMvpProfile(reset = true) {
   const profile = mvpProfile();
@@ -8933,6 +8931,15 @@ function returnToMvpEmail() {
   if (!S.authed) { showScreen('scr-login'); return; }
   showScreen('app');
   openMvpProfile(false);
+}
+function returnToMvpDevices() {
+  AUTH.otpLive = false;
+  AUTH.otpAfter = null;
+  AUTH.otpAction = '';
+  AUTH.otpReturn = 'scr-login';
+  const atLimit = !S.authed;
+  showScreen(atLimit ? 'scr-auth-remember' : 'app');
+  openMvpDevices(atLimit);
 }
 function openMvpDevices(atLimit = false) {
   const profile = mvpProfile();
@@ -8963,12 +8970,19 @@ function openMvpDevices(atLimit = false) {
     const current = device.id === mvpDeviceId;
     const date = new Date(device.rememberedAt).toLocaleDateString(LANG === 'ar' ? 'ar-SY' : 'en-GB');
     addDeviceAction(row, T(current ? 'mvp_this_device' : 'mvp_other_device') + ' · ' + date, T('mvp_remove_device'), () => {
-      if (current) forgetCurrentDevice();
-      else {
-        profile.devices = profile.devices.filter(item => item.id !== device.id);
-        saveMvpProfile();
-      }
-      openMvpDevices(atLimit);
+      const number = AUTH.number;
+      if (!validNum(number) || (!S.authed && !atLimit)) return;
+      closeOverlays(true);
+      AUTH.otpAction = T('mvp_remove_verify');
+      startOtp(number, () => {
+        if (AUTH.number !== number || (!S.authed && !atLimit)) return;
+        if (current) forgetCurrentDevice();
+        else {
+          profile.devices = profile.devices.filter(item => item.id !== device.id);
+          saveMvpProfile();
+        }
+        returnToMvpDevices();
+      }, 'sh-mvp-devices');
     });
     list.appendChild(row);
   }
@@ -11023,7 +11037,7 @@ function renderUCard() {
   const host = $('u-slots'); if (!host) return;
   const active = uActiveBundles(), meter = active.length === 0;
   const title = $('u-title'); if (title) title.textContent = T('u_bundleusage');
-  const va = $('u-viewall'); if (va) { const getB = (meter && S.ucMode !== 'error' && S.ucMode !== 'error-mandatory' && S.ucMode !== 'loading' && S.ucMode !== 'session'); va.textContent = getB ? T('u_getbundle') + (LANG === 'ar' ? ' \u2190' : ' \u2192') : T('bu_viewall'); } /* v94: arrow only on Get a bundle, never on View more */
+  const va = $('u-viewall'); if (va) { const getB = (meter && S.ucMode !== 'error' && S.ucMode !== 'error-mandatory' && S.ucMode !== 'loading' && S.ucMode !== 'session'); va.textContent = getB ? T('u_getbundle') : T('bu_viewall'); }
   let html = '', sig = '';
   if (S.ucMode === 'error' || S.ucMode === 'error-mandatory') {
     const isMand = S.ucMode === 'error-mandatory';
