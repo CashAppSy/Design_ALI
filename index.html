@@ -1764,6 +1764,19 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
  #scr-auth-changenum .title{margin-top:clamp(65px,13vh,105px)}
 }
 
+#a-otp-cancel{display:none}
+#sh-addline-otp #scr-auth-otp{display:flex;flex-direction:column;gap:12px}
+#sh-addline-otp .auth-top{display:none}
+#sh-addline-otp .title{margin:0}
+#sh-addline-otp .sub{margin:0;color:var(--ink-soft)}
+#sh-addline-otp .mvp-otp-contact-hint{margin:0}
+#sh-addline-otp .otp6{margin:0 0 12px;gap:8px}
+#sh-addline-otp .otp6 .otp{flex:1;min-width:0;height:56px}
+#sh-addline-otp .otp-actions{display:flex;gap:10px;margin-top:12px}
+#sh-addline-otp .otp-actions .btn{flex:1;width:auto;min-height:var(--tap);margin:0}
+#sh-addline-otp #a-otp-cancel{display:inline-flex}
+#sh-addline-otp .auth-links{flex-flow:row wrap;justify-content:space-between;gap:0 10px;margin:0}
+
 /* Sign-in decision record v0.5 — additional MVP front-end states (prototype only) */
 #mvp-consent-card{width:min(334px,calc(100% - 32px));max-height:calc(100% - 32px);margin:auto;color:var(--ink)}
 #mvp-consent-card[open]{display:flex;flex-direction:column;gap:10px;align-items:center}
@@ -1985,7 +1998,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <!-- VERIFY YOUR NUMBER — OTP (12 / 12a / 12b states) -->
 <section id="scr-auth-otp" class="screen auth" aria-label="Verify your number">
   <div class="auth-top"><button class="auth-back" id="a-otp-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
-  <h1 class="title" data-k="a_otp_t">Verify your number</h1>
+  <h1 class="title st" id="a-otp-title" data-k="a_otp_t">Verify your number</h1>
   <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr">0944•••000</span></p>
   <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" data-k="mvp_otp_contact_hint" hidden>The code is sent to the contact mobile number registered with the line.</p>
   <p id="mvp-otp-action-hint" hidden></p><div id="a-otp-live">
@@ -1993,7 +2006,10 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
       <input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 1"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 2"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 3"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 4"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 5"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 6">
     </div>
     <p class="aerr" id="a-otp-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span id="a-otp-err-txt"></span></p>
-    <button class="btn block" id="a-otp-verify" data-k="a_verify">Verify</button>
+    <div class="otp-actions">
+      <button class="btn ghost" id="a-otp-cancel" type="button" data-k="cancel">Cancel</button>
+      <button class="btn block" id="a-otp-verify" data-k="a_verify">Verify</button>
+    </div>
     <p class="hint" style="text-align:center" data-k="mvp_otp_demo">Prototype only: enter 123456. No SMS is sent.</p>
   </div>
   <div id="a-otp-dead" hidden>
@@ -2634,6 +2650,10 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
     <a class="btn ghost" id="sup-call2" href="tel:+963944222111" style="flex:1;text-decoration:none"><span data-k="call_real">Call 0944 222 111</span></a>
     <button class="btn ghost" data-close data-k="close" style="flex:1">Close</button>
   </div>
+</div>
+
+<div class="sheet" id="sh-addline-otp" role="dialog" aria-modal="true" aria-labelledby="a-otp-title">
+  <div class="grab" aria-hidden="true"></div>
 </div>
 
 <!-- IMPORTED: ADD A LINE -->
@@ -6773,6 +6793,9 @@ const d = arToLatin(e.clipboardData.getData('text') || '').replace(/\D/g, '');
   });
 }
 function clearBoxes(boxes) { boxes.forEach(b => { b.value = ''; b.classList.remove('err'); }); }
+function otpVisible() {
+  return openEl === $('sh-addline-otp') || $('scr-auth-otp').classList.contains('on');
+}
 function startOtp(num, after, ret) {
   if (AUTH.lockUntil && Date.now() >= AUTH.lockUntil) {
     AUTH.lockUntil = 0; AUTH.otpWrongTotal = 0;
@@ -6785,8 +6808,21 @@ function startOtp(num, after, ret) {
   var actionHint = $('mvp-otp-action-hint'); if (actionHint) { actionHint.hidden = !AUTH.otpAction; actionHint.textContent = AUTH.otpAction || ''; }
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true;
   clearErr('a-otp-err'); clearBoxes(otpBoxes);
-showScreen('scr-auth-otp'); authTick();
-   setTimeout(() => { if ($('scr-auth-otp').classList.contains('on')) otpBoxes[0].focus(); }, 350);
+  const panel = $('scr-auth-otp');
+  const sheet = $('sh-addline-otp');
+  if (ret === 'sh-addline') {
+    panel.classList.remove('screen', 'auth', 'on');
+    sheet.appendChild(panel);
+    if (openEl !== sheet) openSheet(sheet);
+  } else {
+    if (panel.parentElement === sheet) {
+      $('scr-auth-remember').before(panel);
+      panel.classList.add('screen', 'auth');
+    }
+    showScreen('scr-auth-otp');
+  }
+  authTick();
+  setTimeout(() => { if (otpVisible() && AUTH.otpLive) otpBoxes[0].focus(); }, 350);
 }
 function otpDead(key) {
   AUTH.otpLive = false;
@@ -6840,6 +6876,7 @@ $('a-otp-resend').onclick = () => {
   AUTH.otpDeadline = Date.now() + 3 * 60 * 1000; AUTH.resendAt = Date.now() + 30 * 1000;
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true; clearErr('a-otp-err'); clearBoxes(otpBoxes); otpBoxes[0].focus();
 };
+$('a-otp-cancel').onclick = () => returnToAddLine();
 $('a-otp-wrongnum').onclick = () => {
   if (AUTH.otpReturn === 'sh-addline') returnToAddLine();
   else { mvpSanitizePhone($('a-cn-num'), AUTH.number || ''); showScreen('scr-auth-changenum'); }
@@ -6944,7 +6981,7 @@ $('a-g-session').onclick = () => { closeOverlays(true); AUTH.offlineReturn = 'sc
 /* ---------- per-second tick: lock countdown, OTP resend + expiry ---------- */
 function authTick() {
   if (lockedNow() && $('scr-auth-locked').classList.contains('on')) $('a-lock-time').textContent = mmss(AUTH.lockUntil - Date.now());
-  if ($('scr-auth-otp').classList.contains('on') && AUTH.otpLive) {
+  if (otpVisible() && AUTH.otpLive) {
     const left = AUTH.resendAt - Date.now();
 $('a-otp-resend').textContent = left > 0 ? T('a_resend_in').replace('{t}', mmss(left)) : T('a_resend');
      $('a-otp-resend').disabled = left > 0;
@@ -6959,6 +6996,7 @@ showScreen = function (id) {
   // Redirect before animating: login -> locked -> login in 60ms caused both
   // screens to disappear when the older exit spring finished later.
   if (id === 'scr-login' && lockedNow()) id = 'scr-auth-locked';
+  if (id !== 'app' && openEl === $('sh-addline-otp')) closeOverlays(true);
   _showScreenAuth(id);
   if (id === 'scr-login') {
     var remembered = mvpRemembered();
@@ -6978,7 +7016,7 @@ showScreen = function (id) {
   }
 };
 const _applyLangAuth = applyLang;
-applyLang = function () { _applyLangAuth(); syncLangPills(); if (AUTH.otpNumber && $('scr-auth-otp').classList.contains('on')) mvpOtpDestination(AUTH.otpNumber); authTick(); };
+applyLang = function () { _applyLangAuth(); syncLangPills(); if (AUTH.otpNumber && otpVisible()) mvpOtpDestination(AUTH.otpNumber); authTick(); };
 syncLangPills();
 
 function enterApp() {
@@ -7698,6 +7736,10 @@ function closeOverlays(silent) {
   const jobs = [];
   if (openEl) {
     const el = openEl; openEl = null;
+    if (el.id === 'sh-addline-otp') {
+      AUTH.otpLive = false;
+      AUTH.otpAfter = null;
+    }
     jobs.push(new Promise(res => cardOut(el, res, el.classList.contains('dd') ? { y: -14, sc: 0.94 } : {})));
   }
   $('btn-bell').setAttribute('aria-expanded', 'false');
@@ -9462,6 +9504,7 @@ function bindAddLine() {
       renderNum();
       renderBillLines();
       $('addline-num').value = '';
+      closeOverlays(true);
       showScreen('app');
       toast(T('lines_added'));
     }, 'sh-addline');
