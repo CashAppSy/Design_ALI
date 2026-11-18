@@ -423,10 +423,11 @@ input{caret-color:var(--btn-bg)}
 .bundle.card .bhero{grid-column:1;grid-row:1 / 3;align-self:center;width:auto;text-align:start;transform:translateY(11px)}
 .bundle.card .bp .p{font-size:34px;line-height:1.05;font-weight:900;white-space:nowrap}
 .bundle.card .bp .p svg{display:inline-block;vertical-align:middle}
-button.bundle.card{grid-template-columns:128px minmax(0,1fr);column-gap:8px;padding-block:8px}
-button.bundle.card .bhero{transform:none}
+button.bundle.card{grid-template-columns:120px minmax(0,1fr)}
+button.bundle.card .bhero{transform:translateY(23px)}
 button.bundle.card .bp .p{font-size:28px}
-.bundle.card .b-hero-gb.raised{display:inline-block;transform:translateY(-.7em)}
+.bundle.card .bp .p .b-hero-gb{font-size:16px;font-weight:800;line-height:1}
+.bundle.card .bp .p .b-hero-gb.raised{position:relative;top:-.55em}
 .bundle.card .bp .u{font-size:13px;color:var(--ink-faint)}
 .bundle.card .bfoot{grid-column:2;grid-row:2;align-self:end;display:flex;align-items:baseline;justify-content:flex-end;gap:8px;min-width:0}
 .bundle.card .bfoot .bprice{font-size:17px;font-weight:800;color:var(--ink);white-space:nowrap}
@@ -1732,9 +1733,8 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 .bu-empty-noactive .bu-empty-desc{margin:0;max-width:280px;font-size:14px}
 
 
-/* MVP number field and catalogue unit typography — 2026-11-16 */
+/* MVP number field — 2026-11-16 */
 .mvp-field-help{font-size:12px;line-height:1.4;color:var(--ink-soft);margin-top:5px}
-.bundle.card .bp .p .b-hero-gb{font-size:.58em;font-weight:800;line-height:1;vertical-align:baseline}
 #scr-auth-remember .btn{margin-top:12px}
 #scr-auth-remember .hint{margin-top:18px;text-align:center}
 /* Auth layout v169: thumb-zone inputs without changing the visual identity. */
@@ -7345,8 +7345,7 @@ function bValidSplit(bd) {
   if (m) return '<span class="bv-n num">' + m[1] + '</span> <span class="bv-u">' + m[2] + '</span>';
   return '<span class="bv-n">' + v + '</span>';
 }
-function syncCardDescs() {
-  var cards = document.querySelectorAll('#b-list .bundle.card');
+function syncCardDescs(cards) {
   if (!cards.length) return;
   if (!cards[0].offsetParent) return; /* hidden tab — measurements would read 0 */
   cards.forEach(function (c) {
@@ -7400,9 +7399,9 @@ function bCardElement(bd, best) {
 }
 let bundleCardH = 0; /* v52-branch: last measured bundle-card height, reused as the history target */
 function syncBundleCardSize() { /* v48: uniform card size — biggest card sets the height for all */
-  syncCardDescs(); /* v147: truncate long descriptions first — they set the card height */
   const cards = [...document.querySelectorAll('#b-list .bundle.card')];
   if (!cards.length) return;
+  syncCardDescs(cards);
   cards.forEach((c, i) => c.style.setProperty('--mo-i', Math.min(i, 7))); /* v50: entrance stagger, capped */
   cards.forEach(c => { c.style.height = ''; });
   if (!cards[0].offsetParent) return; /* v48 fix: list hidden on another tab — measurements would read 0; the visible tab switch re-syncs */
@@ -7410,6 +7409,14 @@ function syncBundleCardSize() { /* v48: uniform card size — biggest card sets 
   if (maxH <= 0) return;
   bundleCardH = maxH; /* v52-branch: remember it for history */
   cards.forEach(c => { c.style.height = maxH + 'px'; });
+}
+function syncFinderCardSize() {
+  const cards = [...document.querySelectorAll('#f-results .bundle.card')];
+  if (!cards.length || !cards[0].offsetParent) return;
+  syncCardDescs(cards);
+  cards.forEach(c => { c.style.height = ''; });
+  const target = Math.max(bundleCardH, ...cards.map(c => c.offsetHeight));
+  cards.forEach(c => { c.style.height = target + 'px'; });
 }
 function syncHistoryRowSize() { /* v52-branch: history cards exactly bundle-card height when their trimmed content fits, else their own max (never clip) */
   const rows = [...document.querySelectorAll('#h-list .hrow')];
@@ -7422,7 +7429,10 @@ function syncHistoryRowSize() { /* v52-branch: history cards exactly bundle-card
   rows.forEach(r => { r.style.height = target + 'px'; });
 }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (document.querySelector('#h-list .hrow') && document.querySelector('#h-list .hrow').offsetParent) syncHistoryRowSize(); });
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncBundleCardSize); /* re-measure once the Zain fonts land */
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
+  syncBundleCardSize();
+  syncFinderCardSize();
+});
 function renderBundles() {
   const bands = [['all', T('all')], ['daily', T('b_daily')], ['weekly', T('b_weekly')], ['monthly', T('b_monthly')]];
   const ch = $('b-chips'); ch.innerHTML = '';
@@ -8298,6 +8308,7 @@ function renderFinderResults() {
     emp.innerHTML = `<p class="ftitle">${T('f_no_results')}</p><p class="fdesc">${T('f_no_results_hint')}</p>`;
     res.appendChild(emp);
   }
+  syncFinderCardSize();
 }
 function openFinder() { showAppView('finder'); renderFinderBar(); renderFinderResults(); }
 
