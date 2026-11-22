@@ -1795,6 +1795,73 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 #mvp-delete-dialog button.secondary{background:#fff;color:#163237;border:1px solid #9da9a9}
 #mvp-otp-action-hint{margin:10px 0 14px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.6);font-size:12px;line-height:1.5;color:#11343e}
 #mvp-otp-action-hint[hidden]{display:none!important}
+
+/* Shared geometry for the manual sign-in screens. */
+.screen.auth:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp){
+  --signin-field-height:56px;
+  --signin-label-space:26px;
+  --signin-feedback-space:50px;
+  padding-inline:26px;
+  gap:0;
+  overscroll-behavior:contain;
+}
+.screen.auth:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp)::before,
+.screen.auth:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp)::after{content:none}
+:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp) .auth-top{
+  min-height:50px;
+  margin-block-start:calc(10px + max(env(safe-area-inset-top),28px));
+}
+:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp) h1.title{
+  margin:20px 0 0;
+  font-size:var(--f-title);
+  line-height:1.15;
+}
+.signin-description{display:contents}
+:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp) .signin-description{
+  display:block;
+  min-height:104px;
+  margin-block-start:8px;
+}
+:is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp) .signin-description .sub{margin:0}
+#scr-login.auth form{margin:0}
+#scr-login .fld label{min-height:var(--signin-label-space);margin:0;line-height:1.4}
+#scr-login .phone-row :is(.cc,input),
+#scr-auth-otp.signin-otp .otp6 .otp{height:var(--signin-field-height)}
+#scr-auth-otp.signin-otp .otp6{margin:0;padding-block-start:var(--signin-label-space)}
+#scr-auth-otp.signin-otp .otp6 .otp{flex:1;min-width:0}
+.signin-feedback{display:contents}
+:is(#scr-login,#scr-auth-otp.signin-otp) .signin-feedback{
+  display:flow-root;
+  min-height:var(--signin-feedback-space);
+}
+:is(#scr-login,#scr-auth-otp.signin-otp) .signin-feedback .aerr{margin:7px 0 0}
+:is(#scr-login,#scr-auth-otp.signin-otp,#scr-auth-remember) .signin-primary{
+  width:100%;
+  min-height:52px;
+  margin:0;
+}
+#scr-auth-remember #mvp-remember-yes{
+  margin-block-start:calc(var(--signin-label-space) + var(--signin-field-height) + var(--signin-feedback-space));
+}
+.signin-progress{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  margin-block-start:14px;
+  font-size:var(--f-cap);
+  font-weight:400;
+  line-height:1.5;
+  color:var(--ink-soft);
+  opacity:.78;
+}
+.signin-progress[hidden]{display:none}
+.signin-progress-markers{display:flex;align-items:center;gap:6px;color:#16444b}
+.signin-progress-markers span{width:7px;height:7px;border-radius:99px}
+.signin-progress-markers .current{width:22px;background:#70dcb8}
+.signin-progress-markers .complete{background:currentColor}
+.signin-progress-markers .upcoming{border:1px solid currentColor;opacity:.48}
+
 </style>
 </head>
 <body>
@@ -1844,19 +1911,25 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <section id="scr-login" class="screen auth" aria-label="Sign in">
   <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
   <h1 class="title" data-k="a_signin_t">Sign in</h1>
-  <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
+  <div class="signin-description">
+    <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
+  </div>
   <form id="a-signin-form" novalidate>
     <div class="fld"><label for="a-num" data-k="mvp_number_label">Mobile or ADSL number</label>
       <div class="phone-row" dir="ltr"><span class="cc num" dir="ltr">+963</span><input id="a-num" class="num" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="11" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" placeholder="944 222 111" data-k-ph="mvp_phone_hint" aria-label="Nine-digit Zain mobile, data or landline number without leading zero" aria-describedby="mvp-login-guidance" dir="ltr" required></div>
-      <div class="mvp-field-help" id="mvp-login-guidance">
-        <p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944222111).</p>
-        <p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p>
-      </div>
     </div>
-    <p class="aerr" id="a-signin-err" role="alert"><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944222111 · ADSL: 115430741.</span></p>
-    <button class="btn block" id="a-signin-go" type="submit" data-k="a_continue">Continue</button>
+    <div class="signin-feedback"><p class="aerr" id="a-signin-err" role="alert"><span data-k="mvp_phone_error">Enter 9 digits without the leading 0. Mobile: 944222111 · ADSL: 115430741.</span></p></div>
+    <button class="btn block signin-primary" id="a-signin-go" type="submit" data-k="a_continue">Continue</button>
   </form>
+  <div class="mvp-field-help" id="mvp-login-guidance">
+    <p data-k="mvp_help_mobile">Mobile: enter 9 digits without the leading 0 (e.g. 944222111).</p>
+    <p data-k="mvp_help_landline">ADSL landline: enter 9 digits without the leading 0 (e.g. 115430741).</p>
+  </div>
   <div class="auth-links"><button class="linklike" id="a-help" data-k="a_help_link">Sign-in help</button></div>
+  <div class="signin-progress">
+    <div class="signin-progress-markers" aria-hidden="true"><span class="current"></span><span class="upcoming"></span></div>
+    <span data-k="mvp_signin_step_number">Step 1 of 2 · Enter your number</span>
+  </div>
   <!-- Legacy prototype-only buttons kept out of the MVP journey; required for old demo event handlers. -->
   <div hidden aria-hidden="true" style="display:none!important">
     <button id="a-gmail" type="button"></button><button id="a-guest" type="button"></button>
@@ -2000,16 +2073,19 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 <section id="scr-auth-otp" class="screen auth" aria-label="Verify your number">
   <div class="auth-top"><button class="auth-back" id="a-otp-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
   <h1 class="title st" id="a-otp-title" data-k="a_otp_t">Verify your number</h1>
-  <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr"></span></p>
-  <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" hidden></p>
-  <p id="mvp-otp-action-hint" hidden></p><div id="a-otp-live">
+  <div class="signin-description">
+    <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr"></span></p>
+    <p class="mvp-otp-contact-hint" id="mvp-otp-contact-hint" hidden></p>
+    <p id="mvp-otp-action-hint" hidden></p>
+  </div>
+  <div id="a-otp-live">
     <div class="otp6" dir="ltr">
       <input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 1"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 2"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 3"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 4"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 5"><input class="otp num a-otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 6">
     </div>
-    <p class="aerr" id="a-otp-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span id="a-otp-err-txt"></span></p>
+    <div class="signin-feedback"><p class="aerr" id="a-otp-err" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg><span id="a-otp-err-txt"></span></p></div>
     <div class="otp-actions">
       <button class="btn ghost" id="a-otp-cancel" type="button" data-k="cancel">Cancel</button>
-      <button class="btn block" id="a-otp-verify" data-k="a_verify">Verify</button>
+      <button class="btn block signin-primary" id="a-otp-verify" data-k="a_verify">Verify</button>
     </div>
     <p class="hint" id="a-otp-demo" style="text-align:center" data-k="mvp_otp_demo">Prototype only: enter 123456. No SMS is sent.</p>
   </div>
@@ -2021,14 +2097,20 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
     <button class="linklike" id="a-otp-resend" data-k="a_resend">Request a new code</button>
     <button class="linklike" id="a-otp-wrongnum" data-k="a_wrongnum">Wrong number?</button>
   </div>
+  <div class="signin-progress" id="signin-otp-progress" hidden>
+    <div class="signin-progress-markers" aria-hidden="true"><span class="complete"></span><span class="current"></span></div>
+    <span data-k="mvp_signin_step_verify">Step 2 of 2 · Verify your number</span>
+  </div>
 </section>
 
 <!-- MVP REMEMBER ME — after validated OTP, never a primary account or PIN -->
 <section id="scr-auth-remember" class="screen auth" aria-label="Remember this phone">
   <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
   <h1 class="title" data-k="mvp_remember_t">Remember Me</h1>
-  <p class="body sub" data-k="mvp_remember_s">Remember this phone to open your Zain dashboard without entering a new code next time. You can sign out at any time.</p>
-  <button class="btn block" type="button" id="mvp-remember-yes" data-k="mvp_remember_yes">Remember this phone</button>
+  <div class="signin-description">
+    <p class="body sub" data-k="mvp_remember_s">Remember this phone to open your Zain dashboard without entering a new code next time. You can sign out at any time.</p>
+  </div>
+  <button class="btn block signin-primary" type="button" id="mvp-remember-yes" data-k="mvp_remember_yes">Remember this phone</button>
   <button class="btn block ghost" type="button" id="mvp-remember-no" data-k="mvp_remember_no">Not now</button>
   <p class="hint" data-k="mvp_remember_demo">Prototype only: remembered-phone recognition is simulated in this browser.</p>
 </section>
@@ -6544,6 +6626,8 @@ Object.assign(I18N.en, {
   mvp_idle_end:"Session expired after 15 minutes of inactivity. Sign in with a code.",
   mvp_consent_saved:"Agreement recorded in this browser only (demo).",
   mvp_signin_sub:"Sign in using your Zain mobile or ADSL number.",
+  mvp_signin_step_number:"Step 1 of 2 · Enter your number",
+  mvp_signin_step_verify:"Step 2 of 2 · Verify your number",
   mvp_number_label:"Mobile or ADSL number",
   mvp_help_mobile:"Mobile: enter 9 digits without 0 (e.g. 944222111).",
   mvp_help_landline:"ADSL landline: enter 9 digits without 0 (e.g. 115430741).",
@@ -6622,6 +6706,8 @@ Object.assign(I18N.ar, {
   mvp_idle_end:"انتهت الجلسة بعد 15 دقيقة دون نشاط. سجّل الدخول برمز جديد.",
   mvp_consent_saved:"تم تسجيل الموافقة في المتصفح فقط للتجربة.",
   mvp_signin_sub:"سجّل الدخول باستخدام رقم الموبايل أو ADSL من زين.",
+  mvp_signin_step_number:"الخطوة ١ من ٢ · أدخل رقمك",
+  mvp_signin_step_verify:"الخطوة ٢ من ٢ · تحقّق من رقمك",
    mvp_number_label:"رقم الموبايل أو ADSL",
    mvp_help_mobile:"الموبايل: أدخل 9 أرقام دون الصفر الأول، مثال: 944222111.",
    mvp_help_landline:"الخط الأرضي ADSL: أدخل 9 أرقام دون الصفر الأول، مثال: 115430741.",
@@ -6998,6 +7084,9 @@ function startOtp(num, after, ret) {
   $('a-otp-live').hidden = false; $('a-otp-dead').hidden = true;
   clearErr('a-otp-err'); clearBoxes(otpBoxes);
   const panel = $('scr-auth-otp');
+  const isSignIn = after === mvpAfterOtp && AUTH.otpReturn === 'scr-login';
+  panel.classList.toggle('signin-otp', isSignIn);
+  $('signin-otp-progress').hidden = !isSignIn;
   const sheet = $('sh-mvp-otp');
   if (ret === 'sh-addline' || ret === 'sh-profile' || ret === 'sh-mvp-devices') {
     panel.classList.remove('screen', 'auth', 'on');
