@@ -6597,8 +6597,7 @@ Object.assign(I18N.en, {
   mvp_devices_demo:"Device and session management is simulated in this browser.",
   mvp_this_device:"This device",
   mvp_other_device:"Remembered device",
-  mvp_temporary_session:"Temporary session",
-  mvp_remembered_session:"Remembered session",
+  mvp_last_login_unavailable:"Last sign-in unavailable",
   mvp_no_devices:"No remembered devices",
   mvp_remove_device:"Remove device",
   mvp_remove_verify:"Enter the code to confirm device removal.",
@@ -6677,8 +6676,7 @@ Object.assign(I18N.ar, {
   mvp_devices_demo:"إدارة الأجهزة والجلسات محاكاة في هذا المتصفح.",
   mvp_this_device:"هذا الجهاز",
   mvp_other_device:"جهاز متذكّر",
-  mvp_temporary_session:"جلسة مؤقتة",
-  mvp_remembered_session:"جلسة على جهاز متذكّر",
+  mvp_last_login_unavailable:"تاريخ آخر تسجيل دخول غير متاح",
   mvp_no_devices:"لا توجد أجهزة متذكّرة",
   mvp_remove_device:"إزالة الجهاز",
   mvp_remove_verify:"أدخل الرمز لتأكيد إزالة الجهاز.",
@@ -6798,11 +6796,21 @@ function mvpProfile() {
       first: seeded ? 'Yaman' : '', family: seeded ? 'Nouri' : '',
       email: '', promotions: false, permission: 'default', devices: [], ...saved
     };
+    const profile = mvpProfiles[number];
+    if (!profile.demoDeviceSeeded) {
+      if (!profile.devices.some(device => device.id !== mvpDeviceId)) {
+        const lastLogin = new Date();
+        lastLogin.setDate(lastLogin.getDate() - 1);
+        profile.devices.push({id:'demo-galaxy-a54', name:'Samsung Galaxy A54', lastLoginAt:lastLogin.getTime()});
+      }
+      profile.demoDeviceSeeded = true;
+      saveMvpProfile(profile);
+    }
   }
   return mvpProfiles[number];
 }
-function saveMvpProfile() {
-  try { localStorage.setItem(MVP_PROFILE_KEY + ':' + (AUTH.number || 'demo'), JSON.stringify(mvpProfile())); } catch (e) {}
+function saveMvpProfile(profile = mvpProfile()) {
+  try { localStorage.setItem(MVP_PROFILE_KEY + ':' + (AUTH.number || 'demo'), JSON.stringify(profile)); } catch (e) {}
 }
 let mvpDeviceId;
 try {
@@ -6821,6 +6829,7 @@ function forgetCurrentDevice() {
 }
 let mvpSessionRemembered = false;
 let mvpSessionActivityAt = Date.now();
+let mvpSessionLoginAt;
 function mvpRemembered() {
   try { const x = JSON.parse(localStorage.getItem(MVP_AUTH_KEY) || 'null'); return x && MVP_SIGNIN_NUMBERS.has(x.number) ? x : null; }
   catch (e) { return null; }
@@ -7337,6 +7346,7 @@ function enterApp() {
     if (profileNumber) profileNumber.textContent = current;
     if (typeof window.__ucOnLineChange === 'function') window.__ucOnLineChange();
   }
+  if (!S.authed) mvpSessionLoginAt = Date.now();
   S.authed = true; mvpSessionActivityAt = Date.now(); renderMvpProfile(); renderMore(); showScreen('app'); goTab('home', true); if (typeof window.mvpRefreshConsent === 'function') window.mvpRefreshConsent(); if (typeof window.mvpCancelPendingDeletion === 'function') window.mvpCancelPendingDeletion(); setTimeout(animBars, 400);
 }
 function openAbout() {
@@ -9122,9 +9132,14 @@ function openMvpDevices(atLimit = false) {
   session.hidden = !S.authed;
   $('mvp-current-session-title').hidden = !S.authed;
   session.replaceChildren();
-  function addDeviceAction(row, title, action, handler) {
+  function addDeviceAction(row, name, lastLoginAt, action, handler) {
     const label = document.createElement('span');
-    label.textContent = title;
+    const deviceName = document.createElement('bdi');
+    deviceName.textContent = name;
+    const date = Number.isFinite(lastLoginAt)
+      ? new Date(lastLoginAt).toLocaleDateString(LANG === 'ar' ? 'ar-SY' : 'en-GB')
+      : T('mvp_last_login_unavailable');
+    label.append(deviceName, ' · ', date);
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'linklike';
@@ -9132,26 +9147,25 @@ function openMvpDevices(atLimit = false) {
     button.onclick = handler;
     row.append(label, button);
   }
-  if (S.authed) addDeviceAction(session, T(mvpSessionRemembered ? 'mvp_remembered_session' : 'mvp_temporary_session'), T('mvp_end_session'), endMvpSession);
+  if (S.authed) {
+    const platform = navigator.userAgentData?.platform;
+    addDeviceAction(session, platform || T('mvp_this_device'), mvpSessionLoginAt, T('mvp_end_session'), endMvpSession);
+  }
+  const rememberedDevices = profile.devices.filter(device => device.id !== mvpDeviceId);
   list.replaceChildren();
-  if (!profile.devices.length) list.textContent = T('mvp_no_devices');
-  for (const device of profile.devices) {
+  if (!rememberedDevices.length) list.textContent = T('mvp_no_devices');
+  for (const device of rememberedDevices) {
     const row = document.createElement('div');
     row.className = 'mvp-device-row';
-    const current = device.id === mvpDeviceId;
-    const date = new Date(device.rememberedAt).toLocaleDateString(LANG === 'ar' ? 'ar-SY' : 'en-GB');
-    addDeviceAction(row, T(current ? 'mvp_this_device' : 'mvp_other_device') + ' · ' + date, T('mvp_remove_device'), () => {
+    addDeviceAction(row, device.name || T('mvp_other_device'), device.lastLoginAt ?? device.rememberedAt, T('mvp_remove_device'), () => {
       const number = AUTH.number;
       if (!validNum(number) || (!S.authed && !atLimit)) return;
       closeOverlays(true);
       AUTH.otpAction = T('mvp_remove_verify');
       startOtp(number, () => {
         if (AUTH.number !== number || (!S.authed && !atLimit)) return;
-        if (current) forgetCurrentDevice();
-        else {
-          profile.devices = profile.devices.filter(item => item.id !== device.id);
-          saveMvpProfile();
-        }
+        profile.devices = profile.devices.filter(item => item.id !== device.id);
+        saveMvpProfile();
         returnToMvpDevices();
       }, 'sh-mvp-devices');
     });
