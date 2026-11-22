@@ -11775,24 +11775,25 @@ renderUCard();
   const CONSENT_VER = 'v0.5-demo-2026-11-12';
   const CONSENT_KEY = 'zain_mvp_consent_demo_v1';
   const DELETE_KEY = 'zain_mvp_delete_demo_v1';
-  let consentSession=null; // fallback if the preview blocks browser storage
+  let agreedLoginAt;
   const $m = id => document.getElementById(id);
   function num(){ return (typeof AUTH!=='undefined' && AUTH.number) || ''; }
   window.mvpRefreshConsent = function(){
-    const card=$m('mvp-consent-card'); if(!card) return;
-    let row=consentSession; try{ row=JSON.parse(localStorage.getItem(CONSENT_KEY)||'null')||consentSession; }catch(e){}
-    const agreed = row && row.number === num() && row.version === CONSENT_VER;
-    if (agreed && card.open) card.close();
-    if (!agreed && !card.open) card.showModal();
+    const card = $m('mvp-consent-card');
+    const needsConsent = S.authed && agreedLoginAt !== mvpSessionLoginAt;
+    if (needsConsent && !card.open) card.showModal();
+    if (!needsConsent && card.open) card.close();
   };
   window.mvpCancelPendingDeletion=function(){
     // A verified sign-in cancels an outstanding request; this affects local demo state only.
     try{ const d=JSON.parse(localStorage.getItem(DELETE_KEY)||'null'); if(d && d.number===num()) localStorage.removeItem(DELETE_KEY); }catch(e){}
   };
   $m('mvp-consent-yes').addEventListener('click',function(){
-    consentSession={number:num(),version:CONSENT_VER,at:new Date().toISOString()};
-    try{localStorage.setItem(CONSENT_KEY, JSON.stringify(consentSession));}catch(e){}
-    window.mvpRefreshConsent();toast(T('mvp_consent_saved'));
+    agreedLoginAt = mvpSessionLoginAt;
+    const agreement = {number:num(), version:CONSENT_VER, at:new Date().toISOString()};
+    try { localStorage.setItem(CONSENT_KEY, JSON.stringify(agreement)); } catch (e) {}
+    window.mvpRefreshConsent();
+    toast(T('mvp_consent_saved'));
   });
   window.mvpOpenDeleteProfile=function(){ $m('mvp-delete-dialog').hidden=false; };
   $m('mvp-delete-cancel').addEventListener('click',function(){ $m('mvp-delete-dialog').hidden=true; });
