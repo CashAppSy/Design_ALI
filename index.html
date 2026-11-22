@@ -1816,6 +1816,8 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 }
 :is(#scr-login,#scr-auth-remember,#scr-auth-otp.signin-otp) h1.title{
   margin:20px 0 0;
+  /* Keep the fields within thumb reach and reduce the offset on short viewports. */
+  margin-block-start:clamp(20px,calc(100dvh - 600px),170px);
   font-size:var(--f-title);
   line-height:1.15;
 }
