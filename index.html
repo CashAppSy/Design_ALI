@@ -220,6 +220,7 @@ input{caret-color:var(--btn-bg)}
 [dir="rtl"] .loader i{animation-name:loadr}
 @keyframes loadr{0%{transform:translateX(110%)}100%{transform:translateX(-320%)}}
 /* ============ onboarding ============ */
+#scr-onboard .auth-top{padding-inline:26px}
 #scr-onboard .ob-track{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 #scr-onboard .ob-track::-webkit-scrollbar{display:none}
 .ob-slide{flex:0 0 100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -1883,7 +1884,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- ONBOARDING -->
 <section id="scr-onboard" class="screen" aria-label="Welcome">
-  <div style="height:calc(20px + env(safe-area-inset-top));height:calc(20px + max(env(safe-area-inset-top),28px))"></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span></div>
   <div class="ob-track" id="ob-track">
     <div class="ob-slide" data-i="0">
       <div class="ob-art"><img decoding="async" id="ob-z0" src="data:image/svg+xml,%3Csvg%20fill%3D%22%23FFFFFF%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20width%3D%221000%22%20height%3D%221000%22%20viewBox%3D%220%200%201000%201000%22%3E%0A%3Cdefs%3E%0A%3CclipPath%20id%3D%22clip_1%22%3E%0A%3Cpath%20transform%3D%22matrix%281%2C0%2C0%2C-1%2C0%2C1000%29%22%20d%3D%22M0%201000H1000V0H0Z%22%2F%3E%0A%3C%2FclipPath%3E%0A%3C%2Fdefs%3E%0A%3Cg%3E%0A%3Cg%20clip-path%3D%22url%28%23clip_1%29%22%3E%0A%3Cpath%20transform%3D%22matrix%281%2C0%2C0%2C-1%2C759.7905%2C372.26179%29%22%20d%3D%22M0%200C-4.636-17.263-17.953-38.201-37.88-60.692-48.111-26.955-65.909%204-89.915%2029.815-50.901%2037.337-10.999%2038.422-.839%2020.987%202.097%2015.931%202.367%208.853%200%200M-259.805-329.943C-297.621-329.98-334.68-319.337-366.712-299.239-315.713-282.692-259.288-257.167-203.405-225.058-147.103-192.702-97.041-156.821-57.78-121.704-57.78-123.7-57.632-125.699-57.632-127.721-57.685-181.329-79.001-232.726-116.902-270.638-154.805-308.549-206.197-329.876-259.805-329.943M-518.748-276.428C-527.429-261.458-513.051-230.657-481.756-195.046-471.513-228.702-453.744-259.583-429.795-285.355-478.254-294.776-510.388-290.682-518.748-276.428M-259.805%2074.501C-213.501%2074.438-168.615%2058.508-132.632%2029.367-96.646%20.225-71.734-40.367-62.048-85.649-101.505-123.381-156.105-163.75-218.153-199.386-285.725-238.253-346.638-263.358-395.812-277.168-425.944-249.699-447.069-213.765-456.416-174.078-465.763-134.389-462.895-92.805-448.187-54.777-433.48-16.75-407.621%2015.945-374.004%2039.016-340.386%2062.086-300.578%2074.456-259.805%2074.501M24.76%2035.833C6.905%2066.61-41.825%2072.825-116.401%2054.304-150.561%2081.26-191.623%2098.047-234.883%20102.743-278.143%20107.439-321.852%2099.854-361%2080.856-400.148%2061.859-433.153%2032.217-456.233-4.672-479.313-41.561-491.535-84.207-491.497-127.721-491.496-138.446-490.754-149.157-489.278-159.781-543.187-214.972-562.176-260.349-544.248-291.274-533.15-310.411-509.722-320.102-475.541-320.102-454.769-319.743-434.097-317.131-413.889-312.309-410.313-311.52-406.687-310.632-403.013-309.843-366.682-338.48-322.612-355.585-276.474-358.956-230.337-362.328-184.247-351.812-144.14-328.761-104.031-305.712-71.742-271.182-51.427-229.621-31.115-188.06-23.708-141.37-30.16-95.563%201.036-63.503%2021.899-33.121%2028.682-7.768%2033.072%209.075%2031.789%2023.724%2024.76%2035.833%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A" alt="" width="104" height="104"></div>
@@ -1914,7 +1915,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- MVP LOGIN — number + OTP prototype; no backend SMS, header enrichment, or secure device registration -->
 <section id="scr-login" class="screen auth" aria-label="Sign in">
-  <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span></div>
   <h1 class="title" data-k="a_signin_t">Sign in</h1>
   <div class="signin-description">
     <p class="body sub" data-k="mvp_signin_sub">Enter a Zain mobile or ADSL number to continue.</p>
@@ -1945,7 +1946,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- SIGN IN WITH EMAIL (04c) -->
 <section id="scr-auth-email" class="screen auth" aria-label="Sign in with email">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-login" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-login" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_email_t">Sign in with email</h1>
   <form id="a-email-form" novalidate>
     <div class="fld"><label for="a-em" data-k="a_email">Email address</label>
@@ -1972,7 +1973,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- SET UP YOUR NUMBER (07) -->
 <section id="scr-auth-setup" class="screen auth" aria-label="Set up your number">
-  <div class="auth-top"><button class="auth-back" id="a-setup-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" id="a-setup-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_setup_t">Set up your number</h1>
   <p class="body sub" data-k="a_setup_s">Link your Zain number to finish creating your account.</p>
   <form id="a-setup-form" novalidate>
@@ -1996,7 +1997,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- CREATE ACCOUNT — STEP 1, PHONE (09) -->
 <section id="scr-auth-signup1" class="screen auth" aria-label="Create account">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-login" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-login" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_signup_t">Create your account</h1>
   <p class="body sub" data-k="a_signup1_s">Two quick steps — your name and number first.</p>
   <form id="a-su1-form" novalidate>
@@ -2027,7 +2028,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- CREATE ACCOUNT — STEP 2, PASSWORD (11) -->
 <section id="scr-auth-signup2" class="screen auth" aria-label="Set your password">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-auth-signup1" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-auth-signup1" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_pass_t">Set your password</h1>
   <form id="a-su2-form" novalidate>
     <div class="fld"><label for="a-su-pass" data-k="a_password">Password</label>
@@ -2043,7 +2044,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- CREATE ACCOUNT WITH EMAIL — STEP 1 (09b) -->
 <section id="scr-auth-signup-email1" class="screen auth" aria-label="Create account with email">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-auth-signup1" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-auth-signup1" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_signup_t">Create your account</h1>
   <p class="body sub" data-k="a_signup_e1_s">Two quick steps — your name and email first.</p>
   <form id="a-se1-form" novalidate>
@@ -2059,7 +2060,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- CREATE ACCOUNT WITH EMAIL — STEP 2 (11b) -->
 <section id="scr-auth-signup-email2" class="screen auth" aria-label="Set your password">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-auth-signup-email1" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-auth-signup-email1" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_pass_t">Set your password</h1>
   <p class="body sub" data-k="a_pass_e2_s">Set your password to finish creating your account.</p>
   <form id="a-se2-form" novalidate>
@@ -2076,7 +2077,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- VERIFY YOUR NUMBER — OTP (12 / 12a / 12b states) -->
 <section id="scr-auth-otp" class="screen auth" aria-label="Verify your number">
-  <div class="auth-top"><button class="auth-back" id="a-otp-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" id="a-otp-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title st" id="a-otp-title" data-k="a_otp_t">Verify your number</h1>
   <div class="signin-description">
     <p class="body sub"><span id="a-otp-sent-label" data-k="a_otp_s">Enter the 6-digit code sent to</span> <span class="masked-num num" id="a-otp-num" dir="ltr"></span></p>
@@ -2110,7 +2111,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- MVP REMEMBER ME — after validated OTP, never a primary account or PIN -->
 <section id="scr-auth-remember" class="screen auth" aria-label="Remember this phone">
-  <div class="auth-top"><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span></div>
   <h1 class="title" data-k="mvp_remember_t">Remember Me</h1>
   <div class="signin-description">
     <p class="body sub" data-k="mvp_remember_s">Remember this phone to open your Zain dashboard without entering a new code next time. You can sign out at any time.</p>
@@ -2122,7 +2123,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- OTP — CHANGE NUMBER (12c) -->
 <section id="scr-auth-changenum" class="screen auth" aria-label="Change number">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-auth-otp" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-auth-otp" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_change_t">Change number</h1>
   <p class="body sub" data-k="a_change_s">Enter the correct number. We'll send a new code.</p>
   <form id="a-cn-form" novalidate>
@@ -2138,7 +2139,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- SET UP A PIN (13a) -->
 <section id="scr-auth-pin-setup" class="screen auth" aria-label="Set up a PIN">
-  <div class="auth-top"><button class="auth-back" id="a-pin-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" id="a-pin-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_pin_t">Set up a PIN</h1>
   <p class="body sub" data-k="a_pin_s">Choose a 6-digit PIN for quick sign-in.</p>
   <div class="otp6" dir="ltr">
@@ -2151,7 +2152,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- CONFIRM PIN (13b) -->
 <section id="scr-auth-pin-confirm" class="screen auth" aria-label="Confirm PIN">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-auth-pin-setup" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-auth-pin-setup" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_pin2_t">Confirm your PIN</h1>
   <p class="body sub" data-k="a_pin2_s">Enter your PIN again.</p>
   <div class="otp6" dir="ltr">
@@ -2164,7 +2165,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- ENTER PIN (16b fallback / biometric alternative) -->
 <section id="scr-auth-pin-enter" class="screen auth" aria-label="Enter PIN">
-  <div class="auth-top"><button class="auth-back" id="a-pine-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" id="a-pine-back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_pine_t">Enter your PIN</h1>
   <p class="body sub" data-k="a_pine_s">Enter your 6-digit PIN to continue.</p>
   <div class="otp6" dir="ltr">
@@ -2202,7 +2203,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- FORGOT PASSWORD (16) -->
 <section id="scr-auth-forgot" class="screen auth" aria-label="Reset your password">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-login" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-login" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_forgot_t">Reset your password</h1>
   <p class="body sub" data-k="a_forgot_s">Enter the number or email on your account and we'll send you a verification code.</p>
   <form id="a-fg-form" novalidate>
@@ -2225,7 +2226,7 @@ body.standalone #stage{width:402px!important;height:874px!important;border-radiu
 
 <!-- CREATE NEW PASSWORD (17) -->
 <section id="scr-auth-newpass" class="screen auth" aria-label="Create a new password">
-  <div class="auth-top"><button class="auth-back" data-back-to="scr-auth-forgot" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><span class="sp"></span><div class="langpill" role="group" aria-label="Language"><button data-langpick="en">EN</button><button data-langpick="ar">عربي</button></div></div>
+  <div class="auth-top" dir="ltr"><div class="langpill" role="group" aria-label="Language"><button data-langpick="en" lang="en">EN</button><button data-langpick="ar" lang="ar">عربي</button></div><span class="sp"></span><button class="auth-back" data-back-to="scr-auth-forgot" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button></div>
   <h1 class="title" data-k="a_newpass_t">Create a new password</h1>
   <form id="a-np-form" novalidate>
     <div class="fld"><label for="a-np-pass" data-k="a_password">Password</label>
@@ -6776,7 +6777,16 @@ $('a-nz-use').onclick = () => { closeOverlays(true); if (AUTH.carrierField) { AU
 /* ---------- generic auth navigation ---------- */
 document.querySelectorAll('[data-back-to]').forEach(b => b.addEventListener('click', () => showScreen(b.dataset.backTo)));
 document.querySelectorAll('[data-langpick]').forEach(b => b.addEventListener('click', () => { LANG = b.dataset.langpick; applyLang(); }));
-function syncLangPills() { document.querySelectorAll('[data-langpick]').forEach(b => b.classList.toggle('on', b.dataset.langpick === LANG)); }
+function syncLangPills() {
+  document.querySelectorAll('.langpill').forEach(pill => {
+    pill.setAttribute('aria-label', LANG === 'ar' ? 'اللغة' : 'Language');
+    pill.querySelectorAll('[data-langpick]').forEach(button => {
+      const selected = button.dataset.langpick === LANG;
+      button.classList.toggle('on', selected);
+      button.setAttribute('aria-pressed', String(selected));
+    });
+  });
+}
 
 
 /* Prototype session flags, NOT production authentication. Backend and signed
